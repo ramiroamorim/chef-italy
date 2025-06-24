@@ -1,0 +1,16 @@
+{
+  "name": "chef-amelie-app",
+  "type": "application",
+  "framework": "nodejs",
+  "buildCommand": "npm run build",
+  "startCommand": "npm start",
+  "port": 80,
+  "environment": {
+    "NODE_ENV": "production",
+    "PORT": "80"
+  },
+  "buildpacks": ["heroku/nodejs"],
+  "dependencies": {
+    "node": "18.x"
+  }
+} 
