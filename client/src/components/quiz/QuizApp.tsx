@@ -40,11 +40,15 @@ export default function QuizApp() {
       });
     };
 
-    preloadImages();
-    // Disparar InitiateCheckout quando o quiz é iniciado (com dados do visitante)
-    if (visitorData) {
-      FacebookPixel.trackInitiateCheckout(visitorData);
-    }
+    const initQuizTracking = async () => {
+      preloadImages();
+      // Disparar InitiateCheckout quando o quiz é iniciado (com dados do visitante)
+      if (visitorData) {
+        await FacebookPixel.trackInitiateCheckout(visitorData);
+      }
+    };
+
+    initQuizTracking();
   }, [visitorData]);
 
   return (

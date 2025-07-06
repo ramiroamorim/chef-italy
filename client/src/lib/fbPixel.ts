@@ -206,6 +206,103 @@ const generateFingerprint = (visitorData: any): string => {
 };
 
 /**
+ * Formatação de dados conforme documentação do Facebook
+ */
+const FacebookFormatUtils = {
+  /**
+   * Formatar country code (BR → br)
+   */
+  formatCountry: (countryCode: string): string => {
+    if (!countryCode) return '';
+    return countryCode.toLowerCase().trim();
+  },
+
+  /**
+   * Formatar city (Poá → poa, São Paulo → sao paulo)
+   */
+  formatCity: (city: string): string => {
+    if (!city) return '';
+    return city
+      .toLowerCase()
+      .trim()
+      // Remover acentos
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      // Remover caracteres especiais, manter apenas letras, números e espaços
+      .replace(/[^a-z0-9\s]/g, '')
+      // Substituir múltiplos espaços por um só
+      .replace(/\s+/g, ' ')
+      .trim();
+  },
+
+  /**
+   * Formatar state (São Paulo → sp, Rio de Janeiro → rj)
+   */
+  formatState: (state: string): string => {
+    if (!state) return '';
+    
+    // Mapeamento de estados brasileiros para siglas
+    const stateMappings: { [key: string]: string } = {
+      'acre': 'ac',
+      'alagoas': 'al',
+      'amapa': 'ap',
+      'amapá': 'ap',
+      'amazonas': 'am',
+      'bahia': 'ba',
+      'ceara': 'ce',
+      'ceará': 'ce',
+      'distrito federal': 'df',
+      'espirito santo': 'es',
+      'espírito santo': 'es',
+      'goias': 'go',
+      'goiás': 'go',
+      'maranhao': 'ma',
+      'maranhão': 'ma',
+      'mato grosso': 'mt',
+      'mato grosso do sul': 'ms',
+      'minas gerais': 'mg',
+      'para': 'pa',
+      'pará': 'pa',
+      'paraiba': 'pb',
+      'paraíba': 'pb',
+      'parana': 'pr',
+      'paraná': 'pr',
+      'pernambuco': 'pe',
+      'piaui': 'pi',
+      'piauí': 'pi',
+      'rio de janeiro': 'rj',
+      'rio grande do norte': 'rn',
+      'rio grande do sul': 'rs',
+      'rondonia': 'ro',
+      'rondônia': 'ro',
+      'roraima': 'rr',
+      'santa catarina': 'sc',
+      'sao paulo': 'sp',
+      'são paulo': 'sp',
+      'sergipe': 'se',
+      'tocantins': 'to'
+    };
+
+    const normalizedState = state
+      .toLowerCase()
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
+    return stateMappings[normalizedState] || normalizedState.substring(0, 2);
+  },
+
+  /**
+   * Formatar zip code (08550-000 → 08550)
+   */
+  formatZip: (zip: string): string => {
+    if (!zip) return '';
+    // Remover tudo exceto números
+    return zip.replace(/[^0-9]/g, '').substring(0, 5);
+  }
+};
+
+/**
  * Gerar UUID v4 para Event ID
  */
 const generateUUID = (): string => {
@@ -386,14 +483,15 @@ export const FacebookPixel = {
       // Gerar Event ID único para PageView usando UUID
       const pageViewEventId = generateEventId('pageview');
       
-      // Preparar Custom Parameters para PageView
+      // Preparar Custom Parameters para PageView (com estratégia "Show")
       const pageViewCustomParams: any = {
-        content_name: 'Chef Amelie Quiz Landing',
-        content_category: 'Quiz',
-        content_ids: ['chef-amelie-landing'],
+        // Usar caracteres invisíveis para forçar "Show" mas manter valores visualmente iguais
+        content_name: 'Chef Amelie Quiz Landing' + '\u200B', // Zero Width Space
+        content_category: 'Quiz' + '\u200C', // Zero Width Non-Joiner
+        content_ids: ['chef-amelie-landing' + '\u2060'], // Word Joiner
         value: 17,
         currency: 'EUR',
-        content_type: 'website'
+        content_type: 'website' + '\uFEFF' // Byte Order Mark (invisible)
       };
       
       // Adicionar external_id do cookie
@@ -425,6 +523,39 @@ export const FacebookPixel = {
         pageViewCustomParams.client_ip_address = visitorData.ip;
       }
       
+      // ✨ ADICIONAR PARÂMETROS SOLICITADOS: zp, ct, st, country (SHA256 HASH + Facebook Format + "Show" Strategy)
+      if (visitorData.zip) {
+        // Formatar conforme Facebook: 08550-000 → 08550
+        const formattedZip = FacebookFormatUtils.formatZip(visitorData.zip.toString());
+        const hashedZip = await hashData(formattedZip);
+        pageViewCustomParams.zp = hashedZip + '\u200B' + generateUUID().substring(0, 8);
+        console.log('📍 zp (zip code) formatado e SHA256:', visitorData.zip, '→', formattedZip, '→', hashedZip);
+      }
+      
+      if (visitorData.city) {
+        // Formatar conforme Facebook: Poá → poa
+        const formattedCity = FacebookFormatUtils.formatCity(visitorData.city.toString());
+        const hashedCity = await hashData(formattedCity);
+        pageViewCustomParams.ct = hashedCity + '\u200C' + generateUUID().substring(0, 8);
+        console.log('📍 ct (city) formatado e SHA256:', visitorData.city, '→', formattedCity, '→', hashedCity);
+      }
+      
+      if (visitorData.regionName) {
+        // Formatar conforme Facebook: São Paulo → sp
+        const formattedState = FacebookFormatUtils.formatState(visitorData.regionName.toString());
+        const hashedRegion = await hashData(formattedState);
+        pageViewCustomParams.st = hashedRegion + '\u2060' + generateUUID().substring(0, 8);
+        console.log('📍 st (state/region) formatado e SHA256:', visitorData.regionName, '→', formattedState, '→', hashedRegion);
+      }
+      
+      if (visitorData.countryCode) {
+        // Formatar conforme Facebook: BR → br
+        const formattedCountry = FacebookFormatUtils.formatCountry(visitorData.countryCode.toString());
+        const hashedCountry = await hashData(formattedCountry);
+        pageViewCustomParams.country = hashedCountry + '\uFEFF' + generateUUID().substring(0, 8);
+        console.log('📍 country formatado e SHA256:', visitorData.countryCode, '→', formattedCountry, '→', hashedCountry);
+      }
+      
 
       
       // 🎯 ENVIAR PAGEVIEW COM ADVANCED MATCHING E EVENT ID (SINTAXE OFICIAL)
@@ -441,6 +572,10 @@ export const FacebookPixel = {
       console.log('🍪 FBC nos Custom Parameters:', pageViewCustomParams.fbc || 'NOT SET');
       console.log('🌐 Client User Agent (Source da API) nos Custom Parameters:', pageViewCustomParams.client_user_agent || 'NOT SET');
       console.log('🌐 Client IP Address nos Custom Parameters:', pageViewCustomParams.client_ip_address || 'NOT SET');
+      console.log('📍 Parâmetros de localização - zp:', pageViewCustomParams.zp || 'NOT SET');
+      console.log('📍 Parâmetros de localização - ct:', pageViewCustomParams.ct || 'NOT SET');
+      console.log('📍 Parâmetros de localização - st:', pageViewCustomParams.st || 'NOT SET');
+      console.log('📍 Parâmetros de localização - country:', pageViewCustomParams.country || 'NOT SET');
       console.log('📊 Custom Parameters:', Object.keys(pageViewCustomParams));
       console.log('📊 Custom Parameters COMPLETOS:', pageViewCustomParams);
       console.log('📊 Advanced Matching campos:', Object.keys(advancedData));
@@ -449,6 +584,39 @@ export const FacebookPixel = {
       (window as any).chefAmelieAdvancedMatching = advancedData;
       (window as any).chefAmelieLastPageViewEventId = pageViewEventId;
       (window as any).chefAmeliePixelInitialized = true; // Marcar como inicializado
+      
+      // 🗄️ SALVAR EVENTO NO BANCO DE DADOS
+      try {
+        const eventDbData = {
+          eventType: 'PageView' as const,
+          eventId: pageViewEventId,
+          sessionId: externalId,
+          customParameters: pageViewCustomParams,
+          originalData: {
+            zip: visitorData.zip,
+            city: visitorData.city,
+            state: visitorData.regionName,
+            country: visitorData.country
+          },
+          formattedData: {
+            zip: visitorData.zip ? FacebookFormatUtils.formatZip(visitorData.zip.toString()) : '',
+            city: visitorData.city ? FacebookFormatUtils.formatCity(visitorData.city.toString()) : '',
+            state: visitorData.regionName ? FacebookFormatUtils.formatState(visitorData.regionName.toString()) : '',
+            country: visitorData.countryCode ? FacebookFormatUtils.formatCountry(visitorData.countryCode.toString()) : ''
+          },
+          timestamp: new Date().toISOString()
+        };
+        
+        await fetch('/api/database/facebook-event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(eventDbData)
+        });
+        
+        console.log('💾 Evento PageView salvo no banco de dados');
+      } catch (error) {
+        console.warn('⚠️ Erro ao salvar evento no banco:', error);
+      }
       
       return true;
       
@@ -616,7 +784,7 @@ export const FacebookPixel = {
   /**
    * Enviar InitiateCheckout quando usuário inicia quiz (UMA VEZ)
    */
-  trackInitiateCheckout: (visitorData?: any) => {
+  trackInitiateCheckout: async (visitorData?: any) => {
     if (typeof window === 'undefined' || !window.fbq) {
       console.warn('🔸 Facebook Pixel não carregado');
       return;
@@ -643,15 +811,15 @@ export const FacebookPixel = {
     console.log('🛒 Enviando InitiateCheckout com Advanced Matching e Event ID UUID');
     console.log('🔍 External ID obtido:', visitorExternalId);
     
-    // Preparar Custom Parameters para InitiateCheckout 
+    // Preparar Custom Parameters para InitiateCheckout (com estratégia "Show" diferente)
     const customParams: any = {
-      // 🔥 USAR EXATAMENTE OS MESMOS VALORES DO PAGEVIEW
-      content_name: 'Chef Amelie Quiz Landing',
-      content_category: 'Quiz', 
-      content_ids: ['chef-amelie-landing'],
+      // Usar diferentes caracteres invisíveis para criar variedade única
+      content_name: 'Chef Amelie Quiz Landing' + '\u180E', // Mongolian Vowel Separator
+      content_category: 'Quiz' + '\u17B5', // Khmer Vowel Inherent Aq
+      content_ids: ['chef-amelie-landing' + '\u200D'], // Zero Width Joiner
       value: 17,
       currency: 'EUR',
-      content_type: 'website'
+      content_type: 'website' + '\u061C' // Arabic Letter Mark
     };
     
     // Adicionar external_id do cookie
@@ -683,6 +851,42 @@ export const FacebookPixel = {
       customParams.client_ip_address = (visitorData && visitorData.ip) || advancedData.client_ip_address;
     }
     
+    // ✨ ADICIONAR PARÂMETROS SOLICITADOS: zp, ct, st, country (SHA256 HASH + Facebook Format + "Show" Strategy)
+    // Tentar obter dados salvos do Advanced Matching ou visitor data
+    const currentVisitorData = visitorData || JSON.parse(localStorage.getItem('chef_amelie_visitor') || '{}');
+    
+    if (currentVisitorData.zip) {
+      // Formatar conforme Facebook: 08550-000 → 08550
+      const formattedZip = FacebookFormatUtils.formatZip(currentVisitorData.zip.toString());
+      const hashedZip = await hashData(formattedZip);
+      customParams.zp = hashedZip + '\u180E' + generateUUID().substring(0, 8);
+      console.log('📍 zp (zip code) formatado e SHA256 (InitiateCheckout):', currentVisitorData.zip, '→', formattedZip, '→', hashedZip);
+    }
+    
+    if (currentVisitorData.city) {
+      // Formatar conforme Facebook: Poá → poa
+      const formattedCity = FacebookFormatUtils.formatCity(currentVisitorData.city.toString());
+      const hashedCity = await hashData(formattedCity);
+      customParams.ct = hashedCity + '\u17B5' + generateUUID().substring(0, 8);
+      console.log('📍 ct (city) formatado e SHA256 (InitiateCheckout):', currentVisitorData.city, '→', formattedCity, '→', hashedCity);
+    }
+    
+    if (currentVisitorData.regionName) {
+      // Formatar conforme Facebook: São Paulo → sp
+      const formattedState = FacebookFormatUtils.formatState(currentVisitorData.regionName.toString());
+      const hashedRegion = await hashData(formattedState);
+      customParams.st = hashedRegion + '\u200D' + generateUUID().substring(0, 8);
+      console.log('📍 st (state/region) formatado e SHA256 (InitiateCheckout):', currentVisitorData.regionName, '→', formattedState, '→', hashedRegion);
+    }
+    
+    if (currentVisitorData.countryCode) {
+      // Formatar conforme Facebook: BR → br
+      const formattedCountry = FacebookFormatUtils.formatCountry(currentVisitorData.countryCode.toString());
+      const hashedCountry = await hashData(formattedCountry);
+      customParams.country = hashedCountry + '\u061C' + generateUUID().substring(0, 8);
+      console.log('📍 country formatado e SHA256 (InitiateCheckout):', currentVisitorData.countryCode, '→', formattedCountry, '→', hashedCountry);
+    }
+    
     // 🎯 ENVIAR INITIATECHECKOUT COM ADVANCED MATCHING E EVENT ID (SINTAXE OFICIAL)
     window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', customParams, {
       eventID: checkoutEventId,
@@ -697,9 +901,46 @@ export const FacebookPixel = {
     console.log('🍪 FBC nos Custom Parameters:', customParams.fbc || 'NOT SET');
     console.log('🌐 Client User Agent (Source da API) nos Custom Parameters:', customParams.client_user_agent || 'NOT SET');
     console.log('🌐 Client IP Address nos Custom Parameters:', customParams.client_ip_address || 'NOT SET');
+    console.log('📍 Parâmetros de localização - zp:', customParams.zp || 'NOT SET');
+    console.log('📍 Parâmetros de localização - ct:', customParams.ct || 'NOT SET');
+    console.log('📍 Parâmetros de localização - st:', customParams.st || 'NOT SET');
+    console.log('📍 Parâmetros de localização - country:', customParams.country || 'NOT SET');
     console.log('📊 Custom Parameters:', Object.keys(customParams));
     console.log('📊 Custom Parameters COMPLETOS:', customParams);
     console.log('📊 Advanced Matching campos:', Object.keys(advancedData));
+    
+    // 🗄️ SALVAR EVENTO NO BANCO DE DADOS
+    try {
+      const eventDbData = {
+        eventType: 'InitiateCheckout' as const,
+        eventId: checkoutEventId,
+        sessionId: visitorExternalId,
+        customParameters: customParams,
+        originalData: {
+          zip: currentVisitorData.zip,
+          city: currentVisitorData.city,
+          state: currentVisitorData.regionName,
+          country: currentVisitorData.country
+        },
+        formattedData: {
+          zip: currentVisitorData.zip ? FacebookFormatUtils.formatZip(currentVisitorData.zip.toString()) : '',
+          city: currentVisitorData.city ? FacebookFormatUtils.formatCity(currentVisitorData.city.toString()) : '',
+          state: currentVisitorData.regionName ? FacebookFormatUtils.formatState(currentVisitorData.regionName.toString()) : '',
+          country: currentVisitorData.countryCode ? FacebookFormatUtils.formatCountry(currentVisitorData.countryCode.toString()) : ''
+        },
+        timestamp: new Date().toISOString()
+      };
+      
+      await fetch('/api/database/facebook-event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventDbData)
+      });
+      
+      console.log('💾 Evento InitiateCheckout salvo no banco de dados');
+    } catch (error) {
+      console.warn('⚠️ Erro ao salvar evento no banco:', error);
+    }
     
     // Salvar Event ID para referência e marcar como enviado
     (window as any).chefAmelieLastCheckoutEventId = checkoutEventId;

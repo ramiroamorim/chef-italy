@@ -9,6 +9,8 @@ import {
   prepareCAPIData,
   HotmartUtils 
 } from './config/hotmart';
+import { VisitorDatabase, FacebookEventDatabase, DatabaseUtils } from './database';
+import { sendEventToCAPI, testCAPIConnection, getCAPILogs, getCAPIStats, forwardFrontendEventToCAPI } from './facebook-capi';
 
 // Armazenar visitantes temporariamente (em produção usar banco de dados)
 const visitorsStorage: any[] = [];
@@ -32,7 +34,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         timestamp: visitorData.timestamp
       });
       
-      // Salvar visitante (manter apenas últimas 24 horas)
+      // Estruturar dados para o banco
+      const dbVisitorData = {
+        sessionId: visitorData.external_id,
+        ip: visitorData.visitor_data?.ip,
+        country: visitorData.visitor_data?.country,
+        countryCode: visitorData.visitor_data?.country_code,
+        city: visitorData.visitor_data?.city,
+        regionName: visitorData.visitor_data?.region,
+        zip: visitorData.visitor_data?.zip,
+        latitude: visitorData.visitor_data?.latitude,
+        longitude: visitorData.visitor_data?.longitude,
+        timezone: visitorData.visitor_data?.timezone,
+        currency: visitorData.visitor_data?.currency,
+        isp: visitorData.visitor_data?.isp,
+        userAgent: visitorData.page_data?.user_agent,
+        pageUrl: visitorData.page_data?.url,
+        referrer: visitorData.page_data?.referrer,
+        utm_source: visitorData.marketing_data?.utm_source,
+        utm_medium: visitorData.marketing_data?.utm_medium,
+        utm_campaign: visitorData.marketing_data?.utm_campaign,
+        utm_content: visitorData.marketing_data?.utm_content,
+        utm_term: visitorData.marketing_data?.utm_term,
+        timestamp: visitorData.timestamp || new Date().toISOString()
+      };
+      
+      // Salvar no banco de dados permanente
+      VisitorDatabase.save(dbVisitorData);
+      
+      // Manter também no storage temporário para compatibilidade
       visitorsStorage.push({
         ...visitorData,
         received_at: new Date().toISOString()
@@ -214,6 +244,171 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         error: error instanceof Error ? error.message : 'Erro interno'
+      });
+    }
+  });
+
+  // 🗄️ BANCO DE DADOS: Estatísticas do banco
+  app.get('/api/database/stats', (req, res) => {
+    try {
+      const stats = DatabaseUtils.getFullReport();
+      res.json({
+        success: true,
+        ...stats
+      });
+    } catch (error) {
+      console.error('❌ Erro ao obter estatísticas:', error);
+      res.status(500).json({ success: false, error: 'Erro interno' });
+    }
+  });
+
+  // 🗄️ BANCO DE DADOS: Receber evento do Facebook
+  app.post('/api/database/facebook-event', async (req, res) => {
+    try {
+      const eventData = req.body;
+      
+      console.log('📊 Recebendo evento do Facebook:', {
+        eventType: eventData.eventType,
+        sessionId: eventData.sessionId,
+        hasHashedParams: Boolean(eventData.customParameters?.zp)
+      });
+      
+      // Salvar no banco de dados
+      FacebookEventDatabase.save(eventData);
+      
+      // 📱 ENVIAR PARA FACEBOOK CAPI
+      try {
+        console.log('📱 Enviando evento para Facebook CAPI...');
+        const capiResult = await forwardFrontendEventToCAPI(eventData);
+        
+        if (capiResult.success) {
+          console.log('✅ CAPI: Evento enviado com sucesso!', {
+            logId: capiResult.logId,
+            eventType: eventData.eventType
+          });
+        } else {
+          console.warn('⚠️ CAPI: Falha ao enviar evento:', capiResult.error);
+        }
+      } catch (capiError) {
+        console.error('❌ CAPI: Erro ao processar evento:', capiError);
+      }
+      
+      res.json({ 
+        success: true, 
+        message: 'Evento do Facebook salvo com sucesso' 
+      });
+      
+    } catch (error) {
+      console.error('❌ Erro ao salvar evento do Facebook:', error);
+      res.status(500).json({ success: false, error: 'Erro interno' });
+    }
+  });
+
+  // 🗄️ BANCO DE DADOS: Buscar visitante por ID
+  app.get('/api/database/visitor/:sessionId', (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const result = DatabaseUtils.getVisitorWithEvents(sessionId);
+      
+      if (!result.visitor) {
+        return res.status(404).json({ 
+          success: false, 
+          error: 'Visitante não encontrado' 
+        });
+      }
+      
+      res.json({
+        success: true,
+        ...result
+      });
+      
+    } catch (error) {
+      console.error('❌ Erro ao buscar visitante:', error);
+      res.status(500).json({ success: false, error: 'Erro interno' });
+    }
+  });
+
+  // 🗄️ BANCO DE DADOS: Exportar todos os dados
+  app.get('/api/database/export', (req, res) => {
+    try {
+      const exportData = DatabaseUtils.exportAllData();
+      
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Content-Disposition', 'attachment; filename="chef-amelie-data-export.json"');
+      res.json(exportData);
+      
+    } catch (error) {
+      console.error('❌ Erro ao exportar dados:', error);
+      res.status(500).json({ success: false, error: 'Erro interno' });
+    }
+  });
+
+  // 📱 FACEBOOK CAPI: Estatísticas e monitoramento
+  app.get('/api/capi/stats', (req, res) => {
+    try {
+      const stats = getCAPIStats();
+      res.json({
+        success: true,
+        ...stats
+      });
+    } catch (error) {
+      console.error('❌ Erro ao obter estatísticas CAPI:', error);
+      res.status(500).json({ success: false, error: 'Erro interno' });
+    }
+  });
+
+  // 📱 FACEBOOK CAPI: Logs de envios
+  app.get('/api/capi/logs', (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 20;
+      const logs = getCAPILogs(limit);
+      
+      res.json({
+        success: true,
+        logs,
+        total: logs.length
+      });
+    } catch (error) {
+      console.error('❌ Erro ao obter logs CAPI:', error);
+      res.status(500).json({ success: false, error: 'Erro interno' });
+    }
+  });
+
+  // 📱 FACEBOOK CAPI: Testar conexão
+  app.post('/api/capi/test', async (req, res) => {
+    try {
+      console.log('🧪 Testando conexão Facebook CAPI...');
+      const testResult = await testCAPIConnection();
+      
+      res.json({
+        success: testResult.success,
+        message: testResult.message,
+        details: testResult.details
+      });
+    } catch (error) {
+      console.error('❌ Erro ao testar CAPI:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Erro ao testar CAPI',
+        error: error instanceof Error ? error.message : 'Erro interno' 
+      });
+    }
+  });
+
+  // 📱 FACEBOOK CAPI: Enviar evento manual
+  app.post('/api/capi/send-event', async (req, res) => {
+    try {
+      const eventData = req.body;
+      console.log('📱 Enviando evento manual para CAPI:', eventData);
+      
+      const result = await sendEventToCAPI(eventData);
+      
+      res.json(result);
+    } catch (error) {
+      console.error('❌ Erro ao enviar evento manual CAPI:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Erro interno' 
       });
     }
   });
