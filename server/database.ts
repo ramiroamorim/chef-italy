@@ -129,8 +129,8 @@ export const VisitorDatabase = {
   // Estatísticas
   getStats: () => {
     const visitors = readJsonFile<VisitorData>(VISITORS_FILE);
-    const countries = [...new Set(visitors.map(v => v.country).filter(Boolean))];
-    const cities = [...new Set(visitors.map(v => v.city).filter(Boolean))];
+    const countries = Array.from(new Set(visitors.map(v => v.country).filter(Boolean)));
+    const cities = Array.from(new Set(visitors.map(v => v.city).filter(Boolean)));
     
     return {
       total: visitors.length,
@@ -182,7 +182,7 @@ export const FacebookEventDatabase = {
       total: events.length,
       pageViews,
       initiateCheckouts,
-      uniqueSessions: [...new Set(events.map(e => e.sessionId))].length,
+      uniqueSessions: Array.from(new Set(events.map(e => e.sessionId))).length,
       mostRecentEvent: events.length > 0 ? events[events.length - 1].timestamp : null
     };
   }

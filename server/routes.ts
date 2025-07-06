@@ -9,7 +9,7 @@ import {
   prepareCAPIData,
   HotmartUtils 
 } from './config/hotmart';
-import { VisitorDatabase, FacebookEventDatabase, DatabaseUtils } from './database';
+import { VisitorDatabase, FacebookEventDatabase, DatabaseUtils } from './database-supabase';
 import { sendEventToCAPI, testCAPIConnection, getCAPILogs, getCAPIStats, forwardFrontendEventToCAPI } from './facebook-capi';
 
 // Armazenar visitantes temporariamente (em produção usar banco de dados)
@@ -23,7 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // 🎯 Receber dados de tracking de visitantes
-  app.post('/api/tracking/visitor', (req, res) => {
+  app.post('/api/tracking/visitor', async (req, res) => {
     try {
       const visitorData = req.body;
       
@@ -60,7 +60,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
       
       // Salvar no banco de dados permanente
-      VisitorDatabase.save(dbVisitorData);
+      await VisitorDatabase.save(dbVisitorData);
       
       // Manter também no storage temporário para compatibilidade
       visitorsStorage.push({
@@ -249,9 +249,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // 🗄️ BANCO DE DADOS: Estatísticas do banco
-  app.get('/api/database/stats', (req, res) => {
+  app.get('/api/database/stats', async (req, res) => {
     try {
-      const stats = DatabaseUtils.getFullReport();
+      const stats = await DatabaseUtils.getFullReport();
       res.json({
         success: true,
         ...stats
@@ -274,7 +274,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       // Salvar no banco de dados
-      FacebookEventDatabase.save(eventData);
+      await FacebookEventDatabase.save(eventData);
       
       // 📱 ENVIAR PARA FACEBOOK CAPI
       try {
@@ -305,10 +305,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // 🗄️ BANCO DE DADOS: Buscar visitante por ID
-  app.get('/api/database/visitor/:sessionId', (req, res) => {
+  app.get('/api/database/visitor/:sessionId', async (req, res) => {
     try {
       const { sessionId } = req.params;
-      const result = DatabaseUtils.getVisitorWithEvents(sessionId);
+      const result = await DatabaseUtils.getVisitorWithEvents(sessionId);
       
       if (!result.visitor) {
         return res.status(404).json({ 
@@ -329,9 +329,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // 🗄️ BANCO DE DADOS: Exportar todos os dados
-  app.get('/api/database/export', (req, res) => {
+  app.get('/api/database/export', async (req, res) => {
     try {
-      const exportData = DatabaseUtils.exportAllData();
+      const exportData = await DatabaseUtils.exportAllData();
       
       res.setHeader('Content-Type', 'application/json');
       res.setHeader('Content-Disposition', 'attachment; filename="chef-amelie-data-export.json"');
