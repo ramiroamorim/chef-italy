@@ -7,6 +7,8 @@ import { VisitorTrackingProvider } from "@/contexts/VisitorTrackingContext";
 import TrackingDebug from "@/components/debug/TrackingDebug";
 
 function App() {
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
   return (
     <VisitorTrackingProvider>
       <Switch>

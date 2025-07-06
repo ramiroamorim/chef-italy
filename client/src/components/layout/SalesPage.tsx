@@ -110,15 +110,15 @@ const PriceSection = ({ buyUrl }: { buyUrl: string }) => (
       backgroundColor: "#FFF5F5", 
       borderColor: "#FFE5E5" 
     }}>
-    <p style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>Valeur réelle du pack : <span className="line-through">34€</span></p>
-    <p style={{ fontSize: "1.35rem", fontWeight: "bold", color: COLORS.PRIMARY, marginBottom: "1rem" }}>Aujourd'hui : seulement 17€</p>
-    <p style={{ fontSize: "1.05rem", fontWeight: "bold", color: COLORS.ERROR, marginBottom: "1.5rem" }}>⚠️ Dernières 20 unités disponibles à 17€ seulement !</p>
+    <p style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>Valore reale del pack: <span className="line-through">34€</span></p>
+    <p style={{ fontSize: "1.35rem", fontWeight: "bold", color: COLORS.PRIMARY, marginBottom: "1rem" }}>Oggi: solo 17€</p>
+    <p style={{ fontSize: "1.05rem", fontWeight: "bold", color: COLORS.ERROR, marginBottom: "1.5rem" }}>⚠️ Ultime 20 unità disponibili a soli 17€!</p>
     
     <GreenPulseButton href={buyUrl}>
-      JE VEUX LE PACK POUR 17€
+      VOGLIO IL PACK A 17€
     </GreenPulseButton>
     
-    <p style={{ fontSize: "1.05rem" }}>📩 Livraison immédiate par e-mail. Sans abonnement. Sans engagement.</p>
+    <p style={{ fontSize: "1.05rem" }}>📩 Consegna immediata via email. Senza abbonamento. Senza impegno.</p>
   </div>
 );
 
@@ -140,16 +140,16 @@ export default function SalesPage() {
             marginBottom: "1rem",
             fontWeight: "normal"
           }}>
-            <span className="block">500 recettes sans sucre, sans</span>
-            <span className="block">gluten et sans lactose</span>
-            <span className="block">qui nourrissent, font mincir</span>
-            <span className="block">avec plaisir</span>
-            <span className="block">et rééquilibrent votre corps.</span>
+            <span className="block">500 ricette senza zucchero, senza</span>
+            <span className="block">glutine e senza lattosio</span>
+            <span className="block">che nutrono, fanno dimagrire</span>
+            <span className="block">con piacere</span>
+            <span className="block">e riequilibrano il tuo corpo.</span>
           </h1>
 
           <div className="mt-3 sm:mt-4">
-            <p className="mb-2 text-xs sm:text-sm">Pas de régime à la mode. Pas d'ingrédients impossibles à trouver. Pas de plats tristes.</p>
-            <p className="mb-2 text-xs sm:text-sm">Seulement une cuisine <strong>vraie, savoureuse et libératrice</strong> — pour les femmes avec des restrictions qui veulent encore <strong>se régaler sans peur.</strong></p>
+            <p className="mb-2 text-xs sm:text-sm">Nessuna dieta di moda. Nessun ingrediente impossibile da trovare. Nessun piatto triste.</p>
+            <p className="mb-2 text-xs sm:text-sm">Solo una cucina <strong>vera, gustosa e liberatrice</strong> — per le donne con restrizioni che vogliono ancora <strong>deliziarsi senza paura.</strong></p>
           </div>
         </div>
 
@@ -157,7 +157,7 @@ export default function SalesPage() {
         <div className="mb-8 border border-gray-200 rounded-md overflow-hidden">
           <img 
             src={RecipeImages.gridCollage} 
-            alt="Collection de recettes sans sucre, sans gluten et sans lactose"
+            alt="Collezione di ricette senza zucchero, senza glutine e senza lattosio"
             className="w-full h-auto"
           />
         </div>
@@ -170,7 +170,7 @@ export default function SalesPage() {
             fontWeight: "700",
             color: "#57C084",
             marginBottom: "10px"
-          }}>💚 Pour qui c'est:</h3>
+          }}>💚 Per chi è:</h3>
           <ul style={{
             listStyle: "none",
             padding: "0 0 0 4px",
@@ -179,10 +179,10 @@ export default function SalesPage() {
             fontSize: "0.95rem",
             lineHeight: "1.8"
           }}>
-            <li>🌿 Femmes avec intolérances (gluten, lactose, sucre)</li>
-            <li>🥗 Celles qui veulent mincir sans frustration</li>
-            <li>😩 Celles fatiguées des plats tristes et sans goût</li>
-            <li>✨ Celles qui veulent une méthode simple et durable</li>
+            <li>🌿 Donne con intolleranze (glutine, lattosio, zucchero)</li>
+            <li>🥗 Quelle che vogliono dimagrire senza frustrazione</li>
+            <li>😩 Quelle stanche di piatti tristi e senza sapore</li>
+            <li>✨ Quelle che vogliono un metodo semplice e duraturo</li>
           </ul>
         </div>
 
@@ -200,7 +200,7 @@ export default function SalesPage() {
             fontWeight: "700",
             color: "#F44336",
             marginBottom: "10px"
-          }}>🚫 Pour qui ce n'est pas:</h3>
+          }}>🚫 Per chi non è:</h3>
           <ul style={{
             listStyle: "none",
             padding: "0 0 0 4px",
@@ -209,13 +209,13 @@ export default function SalesPage() {
             fontSize: "0.95rem",
             lineHeight: "1.8"
           }}>
-            <li>🙅‍♀️ Celles qui ne veulent pas changer leurs habitudes</li>
-            <li>🧪 Celles qui cherchent une solution magique</li>
-            <li>🌀 Celles qui préfèrent rester dans le désordre</li>
+            <li>🙅‍♀️ Quelle che non vogliono cambiare le loro abitudini</li>
+            <li>🧪 Quelle che cercano una soluzione magica</li>
+            <li>🌀 Quelle che preferiscono rimanere nel disordine</li>
             <li style={{ 
               fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
               fontSize: "0.95rem"
-            }}>🍕 Celles qui refusent de cuisiner même un minimum</li>
+            }}>🍕 Quelle che rifiutano di cucinare anche un minimo</li>
           </ul>
         </div>
 
@@ -238,7 +238,7 @@ export default function SalesPage() {
             textAlign: "center",
             fontWeight: "bold"
           }}>
-            Vous ne trouverez pas ces recettes sur Google.
+            Non troverai queste ricette su Google.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -248,7 +248,7 @@ export default function SalesPage() {
             color: "#333333",
             margin: "0"
           }}>
-            Elles sont nées dans la vraie cuisine d'Amélie — pas sur Pinterest, ni dans un blog copié-collé. Chaque plat a été pensé pour <span style={{ fontWeight: "700" }}>apaiser, nourrir</span>... et redonner du <span style={{ fontWeight: "700" }}>plaisir</span> à celles qui avaient renoncé.
+            Sono nate nella vera cucina di Amélie — non su Pinterest, né in un blog copiato. Ogni piatto è stato pensato per <span style={{ fontWeight: "700" }}>placare, nutrire</span>... e ridare <span style={{ fontWeight: "700" }}>piacere</span> a quelle che avevano rinunciato.
           </p>
         </div>
         
@@ -262,7 +262,7 @@ export default function SalesPage() {
         <div className="mb-4 sm:mb-5 overflow-hidden">
           <img 
             src={RecipeImages.book} 
-            alt="Pages du livre de recettes sans sucre"
+            alt="Pagine del libro di ricette senza zucchero"
             className="w-full h-auto rounded-xl shadow-lg"
             style={{ 
               border: "1px solid #f0f0f0",

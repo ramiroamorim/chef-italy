@@ -6,6 +6,7 @@ import ProfileResult from "@/components/quiz/ProfileResult";
 import SalesPage from "@/components/layout/SalesPage";
 import { quizSteps } from "@/data";
 import { FacebookPixel } from "@/lib/fbPixel";
+import { useVisitorTrackingContext } from "@/contexts/VisitorTrackingContext";
 
 export default function QuizApp() {
   const { 
@@ -17,6 +18,10 @@ export default function QuizApp() {
     showResult, 
     showSalesPage
   } = useQuiz(quizSteps.length);
+  
+  // Obter dados do visitante para passar ao InitiateCheckout
+  const trackingContext = useVisitorTrackingContext();
+  const { visitorData } = trackingContext;
 
   // Pré-carregar todas as imagens do quiz
   useEffect(() => {
@@ -36,8 +41,11 @@ export default function QuizApp() {
     };
 
     preloadImages();
-    FacebookPixel.trackQuizStart();
-  }, []);
+    // Disparar InitiateCheckout quando o quiz é iniciado (com dados do visitante)
+    if (visitorData) {
+      FacebookPixel.trackInitiateCheckout(visitorData);
+    }
+  }, [visitorData]);
 
   return (
     <div className="min-h-screen px-2 sm:px-4 py-4 sm:py-6 md:py-8 flex flex-col">

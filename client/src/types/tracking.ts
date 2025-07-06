@@ -22,6 +22,7 @@ export interface LocationData {
   mobile?: boolean;
   proxy?: boolean;
   hosting?: boolean;
+  source?: string;  // User Agent da API
   api_source?: string;
   api_key_used?: boolean;
   timestamp?: string;
@@ -118,6 +119,7 @@ export interface ApiResponse {
   mobile?: boolean;
   proxy?: boolean;
   hosting?: boolean;
+  source?: string;  // User Agent da API
   continent?: string;
   continentCode?: string;
 } 

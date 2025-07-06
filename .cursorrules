@@ -1,0 +1,125 @@
+# Cursor Rules - Claude Code Integration
+
+## Projeto: Chef Amélie Dupont - Quiz App
+
+### Configuração do Claude Code como Agente Principal
+
+Este projeto está configurado para trabalhar com Claude Code como agente de desenvolvimento principal.
+
+### Comandos Essenciais
+- `npm run dev` - Desenvolvimento (Express + Vite)
+- `npm run build` - Build produção
+- `npm run typecheck` - Verificar tipos
+- `npm run db:push` - Atualizar schema
+
+### Arquitetura do Projeto
+
+**Frontend (React + Vite)**
+- Router: wouter
+- Estado: React Context
+- UI: Radix UI + Tailwind CSS
+- Componentes organizados por domínio
+
+**Backend (Express + Node.js)**
+- API RESTful
+- Integração Hotmart
+- Sistema de tracking de visitantes
+- Facebook Pixel Advanced Matching
+
+### Regras de Desenvolvimento
+
+1. **Sempre use TypeScript** - Projeto totalmente tipado
+2. **Siga padrões existentes** - Observe estrutura de componentes
+3. **Testes são obrigatórios** - Para novas funcionalidades
+4. **Segurança em primeiro lugar** - Nunca exponha API keys
+5. **Performance otimizada** - Considere impacto no carregamento
+
+### Funcionalidades Críticas
+
+**Sistema de Tracking**
+- Geolocalização com apiip.net
+- Matching de vendas Hotmart
+- Integração Facebook Pixel
+
+**Quiz Interativo**
+- Múltiplas etapas
+- Resultados personalizados
+- Tracking de conversões
+
+### Padrões de Código
+
+```typescript
+// Componentes React
+interface ComponentProps {
+  // Props tipadas
+}
+
+export function Component({ prop }: ComponentProps) {
+  // Lógica do componente
+}
+
+// Hooks customizados
+export function useCustomHook() {
+  // Lógica do hook
+}
+
+// APIs
+export async function apiFunction(): Promise<ReturnType> {
+  // Implementação
+}
+```
+
+### Estrutura de Arquivos
+
+```
+client/src/
+├── components/     # Componentes React
+├── hooks/         # Hooks customizados
+├── contexts/      # Contextos React
+├── types/         # Definições TypeScript
+├── lib/           # Utilitários
+└── pages/         # Páginas principais
+
+server/
+├── config/        # Configurações
+├── routes.ts      # Rotas da API
+└── index.ts       # Servidor Express
+```
+
+### Integrações Externas
+
+- **Hotmart API**: Vendas e webhooks
+- **Facebook Pixel**: Tracking e conversões
+- **apiip.net**: Geolocalização premium
+- **Drizzle ORM**: Banco de dados
+
+### Comandos Cursor
+
+Para usar o Claude Code efetivamente:
+
+1. **Cmd/Ctrl + L**: Abrir chat do Claude
+2. **Cmd/Ctrl + K**: Editar código com Claude
+3. **Cmd/Ctrl + I**: Inserir código
+4. **@**: Mencionar arquivos específicos
+
+### Configuração Recomendada
+
+Configure o Cursor para usar Claude Code como agente principal:
+
+1. Settings > Features > Claude Code
+2. Enable "Auto-complete with Claude"
+3. Set "Claude Code" as default AI assistant
+4. Configure context window para incluir CLAUDE.md
+
+### Debugging
+
+- `TrackingDebug.tsx` - Debug tracking em desenvolvimento
+- Console logs detalhados para matching
+- Admin panel para monitoramento
+
+### Deploy
+
+- Build: `npm run build`
+- Pasta de saída: `/dist`
+- Variáveis de ambiente configuradas
+- PM2 para produção

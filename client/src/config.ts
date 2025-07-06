@@ -35,42 +35,42 @@ export const ANIMATIONS = {
 // Textos compartilhados
 export const TEXTS = {
   QUIZ: {
-    PROGRESS: "Étape {current} sur {total}",
-    NEXT_BUTTON: "CONTINUER",
-    TESTIMONIAL_SWIPE: "Faites glisser ➤ pour voir ce qu'elles disent."
+    PROGRESS: "Passaggio {current} di {total}",
+    NEXT_BUTTON: "CONTINUA",
+    TESTIMONIAL_SWIPE: "Scorri ➤ per vedere cosa dicono."
   },
   SALES: {
     PRICE: {
       ORIGINAL: "34€",
       CURRENT: "17€",
-      REMAINING: "Dernières 20 unités disponibles à 17€ seulement!"
+      REMAINING: "Ultime 20 unità disponibili a soli 17€!"
     },
-    BUY_BUTTON: "JE VEUX LE PACK POUR 17€",
-    DELIVERY: "Livraison immédiate par e-mail. Sans abonnement. Sans engagement.",
+    BUY_BUTTON: "VOGLIO IL PACK A 17€",
+    DELIVERY: "Consegna immediata via email. Senza abbonamento. Senza impegno.",
     BONUSES: [
       {
-        title: "🎁 Bonus 1 : Guide de substitutions intelligentes",
-        description: "Remplacez sucre, farine ou lait sans perdre le goût."
+        title: "🎁 Bonus 1: Guida alle sostituzioni intelligenti",
+        description: "Sostituisci zucchero, farina o latte senza perdere il gusto."
       },
       {
-        title: "🎁 Bonus 2 : Carte de satiété naturelle",
-        description: "Construisez des assiettes qui rassasient sans excès."
+        title: "🎁 Bonus 2: Mappa della sazietà naturale",
+        description: "Costruisci piatti che saziano senza eccesso."
       },
       {
-        title: "🎁 Bonus 3 : Protocole intestin + glycémie",
-        description: "Améliorez votre digestion et votre énergie au quotidien."
+        title: "🎁 Bonus 3: Protocollo intestino + glicemia",
+        description: "Migliora la tua digestione e la tua energia quotidiana."
       },
       {
-        title: "🎁 Bonus 4 : Liste de courses intelligente",
-        description: "Gagnez du temps avec des produits simples, testés, validés."
+        title: "🎁 Bonus 4: Lista della spesa intelligente",
+        description: "Risparmia tempo con prodotti semplici, testati, approvati."
       }
     ],
     CLOSING_TEXT: [
-      "Ce n'est pas un régime.",
-      "Ce n'est pas une promesse vide.",
-      "C'est un raccourci vers ce que vous vouliez depuis des années :",
-      "manger avec plaisir, sans douleur.",
-      "Et aujourd'hui, ça vous coûte moins qu'un plat fade au resto."
+      "Non è una dieta.",
+      "Non è una promessa vuota.",
+      "È una scorciatoia verso quello che volevi da anni:",
+      "mangiare con piacere, senza dolore.",
+      "E oggi ti costa meno di un piatto insipido al ristorante."
     ]
   },
   WEBHOOK: {

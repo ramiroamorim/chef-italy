@@ -101,7 +101,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
                     onClick={handlePrev}
                     disabled={isLoading}
                     className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 transition-colors text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg z-10 disabled:opacity-50"
-                    aria-label="Témoignage précédent"
+                    aria-label="Testimonianza precedente"
                   >
                     <ChevronLeft />
                   </button>
@@ -110,7 +110,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
                     onClick={handleNext}
                     disabled={isLoading}
                     className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${currentIndex === testimonials.length - 1 ? 'bg-primary/80 hover:bg-primary' : 'bg-black/60 hover:bg-black/80'} transition-colors text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg z-10 disabled:opacity-50`}
-                    aria-label={currentIndex === testimonials.length - 1 ? "Voir mon profil" : "Témoignage suivant"}
+                    aria-label={currentIndex === testimonials.length - 1 ? "Scopri il mio profilo" : "Testimonianza successiva"}
                   >
                     <ChevronRight />
                   </button>
@@ -148,7 +148,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
           className="btn-primary btn-pulse w-full sm:w-auto py-3 sm:py-4 px-6 sm:px-10 font-medium text-sm sm:text-base rounded-full"
           onClick={handleViewProfile}
         >
-          🔍 DÉCOUVRIR MON PROFIL
+          🔍 SCOPRI IL MIO PROFILO
         </button>
       </div>
     </div>

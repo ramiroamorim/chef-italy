@@ -56,13 +56,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ 
         success: true, 
-        message: 'Visitante salvo com sucesso',
+        message: 'Visitatore salvato con successo',
         visitors_count: visitorsStorage.length
       });
       
     } catch (error) {
       console.error('❌ Erro ao salvar visitante:', error);
-      res.status(500).json({ success: false, error: 'Erro interno' });
+      res.status(500).json({ success: false, error: 'Errore interno' });
     }
   });
 
@@ -213,6 +213,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error('❌ Erro na autenticação:', error);
       res.status(500).json({
         success: false,
+        error: error instanceof Error ? error.message : 'Erro interno'
+      });
+    }
+  });
+
+  // 🔍 DEBUG: Ver dados dos visitantes
+  app.get('/api/debug/visitors', (req, res) => {
+    res.json({
+      total_visitors: visitorsStorage.length,
+      visitors: visitorsStorage.map(v => ({
+        external_id: v.external_id,
+        timestamp: v.timestamp,
+        visitor_data: {
+          ip: v.visitor_data?.ip,
+          city: v.visitor_data?.city,
+          countryCode: v.visitor_data?.countryCode,
+          country: v.visitor_data?.country,
+          regionName: v.visitor_data?.regionName,
+          zip: v.visitor_data?.zip,
+          utm_source: v.visitor_data?.utm_source,
+          userAgent: v.visitor_data?.userAgent?.substring(0, 50) + '...'
+        }
+      }))
+    });
+  });
+
+  // 🔍 DEBUG: Testar match manualmente
+  app.post('/api/debug/test-match', (req, res) => {
+    try {
+      const { sale, visitorIndex } = req.body;
+      
+      if (visitorIndex >= visitorsStorage.length) {
+        return res.status(400).json({
+          error: 'Índice de visitante inválido',
+          total_visitors: visitorsStorage.length
+        });
+      }
+      
+      const visitor = visitorsStorage[visitorIndex];
+      const matchResult = matchSaleWithVisitor(sale, visitor.visitor_data);
+      
+      res.json({
+        success: true,
+        visitor: visitor,
+        sale: sale,
+        match_result: matchResult
+      });
+      
+    } catch (error) {
+      res.status(500).json({
         error: error instanceof Error ? error.message : 'Erro interno'
       });
     }

@@ -10,8 +10,8 @@ const SimpleAudioPlayer = () => {
     <div className="flex flex-col items-center w-full mb-5">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-4">
         <div className="text-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">🎧 Mensagem da Chef Amélie</h3>
-          <p className="text-sm text-gray-600">Ouça a mensagem especial sobre suas receitas</p>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">🎧 Messaggio della Chef Amélie</h3>
+          <p className="text-sm text-gray-600">Ascolta il messaggio speciale sulle tue ricette</p>
         </div>
         
 
@@ -100,24 +100,24 @@ export default function ThankYou() {
       <div className="w-full max-w-xl flex flex-col items-center">
         {/* Título principal com ícone de presente */}
         <h1 className="text-4xl font-bold text-[#B34431] text-center mb-8">
-          <span className="inline-block mr-2">🎁</span> Merci infiniment pour votre confiance!
+          <span className="inline-block mr-2">🎁</span> Grazie infinite per la tua fiducia!
         </h1>
         
         {/* Texto introdutório */}
         <p className="text-lg text-center mb-8 max-w-lg">
-          Avant d'aller découvrir vos recettes dans votre boîte mail…
-          <br />j'ai préparé un message très spécial rien que pour vous.
+          Prima di andare a scoprire le tue ricette nella tua casella di posta...
+          <br />ho preparato un messaggio molto speciale solo per te.
         </p>
         
         {/* Botão de reprodução de áudio */}
         <div className="text-center mb-4">
           <p className="mb-2">
             <span className="bg-[#E9F6FF] text-[#2E7BC2] px-3 py-1 rounded-md">
-              ▶️ Appuie sur lecture pour écouter l'audio 👇🏻
+              ▶️ Premi play per ascoltare l'audio 👇🏻
             </span>
           </p>
           <p className="text-sm text-gray-600 mb-8">
-            Je vous explique tout, en moins de 3 minutes.
+            Ti spiego tutto in meno di 3 minuti.
           </p>
         </div>
         
@@ -220,7 +220,7 @@ export default function ThankYou() {
                     ? 'bg-[#2476c7] hover:bg-[#1c64a9] cursor-pointer focus:ring-[#2476c7]' 
                     : 'bg-gray-400 cursor-not-allowed'
                 }`}
-                aria-label={audioPlaying ? "Pausar" : "Reproduzir"}
+                aria-label={audioPlaying ? "Pausa" : "Riproduci"}
               >
                 {!audioLoaded ? (
                   // Spinner de carregamento
@@ -295,7 +295,7 @@ export default function ThankYou() {
                     console.log(`Clique na posição: ${Math.floor(newPositionPercent)}%`);
                     seekAudio(newPositionPercent);
                   }}
-                  title="Clique para navegar no áudio"
+                  title="Clicca per navigare nell'audio"
                 ></div>
               </div>
               
@@ -343,7 +343,7 @@ export default function ThankYou() {
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >
-              JE VEUX UN PLAN CHAQUE DIMANCHE !
+              VOGLIO UN PIANO OGNI DOMENICA!
             </Button>
             <a 
               href="https://www.notion.so/Chef-Am-lie-Dupont-1d529766d17b80128475e56e60b5fbe8" 
@@ -351,7 +351,7 @@ export default function ThankYou() {
               rel="noopener noreferrer"
               className="text-[#B34431] text-sm hover:underline"
             >
-              Non, merci !
+              No, grazie!
             </a>
           </div>
         )}

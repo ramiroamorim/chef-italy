@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LocationData, VisitorData, ApiConfig, ApiResponse } from '@/types/tracking';
 import { TEXTS } from '../config';
+import { FacebookPixel } from '@/lib/fbPixel';
 
 // Configuração da API - apiip.net
 const IP_API_CONFIG: ApiConfig = {
@@ -10,20 +11,105 @@ const IP_API_CONFIG: ApiConfig = {
   FORCE_PRO: true
 };
 
+/**
+ * Extrair apenas a primeira parte do User Agent (ex: "Mozilla")
+ */
+const extractUserAgentSource = (userAgent: string): string => {
+  if (!userAgent) return '';
+  
+  // Extrair apenas a primeira parte até o primeiro espaço ou "/"
+  const firstPart = userAgent.split(/[\s\/]/)[0];
+  return firstPart || userAgent.substring(0, 20); // Fallback para primeiros 20 caracteres
+};
+
+/**
+ * Gerar UUID v4 para identificação única de leads/visitantes
+ */
+const generateUUID = (): string => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    // Usar API nativa se disponível (navegadores modernos)
+    return crypto.randomUUID();
+  }
+  
+  // Fallback para navegadores mais antigos
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 export function useVisitorTracking() {
   const [visitorData, setVisitorData] = useState<VisitorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [apiUsed, setApiUsed] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string>('');
 
-  // Gerar Session ID
+  // Gerar UUID único para cada visitante/lead (usando sistema unificado do Facebook Pixel)
   const generateSessionId = useCallback(() => {
-    let sessionId = sessionStorage.getItem('chef_amelie_session');
-    if (!sessionId) {
-      sessionId = 'amelie_' + Date.now() + '_' + Math.random().toString(36).substr(2, 12);
-      sessionStorage.setItem('chef_amelie_session', sessionId);
+    // Primeira execução: limpar cookies antigos que podem estar causando conflito
+    try {
+      FacebookPixel.cleanLegacyCookies();
+    } catch (error) {
+      console.warn('⚠️ Erro ao limpar cookies antigos:', error);
     }
-    return sessionId;
+    
+    // Verificar conflitos antes de prosseguir
+    let conflicts;
+    try {
+      conflicts = FacebookPixel.checkCookieConflicts();
+    } catch (error) {
+      console.warn('⚠️ Erro ao verificar conflitos:', error);
+    }
+    
+    // Usar o sistema unificado do Facebook Pixel
+    let sessionId: string | null = null;
+    
+    try {
+      // Usar interface unificada do Facebook Pixel
+      sessionId = FacebookPixel.getVisitorUUID();
+      console.log('🍪 UUID obtido do sistema unificado:', sessionId);
+    } catch (error) {
+      console.warn('⚠️ Erro ao acessar sistema unificado, usando fallback:', error);
+      
+      // Fallback usando getCookie diretamente
+      const getCookie = (name: string): string | null => {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+      };
+      
+      sessionId = getCookie('external_id');
+      
+      if (!sessionId) {
+        // Gerar novo UUID para este visitante/lead
+        sessionId = generateUUID();
+        console.log('🆔 Novo UUID gerado para visitante/lead (fallback):', sessionId);
+        
+        // Salvar no cookie usando o mesmo padrão do Facebook Pixel
+        const setCookie = (name: string, value: string, days: number = 365) => {
+          const expires = new Date();
+          expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+          document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+        };
+        
+        setCookie('external_id', sessionId, 365);
+      } else {
+        console.log('🍪 UUID do cookie encontrado (fallback):', sessionId);
+      }
+    }
+    
+    // Sempre sincronizar com sessionStorage
+    if (sessionId) {
+      sessionStorage.setItem('chef_amelie_uuid_session', sessionId);
+    }
+    
+    return sessionId || generateUUID();
   }, []);
 
   // Coletar dados básicos do navegador
@@ -80,36 +166,47 @@ export function useVisitorTracking() {
 
       const data = await response.json();
       console.log('📊 Resposta da apiip.net:', data);
+      console.log('🔍 DEBUG - Campo source na API:', data.source);
+      console.log('🔍 DEBUG - Todos os campos da API:', Object.keys(data));
       
       // apiip.net tem estrutura diferente de resposta
       if (data && data.ip) {
-        return {
+        const locationData = {
           ip: data.ip,
           continent: data.continentName,
           continentCode: data.continentCode,
           country: data.countryName,
-          countryCode: data.countryCode2,
+          countryCode: data.countryCode, // CORRIGIDO: era countryCode2
           region: data.regionName,
           regionName: data.regionName,
-          city: data.cityName,
+          city: data.city, // CORRIGIDO: era cityName
           district: data.district,
-          zip: data.zipCode,
+          zip: data.postalCode, // CORRIGIDO: era zipCode
           latitude: data.latitude,
           longitude: data.longitude,
-          timezone: data.timeZone?.name,
-          offset: data.timeZone?.offset,
+          timezone: data.timeZone?.id, // CORRIGIDO: era name
+          offset: data.timeZone?.utcOffset, // CORRIGIDO: era offset
           currency: data.currency?.code,
-          isp: data.isp,
-          org: data.org,
-          as: data.as,
-          asname: data.asname,
-          mobile: data.mobile,
-          proxy: data.proxy,
-          hosting: data.hosting,
+          isp: data.connection?.isp, // CORRIGIDO: ISP está em connection
+          org: data.connection?.descr, // CORRIGIDO: organizacao está em connection.descr
+          as: data.connection?.asn, // CORRIGIDO: ASN está em connection
+          asname: data.connection?.descr, // CORRIGIDO: mesmo que org
+          mobile: data.userAgent?.isMobile, // CORRIGIDO: mobile está em userAgent
+          source: data.source || data.user_agent || navigator.userAgent, // User Agent da API ou fallback
+          proxy: data.proxy, // Este pode não existir
+          hosting: data.hosting, // Este pode não existir
           api_source: 'apiip-net',
           api_key_used: true,
           timestamp: new Date().toISOString()
         };
+        
+        console.log('🔍 DEBUG - LocationData mapeado:', locationData);
+        console.log('🔍 DEBUG - source no locationData:', locationData.source);
+        console.log('🔍 DEBUG - data.source da API:', data.source);
+        console.log('🔍 DEBUG - data.user_agent da API:', data.user_agent);
+        console.log('🔍 DEBUG - navigator.userAgent:', navigator.userAgent);
+        console.log('🔍 DEBUG - extractUserAgentSource result:', extractUserAgentSource(locationData.source));
+        return locationData;
       } else {
         console.error('❌ apiip.net retornou dados inválidos:', data);
         throw new Error(data?.message || 'Resposta inválida da API');
@@ -152,6 +249,7 @@ export function useVisitorTracking() {
           timezone: data.timezone,
           isp: data.isp,
           mobile: data.mobile,
+          source: navigator.userAgent, // Usar User Agent do navegador como fallback
           proxy: data.proxy,
           hosting: data.hosting,
           api_source: 'ip-api-free-fallback',
@@ -201,6 +299,16 @@ export function useVisitorTracking() {
   // Enviar dados para webhook da plataforma de vendas
   const sendToWebhook = useCallback(async (data: VisitorData) => {
     try {
+      // 🎯 ATIVAR FACEBOOK PIXEL COM ADVANCED MATCHING
+      console.log('🔥 Iniciando Facebook Pixel com Advanced Matching...');
+      const pixelSuccess = await FacebookPixel.initWithAdvancedMatching(data);
+      
+      if (pixelSuccess) {
+        console.log('✅ Facebook Pixel Advanced Matching configurado com sucesso!');
+      } else {
+        console.warn('⚠️ Facebook Pixel Advanced Matching falhou, mas continuando...');
+      }
+      
       // Preparar dados para envio
       const webhookData = {
         event_type: 'visitor_tracking',
@@ -249,6 +357,11 @@ export function useVisitorTracking() {
           zp: data.zip,
           client_ip_address: data.ip,
           client_user_agent: data.userAgent
+        },
+        facebook_pixel: {
+          // Status do Advanced Matching
+          advanced_matching_success: pixelSuccess,
+          fields_sent: pixelSuccess ? Object.keys((window as any).chefAmelieAdvancedMatching || {}).length : 0
         }
       };
 
@@ -302,6 +415,18 @@ export function useVisitorTracking() {
     }
   }, []);
 
+  // Track de eventos customizados (removido - apenas logging local)
+  const trackEvent = useCallback((eventName: string, eventData?: any) => {
+    if (visitorData) {
+      console.log(`📊 Evento registrado: ${eventName}`, {
+        ...eventData,
+        session_id: visitorData.sessionId,
+        visitor_country: visitorData.country,
+        visitor_city: visitorData.city
+      });
+    }
+  }, [visitorData]);
+
   // Inicializar tracking
   const initTracking = useCallback(async () => {
     console.log('🍳 Chef Amélie - Iniciando tracking PRO...');
@@ -333,6 +458,9 @@ export function useVisitorTracking() {
             api_key_valid: fallbackData.api_key_used || false
           } as VisitorData;
           
+          console.log('🔍 DEBUG FALLBACK - FullData criado:', fullData);
+          console.log('🔍 DEBUG FALLBACK - source no fullData:', fullData.source);
+          
           setApiUsed(finalApiUsed);
           setVisitorData(fullData);
           saveVisitorData(fullData);
@@ -348,6 +476,9 @@ export function useVisitorTracking() {
           api_key_valid: locationData.api_key_used || false
         } as VisitorData;
         
+        console.log('🔍 DEBUG - FullData criado:', fullData);
+        console.log('🔍 DEBUG - source no fullData:', fullData.source);
+        
         setApiUsed(finalApiUsed);
         setVisitorData(fullData);
         saveVisitorData(fullData);
@@ -360,20 +491,6 @@ export function useVisitorTracking() {
       setIsLoading(false);
     }, 1000); // Reduzido de 3000ms para 1000ms
   }, [generateSessionId, collectBasicData, getLocationDataPro, getFallbackLocationData, saveVisitorData, sendToWebhook]);
-
-  // Track de eventos customizados (apenas registra, não envia automaticamente)
-  const trackEvent = useCallback((eventName: string, eventData?: any) => {
-    if (visitorData) {
-      console.log(`📊 Evento registrado: ${eventName}`, {
-        ...eventData,
-        session_id: visitorData.sessionId,
-        visitor_country: visitorData.country,
-        visitor_city: visitorData.city
-      });
-      // Facebook Pixel pode ser usado manualmente quando necessário
-      // FacebookPixel.trackCustomEvent(eventName, eventData);
-    }
-  }, [visitorData]);
 
   // Inicializar quando o componente monta
   useEffect(() => {

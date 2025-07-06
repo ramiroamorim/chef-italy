@@ -21,75 +21,75 @@ export const testimonialImages = [
 
 export const testimonials: TestimonialType[] = [
   {
-    message: "Avant je me réveillais gonflée, fatiguée, perdue.<br>En 21 jours avec le Plan Express j'ai perdu 3,1kg, mes vêtements tombent mieux...<br>Mais surtout : je me sens en paix à table. C'est nouveau.",
+    message: "Prima mi svegliavo gonfia, stanca, confusa.<br>In 21 giorni con il Piano Express ho perso 3,1kg, i miei vestiti cadono meglio...<br>Ma soprattutto: mi sento in pace a tavola. È una novità.",
     time: "",
     image: testimonialImages[0],
-    imageAlt: "Témoignage avec photos avant/après"
+    imageAlt: "Testimonianza con foto prima/dopo"
   },
   {
-    message: "Je n'ai jamais eu autant de plaisir à cuisiner sans sucre 😍",
+    message: "Non ho mai avuto tanto piacere a cucinare senza zucchero 😍",
     time: "",
     image: testimonialImages[1],
-    imageAlt: "Témoignage cuisine sans sucre"
+    imageAlt: "Testimonianza cucina senza zucchero"
   },
   {
-    message: "Je suis choquée...<br>Pas une seule fringale cette semaine.<br>J'ai mangé normalement, j'ai cuisiné rapide, et pourtant je me sens PLUS LÉGÈRE que jamais.<br>C'est la première fois que je ne culpabilise pas à table.",
+    message: "Sono scioccata...<br>Nemmeno una voglia improvvisa questa settimana.<br>Ho mangiato normalmente, ho cucinato veloce, eppure mi sento PIÙ LEGGERA che mai.<br>È la prima volta che non mi sento in colpa a tavola.",
     time: "",
     image: testimonialImages[2],
-    imageAlt: "Témoignage Le Plan Express"
+    imageAlt: "Testimonianza Il Piano Express"
   },
   {
-    message: "Je peux enfin manger du sucré sans craindre pour ma glycémie. Je suis diabétique et c'est toujours compliqué de trouver des desserts qui soient bons et sans sucre. J'ai fait votre brownie et il était parfait. Juste sucré comme il faut, la texture nickel... Franchement, je ne pensais pas que c'était possible. Merci pour ces recettes!!! 🙏🙏🙏",
+    message: "Posso finalmente mangiare dolci senza temere per la mia glicemia. Sono diabetica ed è sempre complicato trovare dessert che siano buoni e senza zucchero. Ho fatto il vostro brownie ed era perfetto. Dolce al punto giusto, consistenza perfetta... Francamente, non pensavo fosse possibile. Grazie per queste ricette!!! 🙏🙏🙏",
     time: "",
     image: testimonialImages[3],
-    imageAlt: "Témoignage brownie sans sucre pour diabétique"
+    imageAlt: "Testimonianza brownie senza zucchero per diabetica"
   },
   {
-    message: "Amelie, bonjour..... J'ai perdu 4 kilos sans même m'en rendre compte. J'ai pris votre livre pour manger plus sainement, et au final, ça m'a aussi aidée à perdre du poids. Les recettes sont rassasiantes et équilibrées, du coup j'ai arrêté de grignoter n'importe quoi. Maintenant, je mange bien, sans frustration, et je me sens mieux 🙏❤️❤️",
+    message: "Amelie, ciao..... Ho perso 4 chili senza nemmeno rendermene conto. Ho preso il vostro libro per mangiare più sano, e alla fine mi ha anche aiutato a perdere peso. Le ricette sono sazianti ed equilibrate, così ho smesso di sgranocchiare qualunque cosa. Ora mangio bene, senza frustrazione, e mi sento meglio 🙏❤️❤️",
     time: "",
     image: testimonialImages[0],
-    imageAlt: "Témoignage perte de poids"
+    imageAlt: "Testimonianza perdita di peso"
   },
   {
-    message: "Mon fils m'a demandé de refaire les cookies du Plan Express. Avant il détestait mes recettes \"sans sucre\". Maintenant il dit que je cuisine comme une chef... ❤️ merci",
+    message: "Mio figlio mi ha chiesto di rifare i biscotti del Piano Express. Prima odiava le mie ricette \"senza zucchero\". Ora dice che cucino come una chef... ❤️ grazie",
     time: "14:55",
     image: testimonialImages[1],
-    imageAlt: "Témoignage cookies sans sucre"
+    imageAlt: "Testimonianza biscotti senza zucchero"
   },
   {
-    message: "Vos recettes sont merveilleuses<br>Je digère mieux, je me sens plus légère... et je mange enfin avec plaisir.",
+    message: "Le vostre ricette sono meravigliose<br>Digerisco meglio, mi sento più leggera... e finalmente mangio con piacere.",
     time: "",
     image: testimonialImages[2],
-    imageAlt: "Témoignage digestion améliorée"
+    imageAlt: "Testimonianza digestione migliorata"
   },
   {
-    message: "adorées !<br>Grâce à tes recettes, j'ai enfin trouvé l'équilibre. Je mange avec plaisir, je digère bien... et j'ai perdu 4 kg sans y penser.",
+    message: "adorate!<br>Grazie alle tue ricette, ho finalmente trovato l'equilibrio. Mangio con piacere, digerisco bene... e ho perso 4 kg senza pensarci.",
     time: "",
     image: testimonialImages[3],
-    imageAlt: "Témoignage équilibre alimentaire"
+    imageAlt: "Testimonianza equilibrio alimentare"
   },
   {
-    message: "Chef, je ne sais pas comment vous remercier. J'ai toujours eu des problèmes digestifs et je pensais que c'était normal d'être ballonnée tout le temps. Depuis que j'ai testé quelques recettes de votre livre, mon transit va beaucoup mieux. Je me sens plus légère, et en plus, tout est vraiment bon. Je n'aurais jamais cru qu'une alimentation sans gluten et sans lactose pouvait être aussi gourmande. Merci.",
+    message: "Chef, je ne sais pas comment vous remercier. J'ai toujours eu des problèmes digestifs et je pensais que c'était normal essere sempre gonfia tout le temps. Depuis que j'ai testé quelques recettes de votre livre, mon transit va beaucoup mieux. Je me sens plus légère, et en plus, tout est vraiment bon. Je n'aurais jamais cru qu'une alimentation sans gluten et sans lactose pouvait être aussi gourmande. Merci.",
     time: "",
     image: testimonialImages[0],
-    imageAlt: "Témoignage problèmes digestifs résolus"
+    imageAlt: "Testimonianza problemi digestivi risolti"
   },
   {
-    message: "Salut chef! C'est Béatrice qui parle.... Mon fils est coeliaque et enfin, on mange tous la même chose. Avant, je faisais des plats à part pour lui, mais souvent, il n'aimait pas trop. Avec vos recettes, tout le monde mange pareil et adore. Le pain à la patate douce est devenu son préféré. Merci pour ces idées, ça change tout au quotidien.",
+    message: "Ciao chef! Sono Beatrice che parla.... Mio figlio è celiaco et enfin, on mange tous la même chose. Avant, je faisais des plats à part pour lui, mais souvent, il n'aimait pas trop. Avec vos recettes, tout le monde mange pareil et adore. Le pain à la patate douce est devenu son préféré. Merci pour ces idées, ça change tout au quotidien.",
     time: "2:42 PM",
     image: testimonialImages[1],
-    imageAlt: "Témoignage coeliaque"
+    imageAlt: "Testimonianza celiaco"
   },
   {
-    message: "Amelie, bonsoir!! Franchement, je suis trop contente. Depuis que j'ai découvert mon intolérance au lactose, j'avais arrêté de faire des desserts parce que rien ne me plaisait vraiment. Mais hier, j'ai fait votre gâteau aux carottes et il était parfait. Moelleux, savoureux, et le glaçage sans sucre est trop bon. Ça fait plaisir de pouvoir se faire plaisir sans culpabiliser 🙏❤️",
+    message: "Amelie, buonasera!! Francamente, sono troppo contenta. Depuis que j'ai découvert mon intolérance au lactose, avevo smesso di fare dolci parce que rien ne me plaisait vraiment. Mais hier, ho fatto la vostra torta alle carote et il était parfait. Moelleux, savoureux, et le glaçage sans sucre est trop bon. Ça fait plaisir de pouvoir se faire plaisir sans culpabiliser 🙏❤️",
     time: "7:46 PM",
     image: testimonialImages[2],
-    imageAlt: "Témoignage intolérance au lactose"
+    imageAlt: "Testimonianza intolleranza al lattosio"
   },
   {
-    message: "Je pensais devoir dire adieu au pain, mais grâce à vos recettes, j'en remange enfin!! J'ai toujours adoré le pain au petit-déj, mais depuis que j'ai arrêté le gluten, toutes les alternatives étaient sèches et fades. J'ai essayé votre pain à l'avoine et j'ai été bluffée par la texture et le goût. Il est moelleux et savoureux, même ma famille l'adore. Merci pour ce livre!!!! 😋❤️",
+    message: "Pensavo di dover dire addio al pane, mais grazie alle vostre ricette, finalmente ne mangio di nuovo!! J'ai toujours adoré le pain au petit-déj, mais depuis que j'ai arrêté le gluten, toutes les alternatives étaient sèches et fades. J'ai essayé votre pain à l'avoine et j'ai été bluffée par la texture et le goût. Il est moelleux et savoureux, même ma famille l'adore. Merci pour ce livre!!!! 😋❤️",
     time: "5:33 AM",
     image: testimonialImages[3],
-    imageAlt: "Témoignage pain sans gluten"
+    imageAlt: "Testimonianza pane senza glutine"
   }
 ];

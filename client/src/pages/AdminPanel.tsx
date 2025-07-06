@@ -97,7 +97,7 @@ export default function AdminPanel() {
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          🔧 Painel Admin - Chef Amélie
+          🔧 Pannello Admin - Chef Amélie
         </h1>
 
         {/* Botões de Ação */}
@@ -107,7 +107,7 @@ export default function AdminPanel() {
             disabled={isLoading}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
           >
-            🔑 Testar Hotmart Auth
+            🔑 Testare Hotmart Auth
           </button>
           
           <button
@@ -115,7 +115,7 @@ export default function AdminPanel() {
             disabled={isLoading}
             className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
           >
-            💰 Verificar Vendas
+            💰 Verificare Vendite
           </button>
           
           <button
@@ -123,7 +123,7 @@ export default function AdminPanel() {
             disabled={isLoading}
             className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
           >
-            📊 Atualizar Stats
+            📊 Aggiornare Statistiche
           </button>
         </div>
 
@@ -131,23 +131,23 @@ export default function AdminPanel() {
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-semibold text-gray-900">👤 Visitantes</h3>
+              <h3 className="text-lg font-semibold text-gray-900">👤 Visitatori</h3>
               <p className="text-3xl font-bold text-blue-600">{stats.visitors.total}</p>
               <p className="text-sm text-gray-500">Total</p>
-              <p className="text-sm text-gray-700">{stats.visitors.last_24h} nas últimas 24h</p>
+              <p className="text-sm text-gray-700">{stats.visitors.last_24h} nelle ultime 24h</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="text-lg font-semibold text-gray-900">🎯 Matches</h3>
               <p className="text-3xl font-bold text-green-600">{stats.matches.total}</p>
               <p className="text-sm text-gray-500">Total</p>
-              <p className="text-sm text-gray-700">{stats.matches.last_24h} nas últimas 24h</p>
+              <p className="text-sm text-gray-700">{stats.matches.last_24h} nelle ultime 24h</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-semibold text-gray-900">📈 Taxa de Match</h3>
+              <h3 className="text-lg font-semibold text-gray-900">📈 Tasso di Match</h3>
               <p className="text-3xl font-bold text-orange-600">{stats.match_rate}%</p>
-              <p className="text-sm text-gray-500">Precisão</p>
+              <p className="text-sm text-gray-500">Precisione</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow">
