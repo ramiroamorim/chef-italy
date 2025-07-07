@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Chef Amélie Dupont - Quiz App
 
 Uma aplicação interativa de quiz que identifica o perfil gastronômico do usuário e oferece a coleção de receitas da Chef Amélie Dupont.
@@ -36,3 +37,6 @@ npm run dev
 ```
 
 Isso inicia o servidor Express e o servidor de desenvolvimento Vite simultaneamente.
+=======
+# chef-italy
+>>>>>>> f4f19a2d2f66f2810cff5aeb89f7dfdfd797e16a
