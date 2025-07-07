@@ -38,26 +38,31 @@ export default function ProfileResult({ onViewSuggestions }: ProfileResultProps)
       transition={{ duration: 0.3 }}
       className="profile-result max-w-md mx-auto my-5 sm:my-8 md:my-12 px-3 sm:px-6"
     >
-      <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-primary">Il tuo profilo gourmet:</h2>
-      <h3 className="text-2xl sm:text-3xl font-normal text-[#333333] mb-6 sm:mb-8 md:mb-10">La Curiosa Epicurea</h3>
+      <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-primary">Il tuo profilo di gola:</h2>
+      <h3 className="text-2xl sm:text-3xl font-normal text-[#333333] mb-6 sm:mb-8 md:mb-10">La Curiosa Golosa</h3>
 
       <div className="space-y-5 sm:space-y-8 md:space-y-10 text-[#333333] text-left">
         <p className="text-sm sm:text-base md:text-lg leading-relaxed">
-          Sei il tipo di persona che esplora nuovi sapori, testa ricette inaspettate e si concede piaceri senza sensi di colpa.
+          Sei il tipo che ama provare nuovi sapori, riscoprire versioni leggere dei piatti di una volta e sorprendere chi ami con ricette che non sembrano "senza".
         </p>
         
         <p className="text-sm sm:text-base md:text-lg leading-relaxed">
-          Il tuo palato cerca l'equilibrio tra piacere e benessere — senza sacrificare la golosità.
+          Il tuo palato cerca equilibrio: vuoi sentirti bene —<br />
+          ma <strong>senza mai rinunciare al piacere di mangiare bene</strong>.
         </p>
         
         <p className="text-sm sm:text-base md:text-lg leading-relaxed">
-          Quello che la Chef Amélie ha preparato per te è esattamente questo: un universo di ricette che combinano consistenze, aromi e nutrizione intelligente.
+          Quello che la Chef Sofia Moretti ha preparato per te è proprio questo:
+        </p>
+        
+        <p className="text-sm sm:text-base md:text-lg leading-relaxed font-semibold">
+          <strong>un mondo di ricette italiane</strong> con consistenze avvolgenti, profumi veri e ingredienti che nutrono davvero.
         </p>
       </div>
 
       <div className="mt-8 sm:mt-10 md:mt-12">
         <CoralPulseButton onClick={onViewSuggestions}>
-          Scopri i suggerimenti della Chef 🍽️
+          🍽️ Scopri i suggerimenti della Chef
         </CoralPulseButton>
       </div>
     </motion.div>

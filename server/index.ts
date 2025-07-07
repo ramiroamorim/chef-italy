@@ -1,6 +1,6 @@
 // IMPORTANTE: Carregar variáveis de ambiente antes de qualquer import
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv";
+config();
 
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";

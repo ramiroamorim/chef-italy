@@ -4,11 +4,8 @@ import NotFound from "@/pages/not-found";
 import ThankYou from "@/pages/ThankYou";
 import AdminPanel from "@/pages/AdminPanel";
 import { VisitorTrackingProvider } from "@/contexts/VisitorTrackingContext";
-import TrackingDebug from "@/components/debug/TrackingDebug";
 
 function App() {
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  
   return (
     <VisitorTrackingProvider>
       <Switch>
@@ -17,9 +14,6 @@ function App() {
         <Route path="/admin" component={AdminPanel} />
         <Route component={NotFound} />
       </Switch>
-      
-      {/* Debug component - só aparece em desenvolvimento */}
-      <TrackingDebug />
     </VisitorTrackingProvider>
   );
 }

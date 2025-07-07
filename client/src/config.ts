@@ -42,11 +42,11 @@ export const TEXTS = {
   SALES: {
     PRICE: {
       ORIGINAL: "34€",
-      CURRENT: "17€",
-      REMAINING: "Ultime 20 unità disponibili a soli 17€!"
+      CURRENT: "9€",
+      REMAINING: "Ultimi 20 accessi disponibili a 9€ soltanto!"
     },
-    BUY_BUTTON: "VOGLIO IL PACK A 17€",
-    DELIVERY: "Consegna immediata via email. Senza abbonamento. Senza impegno.",
+    BUY_BUTTON: "👉🏻 VOGLIO IL PACCHETTO A 9€",
+    DELIVERY: "Consegna immediata via e-mail. Nessun abbonamento. Nessun vincolo.",
     BONUSES: [
       {
         title: "🎁 Bonus 1: Guida alle sostituzioni intelligenti",

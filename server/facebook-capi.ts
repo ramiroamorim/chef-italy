@@ -8,7 +8,7 @@ import * as crypto from 'crypto';
 // Configuração dinâmica do Facebook CAPI (avaliada em tempo real)
 function getFacebookCAPIConfig() {
   return {
-    PIXEL_ID: '644431871463181', // Mesmo ID do pixel client-side
+    PIXEL_ID: process.env.FACEBOOK_PIXEL_ID || '644431871463181', // Configurar no .env
     ACCESS_TOKEN: process.env.FACEBOOK_ACCESS_TOKEN || 'YOUR_ACCESS_TOKEN_HERE', // Configurar no .env
     API_VERSION: 'v21.0',
     BASE_URL: 'https://graph.facebook.com'
@@ -83,21 +83,21 @@ function prepareUserData(rawData: any): any {
     userData.client_user_agent = rawData.client_user_agent;
   }
   
-  // Dados de localização (hasheados se necessário)
+  // Dados de localização (hasheados conforme exigido pelo Facebook)
   if (rawData.country) {
-    userData.country = rawData.country.toLowerCase(); // já deve estar formatado
+    userData.country = hashData(rawData.country.toLowerCase());
   }
   
   if (rawData.st) {
-    userData.st = rawData.st.toLowerCase(); // já deve estar formatado
+    userData.st = hashData(rawData.st.toLowerCase());
   }
   
   if (rawData.ct) {
-    userData.ct = rawData.ct.toLowerCase(); // já deve estar formatado
+    userData.ct = hashData(rawData.ct.toLowerCase());
   }
   
   if (rawData.zp) {
-    userData.zp = rawData.zp.replace(/[^0-9]/g, ''); // apenas números
+    userData.zp = hashData(rawData.zp.replace(/[^0-9]/g, ''));
   }
   
   // Facebook IDs
@@ -358,7 +358,7 @@ export async function forwardFrontendEventToCAPI(frontendEventData: any): Promis
     // Preparar dados para CAPI
     const capiEventData = {
       event_name: eventType, // 'PageView' ou 'InitiateCheckout'
-      event_time: Math.floor(new Date(frontendEventData.timestamp).getTime() / 1000),
+      event_time: frontendEventData.unix_timestamp || Math.floor(new Date(frontendEventData.timestamp).getTime() / 1000),
       event_id: eventId,
       user_data: {
         external_id: sessionId,

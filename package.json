@@ -17,8 +17,7 @@
     "db:push": "drizzle-kit push",
     "typecheck": "tsc --noEmit",
     "typecheck:server": "tsc --noEmit -p server/tsconfig.json",
-    "migrate:supabase": "tsx scripts/migrate-simple.ts",
-    "test:supabase": "tsx scripts/test-supabase.ts"
+    "check-data": "tsx scripts/check-data.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

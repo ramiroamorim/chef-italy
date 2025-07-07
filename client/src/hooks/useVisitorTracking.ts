@@ -113,9 +113,31 @@ export function useVisitorTracking() {
   }, []);
 
   // Coletar dados básicos do navegador
-  const collectBasicData = useCallback((): Partial<VisitorData> => {
+  const collectBasicData = useCallback((sessionIdParam?: string): Partial<VisitorData> => {
+    // Usar sessionId passado como parâmetro ou o do state
+    const currentSessionId = sessionIdParam || sessionId;
+    
+    // Garantir que temos fbp sempre
+    let fbpValue: string | undefined;
+    let fbcValue: string | undefined;
+    try {
+      fbpValue = FacebookPixel.CookieUtils.getFbp();
+      console.log('🍪 FBP capturado no collectBasicData:', fbpValue);
+      
+      // Tentar capturar fbc também
+      fbcValue = FacebookPixel.CookieUtils.getFbc?.() || undefined;
+      console.log('🍪 FBC capturado no collectBasicData:', fbcValue);
+    } catch (error) {
+      console.warn('⚠️ Erro ao capturar FBP/FBC:', error);
+    }
+    
+    const currentTimestamp = new Date();
+    
     return {
-      sessionId: sessionId,
+      sessionId: currentSessionId,
+      fbp: fbpValue, // Garantir que fbp seja sempre incluído
+      fbc: fbcValue, // Facebook Click ID
+      external_id: currentSessionId, // Garantir que external_id seja igual ao sessionId
       pageUrl: window.location.href,
       pageTitle: document.title,
       referrer: document.referrer || undefined,
@@ -132,7 +154,8 @@ export function useVisitorTracking() {
       utm_medium: getUTMParameter('utm_medium'),
       utm_campaign: getUTMParameter('utm_campaign'),
       utm_content: getUTMParameter('utm_content'),
-      utm_term: getUTMParameter('utm_term')
+      utm_term: getUTMParameter('utm_term'),
+      unix_timestamp: Math.floor(currentTimestamp.getTime() / 1000) // Unix timestamp para CAPI
     };
   }, [sessionId]);
 
@@ -171,6 +194,7 @@ export function useVisitorTracking() {
       
       // apiip.net tem estrutura diferente de resposta
       if (data && data.ip) {
+        const currentTimestamp = new Date();
         const locationData = {
           ip: data.ip,
           continent: data.continentName,
@@ -179,9 +203,11 @@ export function useVisitorTracking() {
           countryCode: data.countryCode, // CORRIGIDO: era countryCode2
           region: data.regionName,
           regionName: data.regionName,
+          state: data.regionName || data.region, // Estado/Província
           city: data.city, // CORRIGIDO: era cityName
           district: data.district,
           zip: data.postalCode, // CORRIGIDO: era zipCode
+          postalCode: data.postalCode, // Campo adicional para compatibilidade
           latitude: data.latitude,
           longitude: data.longitude,
           timezone: data.timeZone?.id, // CORRIGIDO: era name
@@ -197,7 +223,8 @@ export function useVisitorTracking() {
           hosting: data.hosting, // Este pode não existir
           api_source: 'apiip-net',
           api_key_used: true,
-          timestamp: new Date().toISOString()
+          timestamp: currentTimestamp.toISOString(),
+          unix_timestamp: Math.floor(currentTimestamp.getTime() / 1000) // Unix timestamp para CAPI
         };
         
         console.log('🔍 DEBUG - LocationData mapeado:', locationData);
@@ -237,13 +264,16 @@ export function useVisitorTracking() {
       const data = await response.json();
       
       if (data.status === 'success') {
+        const currentTimestamp = new Date();
         return {
           ip: data.query,
           country: data.country,
           countryCode: data.countryCode,
           regionName: data.regionName,
+          state: data.regionName || data.region, // Estado/Província
           city: data.city,
           zip: data.zip,
+          postalCode: data.zip, // Campo adicional para compatibilidade
           latitude: data.lat,
           longitude: data.lon,
           timezone: data.timezone,
@@ -254,7 +284,8 @@ export function useVisitorTracking() {
           hosting: data.hosting,
           api_source: 'ip-api-free-fallback',
           api_key_used: false,
-          timestamp: new Date().toISOString()
+          timestamp: currentTimestamp.toISOString(),
+          unix_timestamp: Math.floor(currentTimestamp.getTime() / 1000) // Unix timestamp para CAPI
         };
       }
       
@@ -318,9 +349,11 @@ export function useVisitorTracking() {
           ip: data.ip,
           country: data.country,
           country_code: data.countryCode,
+          state: data.state || data.regionName, // Estado/Província
           region: data.regionName,
           city: data.city,
           zip: data.zip,
+          postal_code: data.postalCode || data.zip, // Código postal alternativo
           latitude: data.latitude,
           longitude: data.longitude,
           timezone: data.timezone,
@@ -329,7 +362,8 @@ export function useVisitorTracking() {
           mobile: data.mobile,
           proxy: data.proxy,
           hosting: data.hosting,
-          api_source: data.api_source
+          api_source: data.api_source,
+          unix_timestamp: data.unix_timestamp || Math.floor(Date.now() / 1000)
         },
         page_data: {
           url: data.pageUrl,
@@ -351,17 +385,24 @@ export function useVisitorTracking() {
         capi_data: {
           // Dados formatados para CAPI
           external_id: data.sessionId,
+          fbp: data.fbp, // Incluir fbp nos dados CAPI
+          fbc: data.fbc, // Incluir fbc nos dados CAPI
           country: data.countryCode?.toLowerCase(),
-          st: data.regionName,
+          st: data.state || data.regionName, // Estado/Província
           ct: data.city,
-          zp: data.zip,
+          zp: data.zip || data.postalCode, // CEP/Código postal
           client_ip_address: data.ip,
-          client_user_agent: data.userAgent
+          client_user_agent: data.userAgent,
+          unix_timestamp: data.unix_timestamp || Math.floor(Date.now() / 1000) // Unix timestamp para CAPI
         },
         facebook_pixel: {
-          // Status do Advanced Matching
+          // Status do Advanced Matching e dados do Facebook
           advanced_matching_success: pixelSuccess,
-          fields_sent: pixelSuccess ? Object.keys((window as any).chefAmelieAdvancedMatching || {}).length : 0
+          fields_sent: pixelSuccess ? Object.keys((window as any).chefAmelieAdvancedMatching || {}).length : 0,
+          fbp: data.fbp, // Incluir fbp também nos dados do Facebook Pixel
+          fbc: data.fbc, // Incluir fbc também nos dados do Facebook Pixel
+          external_id: data.external_id || data.sessionId, // Incluir external_id
+          unix_timestamp: data.unix_timestamp || Math.floor(Date.now() / 1000) // Unix timestamp para CAPI
         }
       };
 
@@ -373,9 +414,14 @@ export function useVisitorTracking() {
         const fbData = {
           external_id: data.sessionId,
           country: data.countryCode?.toLowerCase(),
-          st: data.regionName,
+          st: data.state || data.regionName, // Estado/Província
           ct: data.city,
-          zp: data.zip
+          zp: data.zip || data.postalCode, // CEP/Código postal
+          fbp: data.fbp,
+          fbc: data.fbc,
+          client_ip_address: data.ip,
+          client_user_agent: data.userAgent,
+          unix_timestamp: data.unix_timestamp || Math.floor(Date.now() / 1000)
         };
         (window as any).chefAmelieFBData = fbData;
         return;
@@ -404,9 +450,14 @@ export function useVisitorTracking() {
       const fbData = {
         external_id: data.sessionId,
         country: data.countryCode?.toLowerCase(),
-        st: data.regionName,
+        st: data.state || data.regionName, // Estado/Província
         ct: data.city,
-        zp: data.zip
+        zp: data.zip || data.postalCode, // CEP/Código postal
+        fbp: data.fbp,
+        fbc: data.fbc,
+        client_ip_address: data.ip,
+        client_user_agent: data.userAgent,
+        unix_timestamp: data.unix_timestamp || Math.floor(Date.now() / 1000) // Unix timestamp para CAPI
       };
       (window as any).chefAmelieFBData = fbData;
       
@@ -435,8 +486,14 @@ export function useVisitorTracking() {
     const newSessionId = generateSessionId();
     setSessionId(newSessionId);
 
-    // Coletar dados básicos imediatamente
-    const basicData = collectBasicData();
+    // Coletar dados básicos imediatamente, passando o sessionId
+    const basicData = collectBasicData(newSessionId);
+    
+    console.log('🔍 DEBUG - BasicData com sessionId:', {
+      sessionId: basicData.sessionId,
+      external_id: basicData.external_id,
+      fbp: basicData.fbp
+    });
 
     // Tentar obter dados de localização
     setTimeout(async () => {

@@ -34,9 +34,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         timestamp: visitorData.timestamp
       });
       
+      // 🔍 DEBUG: Verificar estrutura dos dados recebidos para fbp
+      console.log('🔍 DEBUG - Estrutura dos dados recebidos:', {
+        hasExternalId: Boolean(visitorData.external_id),
+        hasFacebookPixel: Boolean(visitorData.facebook_pixel),
+        hasCapiData: Boolean(visitorData.capi_data),
+        fbpFromFacebookPixel: visitorData.facebook_pixel?.fbp,
+        fbpFromCapiData: visitorData.capi_data?.fbp,
+        topLevelKeys: Object.keys(visitorData)
+      });
+      
       // Estruturar dados para o banco
       const dbVisitorData = {
         sessionId: visitorData.external_id,
+        external_id: visitorData.external_id, // Garantir que external_id seja salvo
+        fbp: visitorData.facebook_pixel?.fbp || visitorData.capi_data?.fbp, // Capturar fbp dos dados
         ip: visitorData.visitor_data?.ip,
         country: visitorData.visitor_data?.country,
         countryCode: visitorData.visitor_data?.country_code,

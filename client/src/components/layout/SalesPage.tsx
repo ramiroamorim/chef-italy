@@ -14,61 +14,15 @@ const RecipeImages = {
   gridCollage: recipesGridCollageImage
 };
 
-// Componente de botão pulsante verde - versão robusta
+// Componente de botão pulsante verde - versão simplificada e funcional
 const GreenPulseButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Logs detalhados para debug
+    // Logs para debug
     console.log('🛒 CLICK DETECTADO - Botão da Hotmart');
     console.log('🔗 URL:', href);
-    console.log('🖱️ Event details:', {
-      type: e.type,
-      button: e.button,
-      buttons: e.buttons,
-      ctrlKey: e.ctrlKey,
-      metaKey: e.metaKey,
-      shiftKey: e.shiftKey
-    });
     
-    // Verificar se há popup blockers
-    console.log('🔒 Verificando popup blockers...');
-    
-    // Múltiplas tentativas de abertura para garantir funcionamento
-    try {
-      // Método 1: window.open com timeout
-      console.log('🚀 Tentativa 1: window.open');
-      const newWindow = window.open(href, '_blank', 'noopener,noreferrer');
-      
-      // Aguardar e verificar se abriu
-      setTimeout(() => {
-        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-          console.log('⚠️ Popup bloqueado ou falhou - tentando método 2');
-          try {
-            window.location.assign(href);
-          } catch (assignError) {
-            console.log('⚠️ location.assign falhou - tentando método 3');
-            window.location.href = href;
-          }
-        } else {
-          console.log('✅ Popup aberto com sucesso!');
-        }
-      }, 100);
-      
-    } catch (error) {
-      console.error('❌ Erro na tentativa 1:', error);
-      // Método 2: location.assign
-      try {
-        console.log('🚀 Tentativa 2: location.assign');
-        window.location.assign(href);
-      } catch (assignError) {
-        console.error('❌ Erro na tentativa 2:', assignError);
-        // Método 3: location.href (fallback final)
-        console.log('🚀 Tentativa 3: location.href');
-        window.location.href = href;
-      }
-    }
+    // Permitir comportamento padrão do link - não prevenir
+    // O navegador irá abrir em nova aba naturalmente
   };
   
   return (
@@ -111,14 +65,14 @@ const PriceSection = ({ buyUrl }: { buyUrl: string }) => (
       borderColor: "#FFE5E5" 
     }}>
     <p style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>Valore reale del pack: <span className="line-through">34€</span></p>
-    <p style={{ fontSize: "1.35rem", fontWeight: "bold", color: COLORS.PRIMARY, marginBottom: "1rem" }}>Oggi: solo 17€</p>
-    <p style={{ fontSize: "1.05rem", fontWeight: "bold", color: COLORS.ERROR, marginBottom: "1.5rem" }}>⚠️ Ultime 20 unità disponibili a soli 17€!</p>
+    <p style={{ fontSize: "1.35rem", fontWeight: "bold", color: COLORS.PRIMARY, marginBottom: "1rem" }}>Oggi: solo 9€</p>
+    <p style={{ fontSize: "1.05rem", fontWeight: "bold", color: COLORS.ERROR, marginBottom: "1.5rem" }}>⚠️ Ultimi 20 accessi disponibili a 9€ soltanto!</p>
     
     <GreenPulseButton href={buyUrl}>
-      VOGLIO IL PACK A 17€
+      👉🏻 VOGLIO IL PACCHETTO A 9€
     </GreenPulseButton>
     
-    <p style={{ fontSize: "1.05rem" }}>📩 Consegna immediata via email. Senza abbonamento. Senza impegno.</p>
+    <p style={{ fontSize: "1.05rem" }}>📩 Consegna immediata via e-mail.<br />Nessun abbonamento. Nessun vincolo.</p>
   </div>
 );
 
@@ -140,16 +94,16 @@ export default function SalesPage() {
             marginBottom: "1rem",
             fontWeight: "normal"
           }}>
-            <span className="block">500 ricette senza zucchero, senza</span>
-            <span className="block">glutine e senza lattosio</span>
-            <span className="block">che nutrono, fanno dimagrire</span>
-            <span className="block">con piacere</span>
-            <span className="block">e riequilibrano il tuo corpo.</span>
+            <span className="block">500 ricette senza zucchero, senza glutine e senza lattosio</span>
+            <span className="block">che nutrono, aiutano a dimagrire con piacere</span>
+            <span className="block">e riportano il tuo corpo in equilibrio.</span>
           </h1>
 
           <div className="mt-3 sm:mt-4">
-            <p className="mb-2 text-xs sm:text-sm">Nessuna dieta di moda. Nessun ingrediente impossibile da trovare. Nessun piatto triste.</p>
-            <p className="mb-2 text-xs sm:text-sm">Solo una cucina <strong>vera, gustosa e liberatrice</strong> — per le donne con restrizioni che vogliono ancora <strong>deliziarsi senza paura.</strong></p>
+            <p className="mb-2 text-xs sm:text-sm">📛 Nessuna dieta alla moda.</p>
+            <p className="mb-2 text-xs sm:text-sm">🛒 Nessun ingrediente impossibile da trovare.</p>
+            <p className="mb-2 text-xs sm:text-sm">🥀 Nessun piatto triste o insapore.</p>
+            <p className="mb-2 text-xs sm:text-sm">Solo cucina vera, piena di gusto e libertà —<br />per le donne con intolleranze che <strong>non vogliono rinunciare a mangiare bene</strong>.<br /><strong>Mai più.</strong></p>
           </div>
         </div>
 
@@ -170,7 +124,7 @@ export default function SalesPage() {
             fontWeight: "700",
             color: "#57C084",
             marginBottom: "10px"
-          }}>💚 Per chi è:</h3>
+          }}>💚 È per te se...</h3>
           <ul style={{
             listStyle: "none",
             padding: "0 0 0 4px",
@@ -179,10 +133,10 @@ export default function SalesPage() {
             fontSize: "0.95rem",
             lineHeight: "1.8"
           }}>
-            <li>🌿 Donne con intolleranze (glutine, lattosio, zucchero)</li>
-            <li>🥗 Quelle che vogliono dimagrire senza frustrazione</li>
-            <li>😩 Quelle stanche di piatti tristi e senza sapore</li>
-            <li>✨ Quelle che vogliono un metodo semplice e duraturo</li>
+            <li>🌿 Hai intolleranze (glutine, lattosio, zucchero)</li>
+            <li>🥗 Vuoi dimagrire senza frustrazione né rinunce impossibili</li>
+            <li>😩 Sei stanca di piatti tristi, insipidi o industriali</li>
+            <li>✨ Cerchi un metodo semplice, duraturo, umano</li>
           </ul>
         </div>
 
@@ -200,7 +154,7 @@ export default function SalesPage() {
             fontWeight: "700",
             color: "#F44336",
             marginBottom: "10px"
-          }}>🚫 Per chi non è:</h3>
+          }}>🚫 Non è per te se...</h3>
           <ul style={{
             listStyle: "none",
             padding: "0 0 0 4px",
@@ -209,13 +163,13 @@ export default function SalesPage() {
             fontSize: "0.95rem",
             lineHeight: "1.8"
           }}>
-            <li>🙅‍♀️ Quelle che non vogliono cambiare le loro abitudini</li>
-            <li>🧪 Quelle che cercano una soluzione magica</li>
-            <li>🌀 Quelle che preferiscono rimanere nel disordine</li>
+            <li>🙅‍♀️ Non vuoi cambiare nemmeno una minima abitudine</li>
+            <li>🧪 Cerchi una pillola magica che "risolve tutto"</li>
+            <li>🌀 Preferisci restare nel caos alimentare</li>
             <li style={{ 
               fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
               fontSize: "0.95rem"
-            }}>🍕 Quelle che rifiutano di cucinare anche un minimo</li>
+            }}>🍕 Rifiuti anche solo l'idea di cucinare un minimo</li>
           </ul>
         </div>
 
@@ -238,7 +192,7 @@ export default function SalesPage() {
             textAlign: "center",
             fontWeight: "bold"
           }}>
-            Non troverai queste ricette su Google.
+            ⚠️ Queste ricette NON sono su Google.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -248,7 +202,7 @@ export default function SalesPage() {
             color: "#333333",
             margin: "0"
           }}>
-            Sono nate nella vera cucina di Amélie — non su Pinterest, né in un blog copiato. Ogni piatto è stato pensato per <span style={{ fontWeight: "700" }}>placare, nutrire</span>... e ridare <span style={{ fontWeight: "700" }}>piacere</span> a quelle che avevano rinunciato.
+            Non vengono da Pinterest, né da un blog copiato.<br />Sono nate nella cucina vera di Sofia Moretti —<br />testate, aggiustate, perfezionate per portare sollievo, nutrimento e piacere autentico a chi aveva rinunciato a mangiare con gioia.
           </p>
         </div>
         
@@ -290,13 +244,13 @@ export default function SalesPage() {
             fontWeight: "700", 
             color: "#2196F3", 
             marginBottom: "10px" 
-          }}>📦 Ce que vous allez recevoir :</h2>
+          }}>📦 Cosa ricevi subito:</h2>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
             fontSize: "0.95rem", 
             marginBottom: "10px",
             lineHeight: "1.8"
-          }}>Un accès à <span style={{ color: "#B34431", fontWeight: "bold" }}>500 recettes exclusives</span> créées et testées par la Cheffe Amélie — organisées pour nourrir, apaiser et régaler votre quotidien.</p>
+          }}>Un accesso completo a <span style={{ color: "#B34431", fontWeight: "bold" }}>500 ricette esclusive</span>, create e testate dalla Chef Sofia per:</p>
           
           <ul style={{
             listStyle: "none",
@@ -306,10 +260,10 @@ export default function SalesPage() {
             fontSize: "0.95rem",
             lineHeight: "1.8"
           }}>
-            <li>🍽️ <span style={{ color: "#B34431", fontWeight: "bold" }}>100 petits-déjeuners & collations</span> — pour bien démarrer la journée, sans pic de sucre</li>
-            <li>🥦 <span style={{ color: "#B34431", fontWeight: "bold" }}>300 déjeuners & dîners</span> — faciles, nourrissants et équilibrés, pour tous les jours</li>
-            <li>🍫 <span style={{ color: "#B34431", fontWeight: "bold" }}>100 desserts gourmands</span> — sans sucre raffiné, mais pleins de plaisir</li>
-            <li>🧭 <span style={{ color: "#B34431", fontWeight: "bold" }}>Recettes classées par objectif</span> : digestion, satiété, inflammation, énergie</li>
+            <li>🍽️ <span style={{ color: "#B34431", fontWeight: "bold" }}>100 colazioni & spuntini</span> — per iniziare la giornata senza picchi glicemici</li>
+            <li>🥦 <span style={{ color: "#B34431", fontWeight: "bold" }}>300 pranzi & cene</span> — facili, nutrienti, antinfiammatori</li>
+            <li>🍫 <span style={{ color: "#B34431", fontWeight: "bold" }}>100 dolci golosi</span> — senza zucchero raffinato, ma pieni di gusto</li>
+            <li>🧭 <span style={{ color: "#B34431", fontWeight: "bold" }}>Ricette organizzate per obiettivo</span>: digestione, sazietà, energia, infiammazione</li>
           </ul>
         </div>
 
@@ -323,7 +277,7 @@ export default function SalesPage() {
             fontWeight: "700", 
             color: "#FF9800", 
             marginBottom: "10px" 
-          }}>🎁 Bonus exclusifs inclus aujourd'hui :</h2>
+          }}>🎁 BONUS ESCLUSIVI OGGI:</h2>
           
           <ul style={{
             listStyle: "none",
@@ -332,20 +286,20 @@ export default function SalesPage() {
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
           }}>
             <li style={{ marginBottom: "12px" }}>
-              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 1 : Guide de substitutions intelligentes</p>
-              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Remplacez sucre, farine ou lait sans perdre le goût.</p>
+              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 1: Guida alle sostituzioni intelligenti</p>
+              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Sostituisci zucchero, farina e latte senza perdere sapore</p>
             </li>
             <li style={{ marginBottom: "12px" }}>
-              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 2 : Carte de satiété naturelle</p>
-              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Construisez des assiettes qui rassasient sans excès.</p>
+              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 2: Mappa della sazietà naturale</p>
+              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Componi piatti che saziano senza eccessi né ansia</p>
             </li>
             <li style={{ marginBottom: "12px" }}>
-              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 3 : Protocole intestin + glycémie</p>
-              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Améliorez votre digestion et votre énergie au quotidien.</p>
+              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 3: Protocollo intestino + glicemia</p>
+              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Ritrova energia e digestione stabile ogni giorno</p>
             </li>
             <li style={{ marginBottom: "0" }}>
-              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 4 : Liste de courses intelligente</p>
-              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Gagnez du temps avec des produits simples, testés, validés.</p>
+              <p style={{ fontSize: "0.95rem", fontWeight: "bold", margin: "0 0 4px 0", lineHeight: "1.8" }}>🎁 Bonus 4: Lista della spesa intelligente</p>
+              <p style={{ fontSize: "0.95rem", marginLeft: "1rem", margin: "0", lineHeight: "1.8" }}>Risparmia tempo con ingredienti semplici, testati, approvati</p>
             </li>
           </ul>
         </div>
@@ -367,7 +321,7 @@ export default function SalesPage() {
             marginBottom: "12px",
             fontWeight: "normal"
           }}>
-            Ce n'est pas un régime. Ce n'est pas une promesse vide.
+            ❌ Non è una dieta.<br />Non è una promessa vuota.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -377,7 +331,7 @@ export default function SalesPage() {
             marginBottom: "12px",
             fontWeight: "normal"
           }}>
-            C'est un raccourci vers ce que vous vouliez depuis des années : <span style={{ color: "#B34431", fontWeight: "600" }}>manger avec plaisir, sans douleur.</span>
+            💡 È un ritorno alla tavola con leggerezza.<br />Un modo per ricominciare a mangiare con piacere — <span style={{ color: "#B34431", fontWeight: "600" }}>senza dolore</span>.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -387,7 +341,7 @@ export default function SalesPage() {
             marginBottom: "0",
             fontWeight: "normal"
           }}>
-            Et aujourd'hui, ça vous coûte moins qu'un plat fade au resto.
+            💰 E oggi, ti costa meno di un piatto triste al ristorante.
           </p>
         </div>
         
@@ -449,7 +403,7 @@ export default function SalesPage() {
             color: "#666666", 
             lineHeight: "1.8"
           }}>
-            Avec tout mon cœur — pour que vous puissiez enfin manger avec liberté et plaisir.
+            Con tutto il mio cuore — perché tu possa finalmente mangiare con libertà e piacere.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -458,7 +412,7 @@ export default function SalesPage() {
             fontWeight: "500", 
             color: "#B34431"
           }}>
-            Cheffe Amélie Dupont
+            Chef Sofia Moretti
           </p>
         </div>
       </div>

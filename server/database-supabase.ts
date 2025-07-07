@@ -6,9 +6,11 @@ interface VisitorData {
   ip?: string;
   country?: string;
   countryCode?: string;
+  state?: string;          // Estado/Província
   city?: string;
   regionName?: string;
   zip?: string;
+  postalCode?: string;     // Código postal alternativo
   latitude?: number;
   longitude?: number;
   timezone?: string;
@@ -22,6 +24,16 @@ interface VisitorData {
   utm_campaign?: string;
   utm_content?: string;
   utm_term?: string;
+  external_id?: string;
+  fbp?: string;            // Facebook Browser ID
+  fbc?: string;            // Facebook Click ID
+  phone?: string;          // Telefone (hasheado)
+  email?: string;          // Email (hasheado)
+  firstName?: string;      // Nome (hasheado)
+  lastName?: string;       // Sobrenome (hasheado)
+  gender?: string;         // Gênero (hasheado)
+  dateOfBirth?: string;    // Data de nascimento (hasheado)
+  unix_timestamp?: number; // Timestamp Unix para CAPI
   timestamp: string;
 }
 
@@ -39,6 +51,13 @@ interface FacebookEventData {
     external_id?: string;
     fbp?: string;
     fbc?: string;
+    phone?: string;          // Telefone (hasheado)
+    email?: string;          // Email (hasheado)
+    fn?: string;             // Nome (hasheado)
+    ln?: string;             // Sobrenome (hasheado)
+    ge?: string;             // Gênero (hasheado)
+    db?: string;             // Data de nascimento (hasheado)
+    unix_timestamp?: number; // Timestamp Unix para CAPI
     [key: string]: any;
   };
   originalData: {
@@ -46,13 +65,28 @@ interface FacebookEventData {
     city?: string;
     state?: string;
     country?: string;
+    postalCode?: string;     // Código postal alternativo
+    phone?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    gender?: string;
+    dateOfBirth?: string;
   };
   formattedData?: {
     zip?: string;
     city?: string;
     state?: string;
     country?: string;
+    postalCode?: string;
+    phone?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    gender?: string;
+    dateOfBirth?: string;
   };
+  unix_timestamp?: number; // Timestamp Unix para CAPI
   timestamp: string;
 }
 

@@ -13,153 +13,186 @@ export const quizSteps: QuizStepType[] = [
     title: "Ti hanno mentito.",
     textBlocks: [
       {
-        content: "Puoi mangiare un <strong>brownie fondente</strong>, una <strong>brioche soffice</strong>, o una <strong>crostata cioccolato-nocciola</strong> — <em>senza zucchero, senza glutine, senza lattosio.</em>"
+        content: "Puoi ancora gustarti un piatto di <strong>lasagne alla bolognese</strong>, una <strong>crostata fatta in casa</strong> o un <strong>tiramisù vellutato</strong>..."
       },
       {
-        content: "E riprenderti. Senza sensi di colpa."
+        content: "— Tutto <strong>senza glutine</strong>.<br>— <strong>Senza zucchero</strong>.<br>— <strong>Senza lattosio</strong>."
       },
       {
-        content: "🎁 In 1 minuto, scopri il tuo <strong>profilo gourmet</strong> e accedi alla <em>collezione privata</em> di 500 ricette emblematiche della Chef Amélie."
+        content: "E sì, puoi anche fare il bis.<br><strong>Senza dolore. Senza gonfiore. Senza sensi di colpa.</strong>"
+      },
+      {
+        content: "🎁 In meno di 60 secondi, scopri il tuo <strong>profilo di gola</strong> e accedi alla <em>collezione privata</em> con 500 ricette iconiche della Chef Amélie —"
+      },
+      {
+        content: "Pensate per chi <strong>AMA la cucina italiana</strong>, ma ha dovuto smettere di mangiarla."
       }
     ],
     image: "https://cdn.xquiz.co/images/94f2084a-557c-43be-abcc-2ba23141cb46",
-    imageAlt: "Dolci senza zucchero, senza glutine, senza lattosio",
-    buttonText: "Scopri il mio profilo gourmet",
-    footerText: "Più di <strong>30.000 donne</strong> hanno già scoperto il loro<br>Questo test richiede solo 60 secondi"
+    imageAlt: "Ricette italiane senza glutine, senza zucchero, senza lattosio",
+    buttonText: "👉🏻 Scopri ora il tuo profilo di gola",
+    footerText: "Oltre <strong>100.000 donne italiane</strong> lo hanno già fatto.<br>Il test dura meno di un minuto.<br>Ma può ridarti il gusto della tua tavola."
   },
   
   // Step 1
   {
-    name: "discourage",
-    title: "<span class='text-[#333333]'>Quando provi a </span><span class='text-primary font-semibold'>mangiare più sano</span><span class='text-[#333333]'>... cosa ti </span><span class='text-primary font-semibold'>scoraggia</span><span class='text-[#333333]'> di più?</span>",
+    name: "temptations",
+    title: "<span class='text-[#333333]'>Anche senza zucchero, glutine e lattosio… quale di queste </span><span class='text-primary font-semibold'>tentazioni italiane</span><span class='text-[#333333]'> ti fa chiudere gli occhi solo al pensiero?</span>",
+    image: "https://cdn.xquiz.co/images/94f2084a-557c-43be-abcc-2ba23141cb46",
+    imageAlt: "Tentazioni italiane senza glutine, senza zucchero, senza lattosio",
     options: [
       {
-        value: "fades",
-        label: "I piatti sono spesso insipidi o secchi"
+        value: "focaccia",
+        label: "🍕 Focaccia appena sfornata, con rosmarino e olio extravergine che profuma la cucina"
       },
       {
-        value: "faim",
-        label: "Ho ancora fame dopo aver mangiato"
+        value: "budino",
+        label: "🍮 Budino al cioccolato fondente, vellutato, servito ancora tiepido"
       },
       {
-        value: "idees",
-        label: "Non so cosa cucinare nel quotidiano"
+        value: "tortino",
+        label: "🧁 Mini tortino al limone con scorza di Sorrento e glassa dolce (senza zucchero raffinato)"
       },
       {
-        value: "abandon",
-        label: "Abbandono dopo qualche giorno"
+        value: "torta",
+        label: "🥧 Torta soffice alle mele e cannella, come la faceva la nonna — ma senza zucchero né farina bianca"
       }
     ]
   },
   
   // Step 2
   {
-    name: "dessert",
-    title: "<span class='text-primary font-semibold'>Anche senza zucchero, senza glutine, senza lattosio... </span><span class='text-[#333333]'>quale di queste prelibatezze ti fa venire più voglia?</span>",
-    image: RecipeImages.grid,
-    imageAlt: "Collezione di dolci senza zucchero, senza glutine, senza lattosio",
+    name: "recipes_experience",
+    title: "<span class='text-[#333333]'>Hai mai provato a seguire quelle </span><span class='text-primary font-semibold'>ricette \"salutari\" trovate online</span><span class='text-[#333333]'>?</span><br><span class='text-[#333333]'>Quelle che promettono miracoli…</span><br><span class='text-[#333333]'>...ma alla fine sono </span><span class='text-primary font-semibold'>troppo complicate, insipide o vengono una schifezza</span><span class='text-[#333333]'>?</span>",
     options: [
       {
-        value: "brownie",
-        label: "🍫 Brownie fondente ancora tiepido"
+        value: "disappointed",
+        label: "😩 Sì, ci ho provato… e sono rimasta delusa (più di una volta)"
       },
       {
-        value: "brioche",
-        label: "🥐 Brioche soffice alla cannella"
+        value: "sometimes",
+        label: "😐 Qualche volta funzionano… ma spesso mancano di gusto"
       },
       {
-        value: "tartelette",
-        label: "🥧 Crostata cioccolato-nocciola"
-      },
-      {
-        value: "baguette",
-        label: "🥖 Baguette croccante e calda"
+        value: "no_trust",
+        label: "🙄 No, non mi fido delle ricette trovate in giro sul web"
       }
     ]
   },
   
   // Step 3
   {
-    name: "tried_recipes",
-    title: "<span class='text-[#333333]'>Hai mai provato a seguire delle </span><span class='text-primary font-semibold'>ricette \"sane\" </span><span class='text-[#333333]'>trovate su internet?</span><br><span class='text-[#333333]'>Quelle che promettono tutto... ma che finiscono </span><span class='text-primary font-semibold'>troppo complicate, troppo insipide </span><span class='text-[#333333]'>o </span><span class='text-primary font-semibold'>completamente fallite</span><span class='text-[#333333]'>?</span>",
-    options: [
+    name: "chef_profile",
+    image: ChefImages.amelie,
+    imageAlt: "Chef Sofia Moretti",
+    title: "Un incontro con la Chef Sofia Moretti",
+    description: "La sua storia. La sua missione. Le sue ricette che hanno ridato speranza a migliaia di donne italiane.",
+    textBlocks: [
       {
-        value: "disappointed",
-        label: "😔 Sì, ho provato... e sono rimasta delusa"
+        content: "👩🏻‍🍳 <strong>Chef Sofia Moretti</strong>"
       },
       {
-        value: "sometimes",
-        label: "😐 Ho provato, a volte funziona"
+        content: "Nata a Parma, cresciuta tra profumo di pane appena sfornato, sughi della nonna e ricette scritte a mano su fogli unti d'olio."
       },
       {
-        value: "no_trust",
-        label: "🧐 No, non mi fido delle ricette del web"
+        content: "Per Sofia, la cucina è sempre stata <strong>memoria, cura e identità</strong>."
+      },
+      {
+        content: "Si è formata all'Accademia di Cucina Naturale di Firenze, specializzandosi in <strong>cucina anti-infiammatoria e nutrizione per donne mature</strong>."
+      },
+      {
+        content: "Ma è solo dopo aver scoperto le sue stesse intolleranze a glutine, lattosio e zuccheri raffinati…<br>...che ha capito quanto fosse devastante rinunciare ai piatti della propria infanzia."
+      },
+      {
+        content: "È lì che ha deciso di creare una <strong>rivoluzione</strong>:<br>Una cucina italiana vera, piena di gusto — <strong>ma che non fa male</strong>.",
+        highlight: true
+      },
+      {
+        content: "🎯 Ricette semplici, senza ingredienti proibitivi.<br><strong>Senza sensi di colpa.</strong><br><strong>Senza dolore.</strong><br><strong>Solo sapore, tradizione e leggerezza.</strong>"
+      },
+      {
+        content: "Oggi condivide oltre 500 ricette con donne che hanno perso il piacere di mangiare — e lo vogliono ritrovare"
       }
-    ]
+    ],
+    buttonText: "Scopri come le sue ricette possono aiutare anche te"
   },
   
   // Step 4
   {
-    name: "chef_profile",
-    image: ChefImages.amelie,
-    imageAlt: "Chef Amélie Dupont",
-    title: "Un incontro con la Chef Amélie Dupont",
-    description: "La sua storia, la sua missione, le sue ricette.",
-    textBlocks: [
-      {
-        content: "Nata ad Aix-en-Provence, Amélie Dupont è cresciuta tra pani caldi, erbe fresche e ricette di famiglia trasmesse da sua madre."
-      },
-      {
-        content: "Formata all'Institut Saint-Louis di Marsiglia, ha lavorato in ristoranti locali impegnati in una cucina naturale e anti-infiammatoria."
-      },
-      {
-        content: "Ma è dopo aver scoperto le sue intolleranze che decide di creare un nuovo approccio:"
-      },
-      {
-        content: "Ricette semplici, gourmet, senza zucchero, senza glutine, senza lattosio — e piene di piacere.",
-        highlight: true
-      },
-      {
-        content: "Oggi condivide più di 500 ricette pensate per trasformare il quotidiano di migliaia di donne."
-      }
-    ],
-    buttonText: "Scopri come le sue ricette possono aiutarmi"
-  },
-  
-  // Step 5
-  {
     name: "improve",
-    title: "<span class='text-primary font-semibold'>Cosa vorresti migliorare </span><span class='text-[#333333]'>in priorità oggi?</span>",
+    title: "<span class='text-[#333333]'>Cosa vorresti </span><span class='text-primary font-semibold'>migliorare per prima cosa</span><span class='text-[#333333]'> — già da oggi?</span>",
     options: [
       {
         value: "digestion",
-        label: "🥗 Ridurre il gonfiore e migliorare la digestione"
+        label: "🍝 Ridurre il gonfiore e tornare a digerire bene (senza rinunciare alla tua pasta preferita)"
       },
       {
         value: "sugar",
-        label: "🍬 Stabilizzare la glicemia e ridurre la voglia di zucchero"
+        label: "🍫 Stabilizzare la glicemia e liberarti da quella voglia continua di dolci"
       },
       {
         value: "weight",
-        label: "⚖️ Perdere peso senza frustrazione né dieta estrema"
+        label: "⚖️ Perdere peso senza frustrazione né diete estreme (senza dire addio alla cucina italiana)"
       },
       {
         value: "energy",
-        label: "💪 Ritrovare la mia energia e uscire dalla stanchezza cronica"
+        label: "💥 Ritrovare l'energia e uscire da quella stanchezza che non passa mai"
       },
       {
         value: "all",
-        label: "🌱 Tutto questo insieme (e finalmente sentirmi bene nel mio corpo)"
+        label: "🧘‍♀️ Tutto questo insieme (e finalmente sentirmi bene nel mio corpo, ogni giorno)"
       }
     ]
   },
   
+  // Step 5
+  {
+    name: "result",
+    title: "La Curiosa Golosa",
+    textBlocks: [
+      {
+        content: "Sei il tipo che ama provare nuovi sapori, riscoprire versioni leggere dei piatti di una volta e sorprendere chi ami con ricette che non sembrano \"senza\"."
+      },
+      {
+        content: "Il tuo palato cerca equilibrio: vuoi sentirti bene —<br>ma <strong>senza mai rinunciare al piacere di mangiare bene</strong>."
+      },
+      {
+        content: "Quello che la Chef Sofia Moretti ha preparato per te è proprio questo:"
+      },
+      {
+        content: "<strong>un mondo di ricette italiane</strong> con consistenze avvolgenti, profumi veri e ingredienti che nutrono davvero.",
+        highlight: true
+      }
+    ],
+    buttonText: "🍽️ Scopri i suggerimenti della Chef"
+  },
+  
   // Step 6
   {
-    name: "testimonials",
-    title: "<span class='text-primary font-semibold'>Centinaia di donne </span><span class='text-[#333333]'>hanno già testato queste ricette e visto il loro corpo trasformarsi.</span>",
-    description: "<span class='text-primary'>Scorri ➤ per vedere cosa dicono.</span>",
-    isTestimonialStep: true,
-    buttonText: "🔍 SCOPRI IL MIO PROFILO"
+    name: "sales_page",
+    title: "500 ricette senza zucchero, senza glutine e senza lattosio",
+    description: "che nutrono, aiutano a dimagrire con piacere e riportano il tuo corpo in equilibrio.",
+    textBlocks: [
+      {
+        content: "📛 <strong>Nessuna dieta alla moda.</strong><br>🛒 <strong>Nessun ingrediente impossibile da trovare.</strong><br>🥀 <strong>Nessun piatto triste o insapore.</strong>"
+      },
+      {
+        content: "Solo cucina vera, piena di gusto e libertà —<br>per le donne con intolleranze che <strong>non vogliono rinunciare a mangiare bene</strong>.<br><strong>Mai più.</strong>"
+      },
+      {
+        content: "💚 <strong>È per te se...</strong><br>🌿 Hai intolleranze (glutine, lattosio, zucchero)<br>🥗 Vuoi dimagrire senza frustrazione né rinunce impossibili<br>😩 Sei stanca di piatti tristi, insipidi o industriali<br>✨ Cerchi un metodo semplice, duraturo, umano"
+      },
+      {
+        content: "🚫 <strong>Non è per te se...</strong><br>🙅‍♀️ Non vuoi cambiare nemmeno una minima abitudine<br>🧪 Cerchi una pillola magica che \"risolve tutto\"<br>🌀 Preferisci restare nel caos alimentare<br>🍕 Rifiuti anche solo l'idea di cucinare un minimo"
+      },
+      {
+        content: "⚠️ <strong>Queste ricette NON sono su Google.</strong><br>Non vengono da Pinterest, né da un blog copiato.<br>Sono nate nella cucina vera di Sofia Moretti —<br>testate, aggiustate, perfezionate per portare sollievo, nutrimento e piacere autentico a chi aveva rinunciato a mangiare con gioia.",
+        highlight: true
+      }
+    ],
+    buttonText: "👉🏻 VOGLIO IL PACCHETTO A 9€",
+    priceText: "Valore reale del pacchetto: 34€<br>Oggi: solo 9€",
+    urgencyText: "⚠️ Ultimi 20 accessi disponibili a 9€ soltanto!",
+    guaranteeText: "📩 Consegna immediata via e-mail.<br>Nessun abbonamento. Nessun vincolo."
   }
 ];

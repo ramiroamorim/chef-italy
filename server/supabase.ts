@@ -27,9 +27,11 @@ export interface SupabaseVisitorData {
   ip?: string;
   country?: string;
   country_code?: string;
+  state?: string;          // Estado/Província
   city?: string;
   region_name?: string;
   zip?: string;
+  postal_code?: string;    // Código postal alternativo
   latitude?: number;
   longitude?: number;
   timezone?: string;
@@ -43,6 +45,16 @@ export interface SupabaseVisitorData {
   utm_campaign?: string;
   utm_content?: string;
   utm_term?: string;
+  external_id?: string;
+  fbp?: string;            // Facebook Browser ID
+  fbc?: string;            // Facebook Click ID
+  phone?: string;          // Telefone (hasheado)
+  email?: string;          // Email (hasheado)
+  first_name?: string;     // Nome (hasheado)
+  last_name?: string;      // Sobrenome (hasheado)
+  gender?: string;         // Gênero (hasheado)
+  date_of_birth?: string;  // Data de nascimento (hasheado)
+  unix_timestamp?: number; // Timestamp Unix para CAPI
   created_at?: string;
 }
 
@@ -54,6 +66,7 @@ export interface SupabaseFacebookEventData {
   custom_parameters: Record<string, any>;
   original_data: Record<string, any>;
   formatted_data?: Record<string, any>;
+  unix_timestamp?: number; // Timestamp Unix para CAPI
   created_at?: string;
 }
 
@@ -65,9 +78,11 @@ export const DataConverter = {
     ip: visitor.ip,
     country: visitor.country,
     country_code: visitor.countryCode,
+    state: visitor.state || visitor.regionName, // Estado/Província
     city: visitor.city,
     region_name: visitor.regionName,
     zip: visitor.zip,
+    postal_code: visitor.postalCode || visitor.zip, // Código postal alternativo
     latitude: visitor.latitude,
     longitude: visitor.longitude,
     timezone: visitor.timezone,
@@ -81,6 +96,16 @@ export const DataConverter = {
     utm_campaign: visitor.utm_campaign,
     utm_content: visitor.utm_content,
     utm_term: visitor.utm_term,
+    external_id: visitor.external_id,
+    fbp: visitor.fbp,
+    fbc: visitor.fbc,
+    phone: visitor.phone,
+    email: visitor.email,
+    first_name: visitor.firstName,
+    last_name: visitor.lastName,
+    gender: visitor.gender,
+    date_of_birth: visitor.dateOfBirth,
+    unix_timestamp: visitor.unix_timestamp || Math.floor(Date.now() / 1000),
     created_at: visitor.timestamp
   }),
 
@@ -92,6 +117,7 @@ export const DataConverter = {
     custom_parameters: event.customParameters,
     original_data: event.originalData,
     formatted_data: event.formattedData,
+    unix_timestamp: event.unix_timestamp || Math.floor(Date.now() / 1000),
     created_at: event.timestamp
   }),
 
@@ -101,9 +127,11 @@ export const DataConverter = {
     ip: supabaseData.ip,
     country: supabaseData.country,
     countryCode: supabaseData.country_code,
+    state: supabaseData.state,
     city: supabaseData.city,
     regionName: supabaseData.region_name,
     zip: supabaseData.zip,
+    postalCode: supabaseData.postal_code,
     latitude: supabaseData.latitude,
     longitude: supabaseData.longitude,
     timezone: supabaseData.timezone,
@@ -117,6 +145,16 @@ export const DataConverter = {
     utm_campaign: supabaseData.utm_campaign,
     utm_content: supabaseData.utm_content,
     utm_term: supabaseData.utm_term,
+    external_id: supabaseData.external_id,
+    fbp: supabaseData.fbp,
+    fbc: supabaseData.fbc,
+    phone: supabaseData.phone,
+    email: supabaseData.email,
+    firstName: supabaseData.first_name,
+    lastName: supabaseData.last_name,
+    gender: supabaseData.gender,
+    dateOfBirth: supabaseData.date_of_birth,
+    unix_timestamp: supabaseData.unix_timestamp,
     timestamp: supabaseData.created_at
   }),
 
@@ -127,6 +165,7 @@ export const DataConverter = {
     customParameters: supabaseData.custom_parameters,
     originalData: supabaseData.original_data,
     formattedData: supabaseData.formatted_data,
+    unix_timestamp: supabaseData.unix_timestamp,
     timestamp: supabaseData.created_at
   })
 };
