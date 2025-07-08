@@ -16,6 +16,7 @@ export default function QuizApp() {
     handleOptionSelect, 
     handleNextStep, 
     showResult, 
+    showPostProfile,
     showSalesPage
   } = useQuiz(quizSteps.length);
   
@@ -51,10 +52,11 @@ export default function QuizApp() {
     initQuizTracking();
   }, [visitorData]);
 
+
   return (
     <div className="min-h-screen px-2 sm:px-4 py-4 sm:py-6 md:py-8 flex flex-col">
       {/* Progress Dots - only show during actual quiz, not on landing or sales page */}
-      {currentStep > 0 && !showResult && !showSalesPage && (
+      {currentStep > 0 && !showResult && !showPostProfile && !showSalesPage && (
         <ProgressDots 
           currentStep={currentStep} 
           totalSteps={6} 
@@ -69,15 +71,26 @@ export default function QuizApp() {
             key={index}
             step={step}
             stepNumber={index}
-            isVisible={currentStep === index && !showResult && !showSalesPage}
+            isVisible={currentStep === index && !showResult && !showPostProfile && !showSalesPage}
             onOptionSelect={handleOptionSelect}
             onNextStep={handleNextStep}
           />
         ))}
 
         {/* Profile Result */}
-        {showResult && !showSalesPage && (
+        {showResult && !showPostProfile && !showSalesPage && (
           <ProfileResult onViewSuggestions={() => handleNextStep()} />
+        )}
+
+        {/* Post Profile Step */}
+        {showPostProfile && !showSalesPage && (
+          <QuizStep
+            step={quizSteps.find(step => step.name === 'post_profile_engagement') || quizSteps[0]}
+            stepNumber={-1}
+            isVisible={true}
+            onOptionSelect={handleOptionSelect}
+            onNextStep={handleNextStep}
+          />
         )}
 
         {/* Sales Page */}

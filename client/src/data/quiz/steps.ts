@@ -169,7 +169,7 @@ export const quizSteps: QuizStepType[] = [
     isTestimonialStep: true
   },
   
-  // Step 6 - Result (La Curiosa Gulosa)
+  // Step 6 - Result (La Curiosa Golosa)
   {
     name: "result",
     title: "La Curiosa Golosa",
@@ -189,6 +189,22 @@ export const quizSteps: QuizStepType[] = [
       }
     ],
     buttonText: "Scopri le tue ricette personalizzate"
+  },
+  
+  // Step 7 - Post-Profile Engagement
+  {
+    name: "post_profile_engagement",
+    title: "Ecco cosa succede quando <span class='text-primary font-semibold'>La Curiosa Golosa</span> incontra le ricette giuste...",
+    isOptimizedSalesStep: true,
+    subtitle: "📚 La tua collezione privata è pronta",
+    description: "Oltre <strong>500 ricette</strong> selezionate personalmente da Sofia Moretti per il tuo profilo specifico.",
+    bulletPoints: [
+      "✅ Ricette che soddisfano la tua curiosità SENZA farti rinunciare al gusto",
+      "✅ Piatti che ti permettono di esplorare nuovi sapori mantenendo i comfort food",
+      "✅ Soluzioni intelligenti per mangiare con gioia e senza conseguenze",
+      "✅ Accesso immediato alla collezione completa + bonus esclusivi"
+    ],
+    buttonText: "Accedi alla Mia Collezione Privata"
   },
   
 ];

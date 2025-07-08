@@ -19,6 +19,7 @@ export function useQuiz(totalSteps: number) {
   const [currentStep, setCurrentStep] = useState(0); // Começa em 0 para a página inicial
   const [answers, setAnswers] = useState<Answer>({});
   const [showResult, setShowResult] = useState(false);
+  const [showPostProfile, setShowPostProfile] = useState(false);
   const [showSalesPage, setShowSalesPage] = useState(false);
 
   /**
@@ -32,10 +33,12 @@ export function useQuiz(totalSteps: number) {
     
     // Avança automaticamente para a próxima etapa após a seleção
     setTimeout(() => {
-      if (currentStep < totalSteps) {
+      if (currentStep < 5) {
+        // Se estamos antes da etapa improve (5), continuar normalmente
         setCurrentStep(prev => prev + 1);
-      } else {
-        setShowResult(true);
+      } else if (currentStep === 5) {
+        // Se estamos na etapa improve (5), vamos para testimonials (6)
+        setCurrentStep(prev => prev + 1);
       }
     }, 500);
   };
@@ -43,18 +46,26 @@ export function useQuiz(totalSteps: number) {
   /**
    * Avança para a próxima etapa do quiz manualmente
    * Se estiver na última etapa, mostra o resultado
-   * Se já estiver mostrando o resultado, vai para a página de vendas
+   * Se já estiver mostrando o resultado, vai para a etapa pós-perfil
+   * Se já estiver na etapa pós-perfil, vai para a página de vendas
    */
   const handleNextStep = () => {
-    if (currentStep < totalSteps - 2) {
-      setCurrentStep(prev => prev + 1);
-    } else if (currentStep === totalSteps - 2) {
-      // Se estamos na penúltima etapa (testimonials), vamos para o resultado
-      setShowResult(true);
-    } else if (showResult) {
-      // Se já estamos mostrando o resultado, ir para a página de vendas completa
+    
+    // Etapas: 0=landing, 1=healthy_discouragement, 2=temptations, 3=recipes_experience, 4=chef_profile, 5=improve, 6=testimonials, 7=result, 8=post_profile_engagement
+    if (showResult) {
+      // Se já estamos mostrando o resultado, ir direto para a página de vendas
       setShowSalesPage(true);
       setShowResult(false);
+    } else if (showPostProfile) {
+      // Se já estamos na etapa pós-perfil, ir para a página de vendas completa
+      setShowSalesPage(true);
+      setShowPostProfile(false);
+    } else if (currentStep < 6) {
+      // Se estamos antes da etapa de testimonials (6), continuar normalmente
+      setCurrentStep(prev => prev + 1);
+    } else if (currentStep === 6) {
+      // Se estamos na etapa de testimonials (6), vamos para o resultado (7)
+      setShowResult(true);
     }
   };
 
@@ -65,6 +76,7 @@ export function useQuiz(totalSteps: number) {
     handleOptionSelect,
     handleNextStep,
     showResult,
+    showPostProfile,
     showSalesPage
   };
 }
