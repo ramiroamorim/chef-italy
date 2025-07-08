@@ -86,12 +86,49 @@
 /* Custom components */
 @layer components {
   .quiz-container {
-    @apply max-w-[600px] mx-auto transition-all duration-300 ease-in-out h-full;
+    @apply max-w-[600px] mx-auto transition-all duration-300 ease-in-out;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .quiz-step {
+    @apply flex-1 flex flex-col justify-center;
+    min-height: calc(100vh - 8rem);
+  }
+  
+  /* Otimizações mobile específicas */
+  @media (max-width: 640px) {
+    .quiz-container {
+      @apply px-4 py-4;
+      min-height: 100vh;
+    }
+    
+    .quiz-step {
+      @apply space-y-4;
+      min-height: calc(100vh - 6rem);
+      justify-content: space-between;
+    }
+    
+    .quiz-step > * {
+      flex-shrink: 0;
+    }
+    
+    /* Garantir que botões fiquem na parte inferior */
+    .quiz-step .btn-primary {
+      @apply mt-auto;
+      margin-top: 2rem !important;
+    }
   }
   
   @media (max-height: 700px) {
     .quiz-container {
       @apply py-2;
+    }
+    
+    .quiz-step {
+      min-height: calc(100vh - 4rem);
     }
     
     .landing-page h1 {
@@ -196,6 +233,19 @@
 
   .landing-page .text-blocks {
     @apply space-y-5 text-lg mb-8;
+  }
+
+  /* Radio button styles */
+  .radio-option input[type="radio"]:checked + .radio-checkmark {
+    @apply border-primary;
+  }
+  
+  .radio-option input[type="radio"]:checked + .radio-checkmark span {
+    @apply opacity-100;
+  }
+  
+  .radio-option:hover .radio-checkmark {
+    @apply border-primary;
   }
 
   .landing-page .text-blocks p {
