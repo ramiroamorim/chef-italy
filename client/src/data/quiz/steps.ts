@@ -13,25 +13,42 @@ export const quizSteps: QuizStepType[] = [
     title: "Ti hanno mentito.",
     textBlocks: [
       {
-        content: "Puoi ancora gustarti un piatto di <strong>lasagne alla bolognese</strong>, una <strong>crostata fatta in casa</strong> o un <strong>tiramisù vellutato</strong>..."
+        content: `Puoi ancora gustarti un piatto di <strong>lasagne alla bolognese</strong>, una <strong>crostata fatta in casa</strong> o un <strong>tiramisù vellutato</strong>… <span style="font-style:italic">-senza glutine, senza zucchero, senza lattosio.</span>`
       },
       {
-        content: "— Tutto <strong>senza glutine</strong>.<br>— <strong>Senza zucchero</strong>.<br>— <strong>Senza lattosio</strong>."
+        content: "E sì, puoi anche fare il bis. <strong>Senza dolore.</strong>"
       },
       {
-        content: "E sì, puoi anche fare il bis.<br><strong>Senza dolore. Senza gonfiore. Senza sensi di colpa.</strong>"
-      },
-      {
-        content: "🎁 In meno di 60 secondi, scopri il tuo <strong>profilo di gola</strong> e accedi alla <em>collezione privata</em> con 500 ricette iconiche della Chef Amélie —"
-      },
-      {
-        content: "Pensate per chi <strong>AMA la cucina italiana</strong>, ma ha dovuto smettere di mangiarla."
+        content: "🎁 In 1 minuto, scopri il tuo <strong>profilo di gola</strong> e accedi alla <em>collezione privata</em> con 500 ricette iconiche della Chef Sofia Moretti."
       }
     ],
     image: QuizImages.etapa01,
     imageAlt: "Ricette italiane senza glutine, senza zucchero, senza lattosio",
     buttonText: "👉🏻 Scopri ora il tuo profilo di gola",
     footerText: "Oltre <strong>100.000 donne italiane</strong> lo hanno già fatto.<br>Il test dura meno di un minuto.<br>Ma può ridarti il gusto della tua tavola."
+  },
+  // Step 1 - Nova etapa após landing
+  {
+    name: "healthy_discouragement",
+    title: "Quando cerchi di <span style=\"color:#E07260\">mangiare in modo più sano….</span> cosa ti <span style=\"color:#E07260\">scoraggia</span> di più?",
+    options: [
+      {
+        value: "insipidi",
+        label: "I piatti sono spesso insipidi o secchi"
+      },
+      {
+        value: "fame",
+        label: "Ho ancora fame dopo aver mangiato"
+      },
+      {
+        value: "cucinare",
+        label: "Non so cosa cucinare ogni giorno"
+      },
+      {
+        value: "rinuncio",
+        label: "Rinuncio dopo pochi giorni"
+      }
+    ]
   },
   
   // Step 1
@@ -145,54 +162,33 @@ export const quizSteps: QuizStepType[] = [
     ]
   },
   
-  // Step 5
+  // Step 5 - Testimonials
+  {
+    name: "testimonials",
+    title: "Centinaia di donne hanno già provato queste ricette e hanno visto il loro corpo trasformarsi.",
+    isTestimonialStep: true
+  },
+  
+  // Step 6 - Result (La Curiosa Gulosa)
   {
     name: "result",
     title: "La Curiosa Golosa",
     textBlocks: [
       {
-        content: "Sei il tipo che ama provare nuovi sapori, riscoprire versioni leggere dei piatti di una volta e sorprendere chi ami con ricette che non sembrano \"senza\"."
+        content: "Sei una donna che ama esplorare, assaggiare, scoprire. Per te, il cibo non è solo nutrimento: è piacere, curiosità, avventura."
       },
       {
-        content: "Il tuo palato cerca equilibrio: vuoi sentirti bene —<br>ma <strong>senza mai rinunciare al piacere di mangiare bene</strong>."
+        content: "Ti piace sperimentare sapori nuovi, ma senza rinunciare ai comfort food che ti fanno sentire a casa."
       },
       {
-        content: "Quello che la Chef Sofia Moretti ha preparato per te è proprio questo:"
+        content: "Dalle tue risposte emerge una personalità che cerca equilibrio tra benessere e gusto vero. Non vuoi rinunce drastiche, ma soluzioni intelligenti che ti permettano di mangiare con gioia — senza conseguenze."
       },
       {
-        content: "<strong>un mondo di ricette italiane</strong> con consistenze avvolgenti, profumi veri e ingredienti che nutrono davvero.",
+        content: "Le ricette di Sofia Moretti sono perfette per te: ti offrono la libertà di esplorare nuovi sapori, mantenendo quel comfort e quella soddisfazione che cerchi in ogni pasto.",
         highlight: true
       }
     ],
-    buttonText: "🍽️ Scopri i suggerimenti della Chef"
+    buttonText: "Scopri le tue ricette personalizzate"
   },
   
-  // Step 6
-  {
-    name: "sales_page",
-    title: "500 ricette senza zucchero, senza glutine e senza lattosio",
-    description: "che nutrono, aiutano a dimagrire con piacere e riportano il tuo corpo in equilibrio.",
-    textBlocks: [
-      {
-        content: "📛 <strong>Nessuna dieta alla moda.</strong><br>🛒 <strong>Nessun ingrediente impossibile da trovare.</strong><br>🥀 <strong>Nessun piatto triste o insapore.</strong>"
-      },
-      {
-        content: "Solo cucina vera, piena di gusto e libertà —<br>per le donne con intolleranze che <strong>non vogliono rinunciare a mangiare bene</strong>.<br><strong>Mai più.</strong>"
-      },
-      {
-        content: "💚 <strong>È per te se...</strong><br>🌿 Hai intolleranze (glutine, lattosio, zucchero)<br>🥗 Vuoi dimagrire senza frustrazione né rinunce impossibili<br>😩 Sei stanca di piatti tristi, insipidi o industriali<br>✨ Cerchi un metodo semplice, duraturo, umano"
-      },
-      {
-        content: "🚫 <strong>Non è per te se...</strong><br>🙅‍♀️ Non vuoi cambiare nemmeno una minima abitudine<br>🧪 Cerchi una pillola magica che \"risolve tutto\"<br>🌀 Preferisci restare nel caos alimentare<br>🍕 Rifiuti anche solo l'idea di cucinare un minimo"
-      },
-      {
-        content: "⚠️ <strong>Queste ricette NON sono su Google.</strong><br>Non vengono da Pinterest, né da un blog copiato.<br>Sono nate nella cucina vera di Sofia Moretti —<br>testate, aggiustate, perfezionate per portare sollievo, nutrimento e piacere autentico a chi aveva rinunciato a mangiare con gioia.",
-        highlight: true
-      }
-    ],
-    buttonText: "👉🏻 VOGLIO IL PACCHETTO A 9€",
-    priceText: "Valore reale del pacchetto: 34€<br>Oggi: solo 9€",
-    urgencyText: "⚠️ Ultimi 20 accessi disponibili a 9€ soltanto!",
-    guaranteeText: "📩 Consegna immediata via e-mail.<br>Nessun abbonamento. Nessun vincolo."
-  }
 ];

@@ -132,7 +132,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center items-center gap-2 my-3 sm:my-4 px-0 sm:px-2">
+      <div className="flex justify-center items-center gap-2 my-2 sm:my-3 px-0 sm:px-2">
         <div className="flex gap-1 sm:gap-1.5 items-center">
           {testimonials.map((_, index) => (
             <span 
@@ -143,7 +143,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
         </div>
       </div>
 
-      <div className="text-center mt-5 sm:mt-8">
+      <div className="text-center mt-3 sm:mt-4">
         <button 
           className="btn-primary btn-pulse w-full sm:w-auto py-3 sm:py-4 px-6 sm:px-10 font-medium text-sm sm:text-base rounded-full"
           onClick={handleViewProfile}

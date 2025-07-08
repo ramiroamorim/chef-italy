@@ -22,7 +22,7 @@
   --card-foreground: 20 14.3% 4.1%;
   --border: 20 5.9% 90%;
   --input: 20 5.9% 90%;
-  --primary: 14 82% 53%; /* #E05B2D - Coral orange */
+  --primary: 14 82% 53%; /* #E07260 - Coral orange */
   --primary-foreground: 60 9.1% 97.8%;
   --secondary: 60 4.8% 95.9%;
   --secondary-foreground: 24 9.8% 10%;
@@ -34,7 +34,7 @@
   --radius: 0.5rem;
   
   /* Custom colors */
-  --coral: 14 82% 53%; /* #E05B2D */
+  --coral: 14 82% 53%; /* #E07260 */
   --coral-light: 13 82% 73%;
   --text-dark: 0 0% 20%;
   --text-medium: 0 0% 33%;
@@ -132,13 +132,13 @@
     .quiz-step .button-area {
       flex-shrink: 0;
       background: white;
-      padding: 1rem 0;
+      padding: 2rem 0; 
       border-top: 1px solid rgba(0,0,0,0.05);
     }
     
     /* Elementos mais compactos */
     .quiz-step h1 {
-      font-size: 1.25rem !important;
+      font-size: 1.rem !important; 
       line-height: 1.2 !important;
       margin: 0.5rem 0 !important;
     }
@@ -158,6 +158,12 @@
     .quiz-step img {
       max-height: 150px !important;
       margin: 0.5rem 0 !important;
+    }
+    
+    /* Exceção para etapa temptations - imagem maior */
+    .quiz-step img[alt*="Tentazioni italiane"] {
+      max-height: 250px !important;
+      margin: 0.75rem 0 !important;
     }
     
     .quiz-step .space-y-4 > * + * {
@@ -198,9 +204,9 @@
   }
 
   .btn-primary {
-    @apply text-white font-medium py-3 px-4 rounded-full transition-all duration-200 ease-in-out;
-    background: linear-gradient(90deg, #F17F6C 0%, #E5885F 100%);
-    box-shadow: 0 0 10px rgba(229, 136, 95, 0.3);
+    @apply text-white font-medium py-3 sm:py-4 px-6 sm:px-8 rounded-full transition-all duration-200 ease-in-out;
+    background: linear-gradient(90deg, #E78D7B 0%, #E07260 100%);
+    box-shadow: 0 4px 15px rgba(224, 114, 96, 0.3);
   }
   
   /* Gradient pulsating button animation */
@@ -219,7 +225,7 @@
     right: 0;
     bottom: 0;
     border-radius: 50px;
-    background: linear-gradient(90deg, #F17F6C 0%, #E5885F 100%);
+    background: linear-gradient(90deg, #E78D7B 0%, #E07260 100%);
     z-index: -1;
   }
   
@@ -231,7 +237,7 @@
     top: 0;
     left: 0;
     border-radius: 50px;
-    background: linear-gradient(90deg, #F17F6C 0%, #E5885F 100%);
+    background: linear-gradient(90deg, #E78D7B 0%, #E07260 100%);
     z-index: -2;
     animation: pulse-border 2s cubic-bezier(0.66, 0, 0, 1) infinite;
   }
@@ -328,7 +334,7 @@
   }
 
   .radio-option {
-    @apply block w-full rounded-full p-3 sm:p-4 cursor-pointer border border-gray-200 transition-all duration-200 ease-in-out hover:border-primary hover:bg-[#FEF8F6];
+    @apply block w-full rounded-full p-2 sm:p-3 cursor-pointer border border-gray-200 transition-all duration-200 ease-in-out hover:border-primary hover:bg-[#FEF8F6];
   }
 
   .radio-option input:checked ~ .radio-checkmark:after {
@@ -402,5 +408,20 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+.titulo-gigante {
+  font-size: 88rem; 
+  line-height: 1;
+}
+@media (min-width: 640px) {
+  .titulo-gigante {
+    font-size: 7rem;
+  }
+}
+@media (min-width: 1024px) {
+  .titulo-gigante {
+    font-size: 9rem;
   }
 }

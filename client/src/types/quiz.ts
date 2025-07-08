@@ -37,6 +37,7 @@ export interface Option {
 export interface QuizStepType {
   name: string;
   title?: string;
+  subtitle?: string;
   description?: string;
   image?: string;
   imageAlt?: string;
@@ -46,6 +47,8 @@ export interface QuizStepType {
   buttonText?: string;
   footerText?: string;
   isTestimonialStep?: boolean;
+  isOptimizedSalesStep?: boolean;
+  bulletPoints?: string[];
   priceText?: string;
   urgencyText?: string;
   guaranteeText?: string;

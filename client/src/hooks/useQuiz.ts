@@ -46,13 +46,13 @@ export function useQuiz(totalSteps: number) {
    * Se já estiver mostrando o resultado, vai para a página de vendas
    */
   const handleNextStep = () => {
-    if (currentStep < totalSteps - 1) {
+    if (currentStep < totalSteps - 2) {
       setCurrentStep(prev => prev + 1);
-    } else if (!showResult) {
-      // Se chegamos ao final do quiz, mostrar o resultado
+    } else if (currentStep === totalSteps - 2) {
+      // Se estamos na penúltima etapa (testimonials), vamos para o resultado
       setShowResult(true);
-    } else {
-      // Se já estamos mostrando o resultado, ir para a página de vendas
+    } else if (showResult) {
+      // Se já estamos mostrando o resultado, ir para a página de vendas completa
       setShowSalesPage(true);
       setShowResult(false);
     }

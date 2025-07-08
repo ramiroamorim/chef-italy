@@ -57,7 +57,7 @@ export default function QuizApp() {
       {currentStep > 0 && !showResult && !showSalesPage && (
         <ProgressDots 
           currentStep={currentStep} 
-          totalSteps={totalSteps - 1} 
+          totalSteps={6} 
         />
       )}
 
