@@ -5,9 +5,11 @@ config();
 import express, { type Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Configurar CORS
 app.use(cors({
@@ -77,13 +79,21 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
+  // Servir arquivos estáticos em produção
+  if (process.env.NODE_ENV === "production") {
+    // Servir arquivos estáticos do build
+    const distPath = path.resolve(__dirname, "..", "dist", "public");
+    app.use(express.static(distPath));
+    
+    // SPA fallback - retornar index.html para todas as rotas não-API
+    app.get("*", (req, res) => {
+      if (!req.path.startsWith("/api/")) {
+        res.sendFile(path.resolve(distPath, "index.html"));
+      }
+    });
   } else {
-    serveStatic(app);
+    const { setupVite } = await import("./vite.js");
+    await setupVite(app, server);
   }
 
   // Use a porta do ambiente ou 3000 como fallback
@@ -93,6 +103,9 @@ app.use((req, res, next) => {
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    console.log(`Server running on port ${port}`);
   });
 })();
+
+// Export para Vercel
+export default app;
