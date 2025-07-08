@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
   "functions": {
     "dist/index.js": {
       "runtime": "nodejs18.x"
@@ -6,16 +8,12 @@
   },
   "routes": [
     {
-      "src": "/assets/(.*)",
-      "dest": "/dist/public/assets/$1"
-    },
-    {
       "src": "/api/(.*)",
       "dest": "/dist/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/public/index.html"
+      "dest": "/index.html"
     }
   ]
 }
