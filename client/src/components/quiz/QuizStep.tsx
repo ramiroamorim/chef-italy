@@ -123,7 +123,7 @@ export default function QuizStep({
       className="quiz-step px-2 sm:px-4 flex flex-col justify-between min-h-screen"
     >
       {/* Conteúdo principal */}
-      <div className="flex-1 flex flex-col justify-center space-y-4">
+      <div className="content-main flex-1 flex flex-col justify-center space-y-4">
       {/* Layout otimizado para Chef Profile */}
       {step.name === 'chef_profile' && (
         <div className="w-full">
@@ -248,7 +248,7 @@ export default function QuizStep({
       </div>
 
       {/* Botões fixos na parte inferior */}
-      <div className="flex-shrink-0 pb-4">
+      <div className="button-area flex-shrink-0 pb-4">
         {/* Button otimizado para Chef Profile */}
         {step.buttonText && !step.options && step.name === 'chef_profile' && (
           <div className="relative w-full">

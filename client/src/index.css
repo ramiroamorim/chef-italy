@@ -98,27 +98,64 @@
     min-height: calc(100vh - 8rem);
   }
   
-  /* Otimizações mobile específicas */
+  /* Otimizações mobile específicas - iPhone Safari */
   @media (max-width: 640px) {
     .quiz-container {
-      @apply px-4 py-4;
+      @apply px-4 py-2;
       min-height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
     }
     
     .quiz-step {
-      @apply space-y-4;
-      min-height: calc(100vh - 6rem);
+      @apply space-y-3;
+      min-height: calc(100vh - 4rem);
+      max-height: calc(100vh - 4rem);
       justify-content: space-between;
+      overflow-y: auto;
     }
     
-    .quiz-step > * {
+    /* Conteúdo principal flexível */
+    .quiz-step .content-main {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    /* Área do botão sempre visível */
+    .quiz-step .button-area {
       flex-shrink: 0;
+      padding-top: 1rem;
+      background: white;
+      position: sticky;
+      bottom: 0;
     }
     
-    /* Garantir que botões fiquem na parte inferior */
-    .quiz-step .btn-primary {
-      @apply mt-auto;
-      margin-top: 2rem !important;
+    /* Imagens menores em mobile */
+    .quiz-step img {
+      max-height: 200px !important;
+      object-fit: contain;
+    }
+    
+    /* Textos mais compactos */
+    .quiz-step h1 {
+      font-size: 1.5rem !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.75rem !important;
+    }
+    
+    .quiz-step h2 {
+      font-size: 1.25rem !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.5rem !important;
+    }
+    
+    .quiz-step p {
+      font-size: 0.9rem !important;
+      line-height: 1.4 !important;
+      margin-bottom: 0.5rem !important;
     }
   }
   
