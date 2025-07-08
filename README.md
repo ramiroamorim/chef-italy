@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Chef Amélie Dupont - Quiz App
+# Chef Italy - Quiz App
 
 Uma aplicação interativa de quiz que identifica o perfil gastronômico do usuário e oferece a coleção de receitas da Chef Amélie Dupont.
 
