@@ -1,18 +1,3 @@
 {
-  "outputDirectory": "dist/public",
-  "functions": {
-    "dist/index.js": {
-      "runtime": "@vercel/node@3.0.0"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/dist/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "outputDirectory": "dist/public"
 }
