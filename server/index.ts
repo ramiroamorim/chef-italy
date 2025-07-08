@@ -12,7 +12,7 @@ const app = express();
 // Configurar CORS
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-vercel-domain.vercel.app', 'https://your-domain.com'] 
+    ? ['https://chef-italy-miro.vercel.app', 'https://your-domain.com'] 
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
