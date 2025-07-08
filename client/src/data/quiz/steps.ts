@@ -4,7 +4,7 @@
  */
 
 import { QuizStepType } from "@/types/quiz";
-import { RecipeImages, ChefImages } from '@/assets/imageExports';
+import { RecipeImages, ChefImages, QuizImages } from '@/assets/imageExports';
 
 export const quizSteps: QuizStepType[] = [
   // Step 0 - Landing Page
@@ -28,7 +28,7 @@ export const quizSteps: QuizStepType[] = [
         content: "Pensate per chi <strong>AMA la cucina italiana</strong>, ma ha dovuto smettere di mangiarla."
       }
     ],
-    image: "https://cdn.xquiz.co/images/94f2084a-557c-43be-abcc-2ba23141cb46",
+    image: QuizImages.etapa01,
     imageAlt: "Ricette italiane senza glutine, senza zucchero, senza lattosio",
     buttonText: "👉🏻 Scopri ora il tuo profilo di gola",
     footerText: "Oltre <strong>100.000 donne italiane</strong> lo hanno già fatto.<br>Il test dura meno di un minuto.<br>Ma può ridarti il gusto della tua tavola."
@@ -38,7 +38,7 @@ export const quizSteps: QuizStepType[] = [
   {
     name: "temptations",
     title: "<span class='text-[#333333]'>Anche senza zucchero, glutine e lattosio… quale di queste </span><span class='text-primary font-semibold'>tentazioni italiane</span><span class='text-[#333333]'> ti fa chiudere gli occhi solo al pensiero?</span>",
-    image: "https://cdn.xquiz.co/images/94f2084a-557c-43be-abcc-2ba23141cb46",
+    image: QuizImages.etapa02,
     imageAlt: "Tentazioni italiane senza glutine, senza zucchero, senza lattosio",
     options: [
       {
@@ -83,7 +83,7 @@ export const quizSteps: QuizStepType[] = [
   // Step 3
   {
     name: "chef_profile",
-    image: ChefImages.amelie,
+    image: ChefImages.sofia,
     imageAlt: "Chef Sofia Moretti",
     title: "Un incontro con la Chef Sofia Moretti",
     description: "La sua storia. La sua missione. Le sue ricette che hanno ridato speranza a migliaia di donne italiane.",

@@ -46,6 +46,9 @@ export interface QuizStepType {
   buttonText?: string;
   footerText?: string;
   isTestimonialStep?: boolean;
+  priceText?: string;
+  urgencyText?: string;
+  guaranteeText?: string;
 }
 
 /**

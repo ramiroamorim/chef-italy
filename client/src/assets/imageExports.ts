@@ -8,6 +8,12 @@
 // Chef Images
 import chefProfile from './images/chef/chef-profile.png';
 import chefAmelie from './images/chef/chef-amelie.png';
+import chefSofia from './images/chef/chef-sofia.png';
+
+// Quiz Images
+import etapa01 from './images/quiz/etapa-01.png';
+import etapa02 from './images/quiz/etapa-02.png';
+import etapa07 from './images/quiz/etapa-07.png';
 
 // Recipes Images
 import recipeBook from './images/recipes/recipe-book-new.png'; // Imagem do livro de receitas
@@ -33,7 +39,14 @@ import audioPreview from './images/thank-you/audio-preview.png';
 // Export por categoria para organização
 export const ChefImages = {
   profile: chefProfile,
-  amelie: chefAmelie
+  amelie: chefAmelie,
+  sofia: chefSofia
+};
+
+export const QuizImages = {
+  etapa01,
+  etapa02,
+  etapa07
 };
 
 export const RecipeImages = {
@@ -65,6 +78,12 @@ export {
   // Chef Images
   chefProfile,
   chefAmelie,
+  chefSofia,
+  
+  // Quiz Images
+  etapa01,
+  etapa02,
+  etapa07,
   
   // Recipe Images
   recipeBook,
