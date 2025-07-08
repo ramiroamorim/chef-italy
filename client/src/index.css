@@ -98,27 +98,53 @@
     min-height: calc(100vh - 8rem);
   }
   
-  /* Otimizações mobile específicas */
+  /* Otimizações mobile específicas - apenas para caber na tela */
   @media (max-width: 640px) {
     .quiz-container {
-      @apply px-4 py-4;
+      @apply px-3 py-2;
       min-height: 100vh;
     }
     
     .quiz-step {
-      @apply space-y-4;
-      min-height: calc(100vh - 6rem);
+      @apply space-y-2;
+      min-height: calc(100vh - 4rem);
       justify-content: space-between;
     }
     
-    .quiz-step > * {
-      flex-shrink: 0;
+    /* Reduzir espaçamentos para caber tudo na tela */
+    .quiz-step h1 {
+      @apply mb-2 leading-tight;
     }
     
-    /* Garantir que botões fiquem na parte inferior */
-    .quiz-step .btn-primary {
-      @apply mt-auto;
-      margin-top: 2rem !important;
+    .quiz-step h2 {
+      @apply mb-2 leading-tight;
+    }
+    
+    .quiz-step p {
+      @apply mb-2 leading-snug;
+    }
+    
+    .quiz-step .space-y-3 > * + * {
+      margin-top: 0.5rem !important;
+    }
+    
+    .quiz-step .space-y-4 > * + * {
+      margin-top: 0.75rem !important;
+    }
+    
+    /* Imagens menores para mobile */
+    .quiz-step img {
+      max-height: 160px !important;
+      margin: 0.5rem 0 !important;
+    }
+    
+    /* Textos mais compactos */
+    .text-blocks {
+      @apply space-y-1;
+    }
+    
+    .arrow-down {
+      @apply my-1 text-xl;
     }
   }
   

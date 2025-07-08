@@ -50,7 +50,7 @@ export default function QuizStep({
 
         {/* Image - Food images grid com otimização */}
         {step.image && (
-          <div className="my-3 sm:my-4 md:my-5 max-w-md mx-auto">
+          <div className="my-2 sm:my-4 md:my-5 max-w-md mx-auto">
             <img 
               src={step.image} 
               alt={step.imageAlt || ""} 
@@ -58,7 +58,7 @@ export default function QuizStep({
               loading="eager"
               decoding="async"
               style={{ 
-                maxHeight: "300px",
+                maxHeight: "200px",
                 objectFit: "contain"
               }}
             />
@@ -70,7 +70,7 @@ export default function QuizStep({
 
         {/* Button with pulse animation */}
         {step.buttonText && (
-          <div className="relative w-full sm:w-auto sm:mx-auto mt-3 sm:mt-4 mb-4 sm:mb-6">
+          <div className="relative w-full sm:w-auto sm:mx-auto mt-2 sm:mt-4 mb-2 sm:mb-6">
             <button 
               className="btn-primary btn-pulse w-full sm:w-auto sm:px-12 md:px-16 py-3 sm:py-4 md:py-5 font-medium text-base sm:text-lg mx-auto block"
               onClick={onNextStep}
@@ -120,10 +120,8 @@ export default function QuizStep({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="quiz-step px-2 sm:px-4 flex flex-col justify-between min-h-screen"
+      className="quiz-step px-2 sm:px-4"
     >
-      {/* Conteúdo principal */}
-      <div className="flex-1 flex flex-col justify-center space-y-4">
       {/* Layout otimizado para Chef Profile */}
       {step.name === 'chef_profile' && (
         <div className="w-full">
@@ -245,45 +243,40 @@ export default function QuizStep({
           ))}
         </div>
       )}
-      </div>
-
-      {/* Botões fixos na parte inferior */}
-      <div className="flex-shrink-0 pb-4">
-        {/* Button otimizado para Chef Profile */}
-        {step.buttonText && !step.options && step.name === 'chef_profile' && (
-          <div className="relative w-full">
-            <div className="absolute inset-0 rounded-full opacity-30" 
-              style={{
-                background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
-                animation: "ping 3s cubic-bezier(0.66, 0, 0, 1) infinite"
-              }}
-            ></div>
-            <button 
-              className="btn-primary relative w-full py-4 px-6 flex items-center justify-center z-10 text-base font-medium" 
-              onClick={onNextStep}
-            >
-              <span>{step.buttonText}</span>
-            </button>
-          </div>
-        )}
-        {/* Button padrão para outros steps */}
-        {step.buttonText && !step.options && step.name !== 'chef_profile' && (
-          <div className="relative w-full">
-            <div className="absolute inset-0 rounded-full opacity-30" 
-              style={{
-                background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
-                animation: "ping 3s cubic-bezier(0.66, 0, 0, 1) infinite"
-              }}
-            ></div>
-            <button 
-              className="btn-primary relative w-full py-4 px-6 flex items-center justify-center z-10 text-base font-medium" 
-              onClick={onNextStep}
-            >
-              <span>{step.buttonText}</span>
-            </button>
-          </div>
-        )}
-      </div>
+      {/* Button otimizado para Chef Profile */}
+      {step.buttonText && !step.options && step.name === 'chef_profile' && (
+        <div className="relative w-full mt-2 sm:mt-3">
+          <div className="absolute inset-0 rounded-full opacity-30" 
+            style={{
+              background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
+              animation: "ping 3s cubic-bezier(0.66, 0, 0, 1) infinite"
+            }}
+          ></div>
+          <button 
+            className="btn-primary relative w-full py-3 sm:py-4 px-6 sm:px-8 flex items-center justify-center z-10 text-sm sm:text-base font-medium" 
+            onClick={onNextStep}
+          >
+            <span>{step.buttonText}</span>
+          </button>
+        </div>
+      )}
+      {/* Button padrão para outros steps */}
+      {step.buttonText && !step.options && step.name !== 'chef_profile' && (
+        <div className="relative w-full mt-2 sm:mt-4">
+          <div className="absolute inset-0 rounded-full opacity-30" 
+            style={{
+              background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
+              animation: "ping 3s cubic-bezier(0.66, 0, 0, 1) infinite"
+            }}
+          ></div>
+          <button 
+            className="btn-primary relative w-full py-3 sm:py-3 px-4 sm:px-6 flex items-center justify-center z-10 text-sm sm:text-sm" 
+            onClick={onNextStep}
+          >
+            <span>{step.buttonText}</span>
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 }
