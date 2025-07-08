@@ -67,8 +67,8 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
   }
 
   return (
-    <div className="flex flex-col justify-center min-h-[400px] w-full px-2 sm:px-4">
-      <div className="relative w-full max-w-md mx-auto">
+    <div className="flex flex-col justify-center items-center min-h-screen w-full px-4 sm:px-6">
+      <div className="relative w-full max-w-sm mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -78,17 +78,21 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
             transition={{ duration: 0.3 }}
             className="testimonial h-full w-full"
           >
-            <div className="testimonial-content bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden"
-                 style={{ boxShadow: '0 10px 25px rgba(0,0,0,0.08)', minHeight: '300px', height: '100%' }}>
+            <div className="testimonial-content bg-white rounded-3xl shadow-xl flex flex-col overflow-hidden"
+                 style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}>
               
               <div className="relative flex-grow">
-                <div className="relative w-full h-[280px] rounded-xl overflow-hidden">
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 m-3 flex items-center justify-center border border-gray-200/50">
                   <img 
                     src={testimonialImages[currentIndex % testimonialImages.length]}
                     alt={current.imageAlt || "Recettes Chef Amélie Dupont"} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-xl"
                     loading="eager"
                     decoding="async"
+                    style={{
+                      objectPosition: 'center center',
+                      filter: 'brightness(1.02) contrast(1.05)'
+                    }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
@@ -96,11 +100,14 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
                     }}
                   />
                   
+                  {/* Moldura interna para dar efeito de profundidade */}
+                  <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/20 pointer-events-none"></div>
+                  
                   {/* Botões de navegação sobre a imagem */}
                   <button 
                     onClick={handlePrev}
                     disabled={isLoading}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/60 hover:bg-black/80 transition-colors text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg z-10 disabled:opacity-50"
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/80 hover:bg-black/95 transition-all duration-200 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg z-10 disabled:opacity-50 hover:scale-110 backdrop-blur-sm"
                     aria-label="Testimonianza precedente"
                   >
                     <ChevronLeft />
@@ -109,7 +116,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
                   <button 
                     onClick={handleNext}
                     disabled={isLoading}
-                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${currentIndex === testimonials.length - 1 ? 'bg-primary/80 hover:bg-primary' : 'bg-black/60 hover:bg-black/80'} transition-colors text-white w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg z-10 disabled:opacity-50`}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${currentIndex === testimonials.length - 1 ? 'bg-primary/90 hover:bg-primary' : 'bg-black/80 hover:bg-black/95'} transition-all duration-200 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg z-10 disabled:opacity-50 hover:scale-110 backdrop-blur-sm`}
                     aria-label={currentIndex === testimonials.length - 1 ? "Scopri il mio profilo" : "Testimonianza successiva"}
                   >
                     <ChevronRight />
@@ -118,7 +125,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
               </div>
               
               {current.time && (
-                <div className="text-right px-3 py-2 bg-white/95">
+                <div className="text-right px-4 py-3 bg-white/95">
                   <span style={{ 
                     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
                     fontSize: "0.9rem",

@@ -25,12 +25,12 @@ import recipes from './images/recipes/recipes.png';
 import bookPages from './images/book/book-pages.png';
 
 // Testimonials Images
-import testimonial1 from './images/testimonials/testimonial1.png';
-import testimonial2 from './images/testimonials/testimonial2.png';
-import testimonial3 from './images/testimonials/testimonial3.png';
-import testimonial4 from './images/testimonials/testimonial4.png';
-import testimonialBread from './images/testimonials/testimonial-bread.jpg';
-import testimonialBrownie from './images/testimonials/testimonial-brownie.jpg';
+import testimonial1 from './images/testimonials/1193d754-5e03-42cf-853f-fc59bc7e7db4.JPG';
+import testimonial2 from './images/testimonials/370efb68-9d8e-432b-b0c5-ef26c792e228.JPG';
+import testimonial3 from './images/testimonials/3abb9dd0-e903-498e-913d-f645ae8b6b3f.JPG';
+import testimonial4 from './images/testimonials/5ed6dd62-8472-4170-8264-fac63010f762.JPG';
+import testimonialBread from './images/testimonials/6975f17a-7bbb-4e4e-acce-d969cd21f7f5.JPG';
+import testimonialBrownie from './images/testimonials/b0c8599b-036e-4648-9387-b81e1545dd9a.JPG';
 
 // Thank You Page Images
 import thankYouPage from './images/thank-you/thank-you-page.png';

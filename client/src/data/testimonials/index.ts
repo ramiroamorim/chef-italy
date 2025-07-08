@@ -6,10 +6,10 @@
 import { TestimonialType } from "@/types/quiz";
 
 // Importação das imagens (usando o alias do vite para a pasta assets)
-import testimonialImage1 from '@/assets/images/testimonials/testimonial1.png';
-import testimonialImage2 from '@/assets/images/testimonials/testimonial2.png';
-import testimonialImage3 from '@/assets/images/testimonials/testimonial3.png';
-import testimonialImage4 from '@/assets/images/testimonials/testimonial4.png';
+import testimonialImage1 from '@/assets/images/testimonials/1193d754-5e03-42cf-853f-fc59bc7e7db4.JPG';
+import testimonialImage2 from '@/assets/images/testimonials/370efb68-9d8e-432b-b0c5-ef26c792e228.JPG';
+import testimonialImage3 from '@/assets/images/testimonials/3abb9dd0-e903-498e-913d-f645ae8b6b3f.JPG';
+import testimonialImage4 from '@/assets/images/testimonials/5ed6dd62-8472-4170-8264-fac63010f762.JPG';
 
 // Array com as imagens importadas para uso fácil
 export const testimonialImages = [
