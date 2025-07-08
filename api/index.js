@@ -1,16 +1,9 @@
-// Função serverless simples para Vercel
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
-
+// Função serverless para Vercel
 export default function handler(req, res) {
   // Configurar CORS
-  res.setHeader('Access-Control-Allow-Origin', 'https://chef-italy-miro.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {
     res.status(200).end();
@@ -23,13 +16,22 @@ export default function handler(req, res) {
     return;
   }
 
-  // Para todas as outras rotas, servir o HTML do React
-  try {
-    const htmlPath = join(__dirname, '..', 'dist', 'public', 'index.html');
-    const html = readFileSync(htmlPath, 'utf-8');
-    res.setHeader('Content-Type', 'text/html');
-    res.status(200).send(html);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao carregar página', details: error.message });
-  }
+  // Para todas as outras rotas, servir HTML simples que carrega o React
+  const html = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Amélie - Quiz Personalizado</title>
+    <script type="module" crossorigin src="/assets/index-Dt7G1mXY.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BCwOgHYb.css">
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>`;
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.status(200).send(html);
 }
