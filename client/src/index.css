@@ -137,11 +137,6 @@
     }
     
     /* Elementos mais compactos */
-    .quiz-step h1 {
-      font-size: 1.rem !important; 
-      line-height: 1.2 !important;
-      margin: 0.5rem 0 !important;
-    }
     
     .quiz-step h2 {
       font-size: 1.1rem !important;
