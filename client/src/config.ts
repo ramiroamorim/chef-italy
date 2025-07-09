@@ -75,7 +75,9 @@ export const TEXTS = {
   },
   WEBHOOK: {
     ENABLED: true, // ✅ Ativado para enviar ao nosso servidor
-    URL: 'http://localhost:3000/api/tracking/visitor',
+    URL: import.meta.env.PROD 
+      ? 'https://chef-italy-miro.vercel.app/api/tracking/visitor'
+      : 'http://localhost:3000/api/tracking/visitor',
     TIMEOUT: 10000
   }
 };
