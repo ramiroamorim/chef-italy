@@ -2,9 +2,11 @@ const { createClient } = require('@supabase/supabase-js');
 
 // Configurações do Supabase - usando variáveis de ambiente do Netlify
 const supabaseUrl = process.env.SUPABASE_URL || 'https://gjqlmfyomxwfbfpqecqq.supabase.co';
-const supabaseKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWxtZnlvbXh3ZmJmcHFlY3FxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2NTMwMzgsImV4cCI6MjA2NDIyOTAzOH0.5HVG2LrFX-wl60K8ItFWIyO1RKAl_Cxs1d2USX_z1bU';
+// Usar service role key que tem mais permissões para operações do servidor
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqcWxtZnlvbXh3ZmJmcHFlY3FxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODY1MzAzOCwiZXhwIjoyMDY0MjI5MDM4fQ.pC8dIxYJWq4Qh7wyfEnkbDRNVR5SDTIbpvrBdeXgWHk';
 
 // Configurações do Facebook CAPI - usando variáveis de ambiente do Netlify
+// Nota: Este token pode estar expirado, precisa ser renovado no Facebook Business Manager
 const FACEBOOK_ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN || 'EAASsZARGMYwQBO7xs0TgXDK6g9LxuofBwdZCvuKsWVxbFy0TZCDaiwjuf335OXHRTCMfJFcUUQ1WyE31cCOQl6dAd53gdG6XZBXwMBkRO7u11sUaZCi8d0JZBTExZATtAe7eiJ3chxONU9kVYysAZBMVET3G3Ypy1y1JjsAZC3bAobWpjZBQblc4ptmUhCTDgZAM5IE9AZDZD';
 const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID || '644431871463181';
 
@@ -92,11 +94,13 @@ async function sendEventToFacebookCAPI(visitorData) {
     console.log('🔍 Tentando enviar para Facebook CAPI...', {
       pixelId: FACEBOOK_PIXEL_ID,
       hasToken: !!FACEBOOK_ACCESS_TOKEN,
+      tokenLength: FACEBOOK_ACCESS_TOKEN ? FACEBOOK_ACCESS_TOKEN.length : 0,
       sessionId: visitorData.external_id
     });
 
     if (!FACEBOOK_ACCESS_TOKEN || !FACEBOOK_PIXEL_ID) {
-      throw new Error('Facebook access token ou pixel ID não configurado');
+      console.log('⚠️ Facebook CAPI desabilitado - credenciais não configuradas');
+      return { success: false, message: 'Facebook CAPI credentials not configured' };
     }
 
     const eventData = {
@@ -148,6 +152,13 @@ async function sendEventToFacebookCAPI(visitorData) {
       console.error('❌ Erro ao enviar para Facebook CAPI:', result);
       console.error('❌ Status da resposta:', response.status);
       console.error('❌ Headers da resposta:', response.headers);
+      
+      // Se o token expirou, retornar erro mas não falhar toda a função
+      if (result.error?.code === 190) {
+        console.log('⚠️ Facebook access token expirado - precisa ser renovado no Facebook Business Manager');
+        return { success: false, message: 'Facebook access token expired', error: result.error };
+      }
+      
       throw new Error(`Facebook CAPI error: ${result.error?.message || 'Unknown error'}`);
     }
 
@@ -155,6 +166,13 @@ async function sendEventToFacebookCAPI(visitorData) {
     return result;
   } catch (error) {
     console.error('❌ Erro ao enviar para Facebook CAPI:', error);
+    
+    // Se é um erro de token expirado, retornar erro mas não falhar toda a função
+    if (error.message.includes('access token') || error.message.includes('decrypted')) {
+      console.log('⚠️ Facebook access token inválido ou expirado - continuando sem Facebook CAPI');
+      return { success: false, message: 'Facebook access token invalid or expired', error: error.message };
+    }
+    
     throw error;
   }
 }
