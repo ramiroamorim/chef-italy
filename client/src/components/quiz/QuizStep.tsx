@@ -33,7 +33,7 @@ export default function QuizStep({
       >
         {/* Título mais compacto */}
         {step.title && (
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#E07260] mb-4 text-center w-full">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-[#E07260] mb-4 text-center w-full">
             {step.title}
           </h1>
         )}
@@ -216,13 +216,13 @@ export default function QuizStep({
       
       {/* Title aumentado para etapa improve */}
       {step.title && step.name === 'improve' && (
-        <div className="text-sm sm:text-base font-semibold mb-2 sm:mb-3 text-center" style={{ lineHeight: '1.3' }}>
+        <div className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-center" style={{ lineHeight: '1.3' }}>
           <span dangerouslySetInnerHTML={{ __html: step.title }} />
         </div>
       )}
       {/* Title menor para etapa recipes_experience */}
       {step.title && step.name === 'recipes_experience' && (
-        <div className="text-sm font-semibold mb-2 sm:mb-3 text-center" style={{ lineHeight: '1.3' }}>
+        <div className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-center" style={{ lineHeight: '1.3' }}>
           <span dangerouslySetInnerHTML={{ __html: step.title }} />
         </div>
       )}
@@ -270,7 +270,7 @@ export default function QuizStep({
       )}
       {/* Title padrão para outros steps */}
       {step.title && step.name !== 'chef_profile' && step.name !== 'landing' && step.name !== 'improve' && step.name !== 'recipes_experience' && step.name !== 'result' && (
-        <div className="text-base sm:text-lg font-semibold mb-2 sm:mb-3 text-center">
+        <div className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-center">
           <span dangerouslySetInnerHTML={{ __html: step.title }} />
         </div>
       )}
