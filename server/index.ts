@@ -25,7 +25,7 @@ function log(message: string, source = "express") {
 // Configurar CORS
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://chef-italy-miro.vercel.app', 'https://your-domain.com'] 
+    ? ['https://chef-italy-miro.vercel.app', 'https://your-domain.com', 'https://mynet-italy.netlify.app'] 
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
