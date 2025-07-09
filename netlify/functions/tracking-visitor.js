@@ -39,12 +39,15 @@ async function saveVisitorToSupabase(visitorData) {
       session_id: visitorData.external_id,
       external_id: visitorData.external_id,
       fbp: visitorData.facebook_pixel?.fbp || visitorData.capi_data?.fbp,
+      fbc: visitorData.facebook_pixel?.fbc || visitorData.capi_data?.fbc,
       ip: visitorData.visitor_data?.ip,
       country: visitorData.visitor_data?.country,
       country_code: visitorData.visitor_data?.country_code,
       city: visitorData.visitor_data?.city,
       region_name: visitorData.visitor_data?.region,
+      state: visitorData.visitor_data?.region || visitorData.visitor_data?.state,
       zip: visitorData.visitor_data?.zip,
+      postal_code: visitorData.visitor_data?.zip || visitorData.visitor_data?.postal_code,
       latitude: visitorData.visitor_data?.latitude,
       longitude: visitorData.visitor_data?.longitude,
       timezone: visitorData.visitor_data?.timezone,
@@ -58,7 +61,8 @@ async function saveVisitorToSupabase(visitorData) {
       utm_campaign: visitorData.marketing_data?.utm_campaign,
       utm_content: visitorData.marketing_data?.utm_content,
       utm_term: visitorData.marketing_data?.utm_term,
-      timestamp: visitorData.timestamp || new Date().toISOString()
+      unix_timestamp: visitorData.unix_timestamp || Math.floor(Date.now() / 1000)
+      // Não incluir timestamp - usar created_at/updated_at automáticos
     };
 
     console.log('📝 Dados para salvar:', JSON.stringify(dbVisitorData, null, 2));
