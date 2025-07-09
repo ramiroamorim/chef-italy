@@ -76,7 +76,7 @@ export const TEXTS = {
   WEBHOOK: {
     ENABLED: true, // ✅ Ativado para enviar ao nosso servidor
     URL: import.meta.env.PROD 
-      ? 'https://chef-italy-miro.vercel.app/api/tracking/visitor'
+      ? 'https://mynet-italy.netlify.app/.netlify/functions/tracking-visitor'
       : 'http://localhost:3000/api/tracking/visitor',
     TIMEOUT: 10000
   }
