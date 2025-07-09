@@ -1,17 +1,16 @@
-import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
 
 // Configurações do Supabase
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Configurações do Facebook CAPI
-const FACEBOOK_ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN!;
-const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID!;
+const FACEBOOK_ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN;
+const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID;
 
 // Função para salvar visitante no Supabase
-async function saveVisitorToSupabase(visitorData: any) {
+async function saveVisitorToSupabase(visitorData) {
   try {
     const dbVisitorData = {
       session_id: visitorData.external_id,
@@ -57,7 +56,7 @@ async function saveVisitorToSupabase(visitorData: any) {
 }
 
 // Função para enviar evento para Facebook CAPI
-async function sendEventToFacebookCAPI(visitorData: any) {
+async function sendEventToFacebookCAPI(visitorData) {
   try {
     const eventData = {
       data: [
@@ -115,7 +114,7 @@ async function sendEventToFacebookCAPI(visitorData: any) {
   }
 }
 
-export const handler: Handler = async (event, context) => {
+exports.handler = async (event, context) => {
   // Configurar CORS
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -150,16 +149,6 @@ export const handler: Handler = async (event, context) => {
       timestamp: visitorData.timestamp
     });
 
-    // 🔍 DEBUG: Verificar estrutura dos dados recebidos para fbp
-    console.log('🔍 DEBUG - Estrutura dos dados recebidos:', {
-      hasExternalId: Boolean(visitorData.external_id),
-      hasFacebookPixel: Boolean(visitorData.facebook_pixel),
-      hasCapiData: Boolean(visitorData.capi_data),
-      fbpFromFacebookPixel: visitorData.facebook_pixel?.fbp,
-      fbpFromCapiData: visitorData.capi_data?.fbp,
-      topLevelKeys: Object.keys(visitorData)
-    });
-
     // Processar em paralelo
     const promises = [];
 
@@ -190,7 +179,7 @@ export const handler: Handler = async (event, context) => {
       headers,
       body: JSON.stringify({ 
         error: 'Internal server error',
-        message: error instanceof Error ? error.message : 'Unknown error'
+        message: error.message || 'Unknown error'
       }),
     };
   }
