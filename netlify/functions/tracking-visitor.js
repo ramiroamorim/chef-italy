@@ -25,12 +25,14 @@ async function saveVisitorToSupabase(visitorData) {
     console.log('🔍 Tentando salvar no Supabase...', {
       url: supabaseUrl,
       hasKey: !!supabaseKey,
+      keyType: supabaseKey.includes('service_role') ? 'service_role' : 'anon',
       sessionId: visitorData.external_id,
       hasSupabaseClient: !!supabase
     });
 
     if (!supabase) {
-      throw new Error('Supabase client não foi inicializado');
+      console.log('⚠️ Supabase client não inicializado - salvando apenas localmente');
+      return { success: false, message: 'Supabase client not initialized' };
     }
 
     const dbVisitorData = {
@@ -61,7 +63,25 @@ async function saveVisitorToSupabase(visitorData) {
 
     console.log('📝 Dados para salvar:', JSON.stringify(dbVisitorData, null, 2));
 
-    // Usar upsert para evitar erros de duplicação
+    // Primeiro tentar verificar se a tabela existe
+    const { data: tableInfo, error: tableError } = await supabase
+      .from('visitors')
+      .select('*')
+      .limit(1);
+
+    if (tableError) {
+      console.error('❌ Erro ao verificar tabela visitors:', tableError);
+      
+      // Se for erro de API key, retornar erro mas não falhar toda a função
+      if (tableError.message.includes('Invalid API key')) {
+        console.log('⚠️ Supabase API key inválida - precisa ser renovada no dashboard do Supabase');
+        return { success: false, message: 'Supabase API key invalid', error: tableError };
+      }
+      
+      throw tableError;
+    }
+
+    // Tentar salvar os dados
     const { data, error } = await supabase
       .from('visitors')
       .upsert([dbVisitorData], {
@@ -77,13 +97,27 @@ async function saveVisitorToSupabase(visitorData) {
         hint: error.hint,
         code: error.code
       });
+      
+      // Se for erro de API key, retornar erro mas não falhar toda a função
+      if (error.message.includes('Invalid API key')) {
+        console.log('⚠️ Supabase API key inválida - precisa ser renovada no dashboard do Supabase');
+        return { success: false, message: 'Supabase API key invalid', error: error };
+      }
+      
       throw error;
     }
 
     console.log('✅ Visitante salvo no Supabase:', dbVisitorData.session_id);
-    return data;
+    return { success: true, data: data };
   } catch (error) {
     console.error('❌ Erro ao salvar no Supabase:', error);
+    
+    // Se é um erro de API key, retornar erro mas não falhar toda a função
+    if (error.message && error.message.includes('Invalid API key')) {
+      console.log('⚠️ Supabase API key inválida ou expirada - continuando sem Supabase');
+      return { success: false, message: 'Supabase API key invalid or expired', error: error.message };
+    }
+    
     throw error;
   }
 }
@@ -251,12 +285,26 @@ exports.handler = async (event, context) => {
       sendEventToFacebookCAPI(visitorData)
     ]);
 
+    // Processar resultados para melhor logging
+    const supabaseResult = results[0].status === 'fulfilled' ? results[0].value : results[0].reason;
+    const facebookResult = results[1].status === 'fulfilled' ? results[1].value : results[1].reason;
+
     console.log('📊 Resultados do processamento:', {
-      supabase: results[0].status,
-      facebook: results[1].status,
-      supabaseError: results[0].status === 'rejected' ? results[0].reason?.message : null,
-      facebookError: results[1].status === 'rejected' ? results[1].reason?.message : null
+      supabase: {
+        status: results[0].status,
+        success: supabaseResult?.success !== false,
+        error: supabaseResult?.message || (results[0].status === 'rejected' ? results[0].reason?.message : null)
+      },
+      facebook: {
+        status: results[1].status,
+        success: facebookResult?.success !== false,
+        error: facebookResult?.message || (results[1].status === 'rejected' ? results[1].reason?.message : null)
+      }
     });
+
+    // Determinar se houve sucessos parciais
+    const supabaseSuccess = results[0].status === 'fulfilled' && supabaseResult?.success !== false;
+    const facebookSuccess = results[1].status === 'fulfilled' && facebookResult?.success !== false;
 
     return {
       statusCode: 200,
@@ -267,9 +315,21 @@ exports.handler = async (event, context) => {
         sessionId: visitorData.external_id,
         timestamp: new Date().toISOString(),
         results: {
-          supabase: results[0].status,
-          facebook: results[1].status
-        }
+          supabase: {
+            status: results[0].status,
+            success: supabaseSuccess,
+            message: supabaseResult?.message || (supabaseSuccess ? 'Success' : 'Failed')
+          },
+          facebook: {
+            status: results[1].status,
+            success: facebookSuccess,
+            message: facebookResult?.message || (facebookSuccess ? 'Success' : 'Failed')
+          }
+        },
+        warnings: [
+          !supabaseSuccess ? 'Supabase integration failed - check API keys' : null,
+          !facebookSuccess ? 'Facebook CAPI integration failed - check access token' : null
+        ].filter(Boolean)
       }),
     };
   } catch (error) {
