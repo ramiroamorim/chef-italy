@@ -100,7 +100,7 @@ export default function SalesPage() {
           </h1>
 
           <div className="mt-3 sm:mt-4">
-            <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina autentica, gustosa e liberatoria — per le donne con intolleranze che vogliono ancora godersi il cibo, senza paura.</p>
+            <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina <strong>autentica, gustosa e liberatoria</strong> — per le donne con intolleranze che vogliono ancora godersi il cibo, senza paura.</p>
           </div>
         </div>
 
