@@ -57,7 +57,7 @@ export default function QuizStep({
 
         {/* Imagem principal centralizada */}
         {step.image && (
-          <div className="my-3 sm:my-4 md:my-5 max-w-lg sm:max-w-2xl md:max-w-3xl mx-auto">
+          <div className="my-1 sm:my-2 md:my-3 max-w-lg sm:max-w-2xl md:max-w-3xl mx-auto">
             <img
               src={step.image}
               alt={step.imageAlt || ""}

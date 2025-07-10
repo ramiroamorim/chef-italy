@@ -2,8 +2,8 @@ import React from "react";
 import { LINKS, COLORS, TEXTS } from "@/config";
 import { ChefImages, TestimonialImages } from '@/assets/imageExports';
 // Importando as imagens diretamente para garantir que o Vite processe corretamente
-import recipeBookImage from '@/assets/images/recipes/recipe-book.png';
-import recipeBookNewImage from '@/assets/images/recipes/recipe-book-new.png'; // Imagem nova para a segunda ocorrência
+import recipeBookImage from '@/assets/images/recipes/Perfil Chef Sofia.png book .png';
+import recipeBookNewImage from '@/assets/images/recipes/Perfil Chef Sofia.png'; // Imagem nova para a segunda ocorrência
 import recipesMainImage from '@/assets/images/recipes/recipes-main.png';
 import etapa07Image from '@/assets/images/quiz/etapa-07.png';
 
@@ -100,9 +100,6 @@ export default function SalesPage() {
           </h1>
 
           <div className="mt-3 sm:mt-4">
-            <p className="mb-2 text-xs sm:text-sm">📛 Nessuna dieta alla moda.</p>
-            <p className="mb-2 text-xs sm:text-sm">🛒 Nessun ingrediente impossibile da trovare.</p>
-            <p className="mb-2 text-xs sm:text-sm">🥀 Nessun piatto triste o insapore.</p>
             <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina autentica, gustosa e liberatoria — per le donne con intolleranze che vogliono ancora godersi il cibo, senza paura.</p>
           </div>
         </div>
@@ -197,7 +194,7 @@ export default function SalesPage() {
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
             fontSize: "0.95rem",
-            lineHeight: "1.6",
+            lineHeight: "1.8",
             textAlign: "center",
             color: "#333333",
             margin: "0"
@@ -353,7 +350,7 @@ export default function SalesPage() {
             className="w-full h-auto rounded-xl shadow-lg"
             style={{ 
               border: "1px solid #f0f0f0",
-              maxWidth: "100%",
+              maxWidth: "110%",
               display: "block",
               margin: "0 auto"
             }}

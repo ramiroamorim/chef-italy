@@ -16,10 +16,10 @@ export const quizSteps: QuizStepType[] = [
         content: `Puoi ancora gustarti un piatto di <strong>lasagne alla bolognese</strong>, una <strong>crostata fatta in casa</strong> o un <strong>tiramisù vellutato</strong>… <span style="font-style:italic">-senza glutine, senza zucchero, senza lattosio.</span>`
       },
       {
-        content: "E sì, puoi anche fare il bis. <strong>Senza dolore.</strong>"
+        content: "<br>E sì, puoi anche fare il bis. <strong>Senza dolore.</strong>"
       },
       {
-        content: "🎁 In 1 minuto, scopri il tuo <strong>profilo di gola</strong> e accedi alla <em>collezione privata</em> con 500 ricette iconiche della Chef Sofia Moretti."
+        content: "<br>🎁 In 1 minuto, scopri il tuo <strong>profilo di gola</strong> e accedi alla <em>collezione privata</em> con 500 ricette iconiche della Chef Sofia Moretti."
       }
     ],
     image: QuizImages.etapa01,
