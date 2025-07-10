@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { LINKS, COLORS, TEXTS } from "@/config";
 import { ChefImages, TestimonialImages } from '@/assets/imageExports';
 // Importando as imagens diretamente para garantir que o Vite processe corretamente
@@ -15,14 +15,13 @@ const RecipeImages = {
 };
 
 // Componente de botão pulsante verde - versão simplificada e funcional 
-const GreenPulseButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Logs para debug
-    console.log('🛒 CLICK DETECTADO - Botão da Hotmart'); // botao ok  
-    console.log('🔗 URL:', href);
-    
-    // Permitir comportamento padrão do link - não prevenir
-    // O navegador irá abrir em nova aba naturalmente
+const GreenPulseButton = memo(({ href, children }: { href: string; children: React.ReactNode }) => {
+  const handleClick = () => {
+    // Logs para debug apenas em desenvolvimento
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🛒 CLICK DETECTADO - Botão da Hotmart');
+      console.log('🔗 URL:', href);
+    }
   };
   
   return (
@@ -38,27 +37,20 @@ const GreenPulseButton = ({ href, children }: { href: string; children: React.Re
         target="_blank" 
         rel="noopener noreferrer"
         onClick={handleClick}
-        className="relative inline-block w-full py-3 sm:py-4 px-6 sm:px-10 text-base sm:text-lg font-bold rounded-full text-white cursor-pointer"
+        className="relative inline-block w-full py-3 sm:py-4 px-6 sm:px-10 text-base sm:text-lg font-bold rounded-full text-white cursor-pointer transition-colors duration-300 ease-in-out text-center no-underline hover:opacity-90"
         style={{ 
           backgroundColor: COLORS.SUCCESS,
-          boxShadow: `0 4px 10px rgba(87, 192, 132, 0.3)`,
-          transition: "background-color 0.3s ease",
-          textDecoration: "none",
-          display: "block",
-          textAlign: "center",
-          pointerEvents: "auto"
+          boxShadow: `0 4px 10px rgba(87, 192, 132, 0.3)`
         }}
-        onMouseOver={(e) => e.currentTarget.style.backgroundColor = COLORS.SUCCESS_DARK}
-        onMouseOut={(e) => e.currentTarget.style.backgroundColor = COLORS.SUCCESS}
       >
         {children}
       </a>
     </div>
   );
-};
+});
 
 // Componente para exibir a seção de preço e botão de compra
-const PriceSection = ({ buyUrl }: { buyUrl: string }) => (
+const PriceSection = memo(({ buyUrl }: { buyUrl: string }) => (
   <div className="py-5 sm:py-6 px-4 sm:px-6 text-center mb-6 sm:mb-8 rounded-lg border" 
     style={{ 
       backgroundColor: "#FFF5F5", 
@@ -74,33 +66,26 @@ const PriceSection = ({ buyUrl }: { buyUrl: string }) => (
     
     <p style={{ fontSize: "1.05rem" }}>📩 Consegna immediata via e-mail.<br />Nessun abbonamento. Nessun vincolo.</p>
   </div>
-);
+));
 
-export default function SalesPage() {
+const SalesPage = memo(() => {
   // URL limpa da Hotmart - sem parâmetros extras
   const buyUrl = LINKS.SALES.BUY_URL;
   
   return (
-    <div className="bg-white min-h-screen">
-      <div className="max-w-[500px] mx-auto px-3 sm:px-4 py-6 sm:py-8 text-[#333] overflow-x-hidden">
+    <div className="bg-white min-h-screen w-full">
+      <div className="max-w-[500px] mx-auto px-3 sm:px-4 py-6 sm:py-8 text-[#333] overflow-x-hidden w-full" style={{ minHeight: '100vh' }}>
         {/* Cabeçalho da página */}
         <div className="bg-[#FFF8F5] p-4 sm:p-6 rounded-md mb-6 sm:mb-8">
-          <h1 style={{ 
-            fontFamily: "Georgia, 'Times New Roman', serif", 
-            fontStyle: "italic",
-            color: "#B34431",
-            fontSize: "1.5rem",
-            lineHeight: "1.4",
-            marginBottom: "1rem",
-            fontWeight: "normal"
-          }}>
+          <h1 className="text-2xl sm:text-3xl leading-tight mb-4 font-normal italic text-[#B34431]" 
+            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
             <span className="block">500 ricette senza zucchero, senza glutine e senza lattosio</span>
             <span className="block">che nutrono, aiutano a dimagrire con piacere</span>
             <span className="block">e riportano il tuo corpo in equilibrio.</span>
           </h1>
 
           <div className="mt-3 sm:mt-4">
-            <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina <strong>autentica, gustosa e liberatoria</strong> — per le donne con intolleranze che vogliono <strong>ancora godersi il cibo, senza paura</strong>.</p>
+            <p className="mb-2 text-xs sm:text-sm leading-relaxed">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina <strong>autentica, gustosa e liberatoria</strong> — per le donne con intolleranze che vogliono <strong>ancora godersi il cibo, senza paura</strong>.</p>
           </div>
         </div>
 
@@ -110,26 +95,15 @@ export default function SalesPage() {
             src={RecipeImages.gridCollage} 
             alt="Collezione di ricette senza zucchero, senza glutine e senza lattosio"
             className="w-full h-auto"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 
         {/* Pour qui c'est: section */}
         <div className="mb-5 sm:mb-6 p-3 sm:p-4 rounded-md border-l-4 bg-[#F1F9F1] border-[#57C084]">
-          <h3 style={{
-            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            fontSize: "1.05rem",
-            fontWeight: "700",
-            color: "#57C084",
-            marginBottom: "10px"
-          }}>💚 È per te se...</h3>
-          <ul style={{
-            listStyle: "none",
-            padding: "0 0 0 4px",
-            margin: "0",
-            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            fontSize: "0.95rem",
-            lineHeight: "1.8"
-          }}>
+          <h3 className="text-lg font-bold text-[#57C084] mb-2">💚 È per te se...</h3>
+          <ul className="list-none p-0 m-0 space-y-1 text-sm leading-relaxed">
             <li>🌿 Hai intolleranze (glutine, lattosio, zucchero)</li>
             <li>🥗 Vuoi dimagrire senza frustrazione né rinunce impossibili</li>
             <li>😩 Sei stanca di piatti tristi, insipidi o industriali</li>
@@ -138,35 +112,13 @@ export default function SalesPage() {
         </div>
 
         {/* Pour qui ce n'est pas: section */}
-        <div style={{
-          backgroundColor: "#FFF5F5",
-          marginBottom: "20px",
-          padding: "14px 16px",
-          borderRadius: "8px",
-          borderLeft: "4px solid #F44336"
-        }}>
-          <h3 style={{
-            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            fontSize: "1.05rem",
-            fontWeight: "700",
-            color: "#F44336",
-            marginBottom: "10px"
-          }}>🚫 Non è per te se...</h3>
-          <ul style={{
-            listStyle: "none",
-            padding: "0 0 0 4px",
-            margin: "0",
-            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            fontSize: "0.95rem",
-            lineHeight: "1.8"
-          }}>
+        <div className="mb-5 p-3 sm:p-4 rounded-md border-l-4 bg-[#FFF5F5] border-[#F44336]">
+          <h3 className="text-lg font-bold text-[#F44336] mb-2">🚫 Non è per te se...</h3>
+          <ul className="list-none p-0 m-0 space-y-1 text-sm leading-relaxed">
             <li>🙅‍♀️ Non vuoi cambiare nemmeno una minima abitudine</li>
             <li>🧪 Cerchi una pillola magica che "risolve tutto"</li>
             <li>🌀 Preferisci restare nel caos alimentare</li>
-            <li style={{ 
-              fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-              fontSize: "0.95rem"
-            }}>🍕 Rifiuti anche solo l'idea di cucinare un minimo</li>
+            <li>🍕 Rifiuti anche solo l'idea di cucinare un minimo</li>
           </ul>
         </div>
 
@@ -215,6 +167,8 @@ export default function SalesPage() {
             src={RecipeImages.book} 
             alt="Pagine del libro di ricette senza zucchero"
             className="w-full h-auto rounded-xl shadow-lg"
+            loading="lazy"
+            decoding="async"
             style={{ 
               border: "1px solid #f0f0f0",
               maxWidth: "100%",
@@ -350,6 +304,8 @@ export default function SalesPage() {
             src={recipeBookNewImage} 
             alt="Livre de recettes Chef Amélie Dupont"
             className="w-full h-auto rounded-xl shadow-lg"
+            loading="lazy"
+            decoding="async"
             style={{ 
               border: "1px solid #f0f0f0",
               maxWidth: "100%",
@@ -380,6 +336,8 @@ export default function SalesPage() {
               src={TestimonialImages.bread} 
               alt="Témoignage client - pain sans gluten"
               className="w-full h-auto"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           
@@ -388,6 +346,8 @@ export default function SalesPage() {
               src={TestimonialImages.testimonial6} 
               alt="Témoignage client - brownie sans sucre"
               className="w-full h-auto"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -419,4 +379,6 @@ export default function SalesPage() {
       </div>
     </div>
   );
-}
+});
+
+export default SalesPage;

@@ -2,10 +2,40 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>Chef Sofia Moretti - Quiz Profilo di Gola</title>
     <meta name="description" content="Scopri il tuo profilo di gola e accedi alla collezione privata di 500 ricette senza zucchero, senza glutine e senza lattosio della Chef Sofia Moretti." />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Critical CSS for mobile layout fix -->
+    <style>
+      html, body {
+        height: 100%;
+        min-height: 100vh;
+        min-height: 100svh;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      #root {
+        height: 100%;
+        min-height: 100vh;
+        min-height: 100svh;
+        width: 100%;
+      }
+      /* Ensure content doesn't get cut off on mobile */
+      @media screen and (max-width: 640px) {
+        body {
+          position: relative;
+          min-height: 100vh !important;
+          min-height: 100svh !important;
+        }
+      }
+    </style>
     
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Chef Sofia Moretti - Ricette italiane senza zucchero, senza glutine, senza lattosio" />
