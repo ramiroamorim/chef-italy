@@ -6,7 +6,7 @@
 // Links externos
 export const LINKS = {
   SALES: {
-    BUY_URL: "https://pay.hotmart.com/D98080625O?off=1n1vmmyz&checkoutMode=10"
+    BUY_URL: "https://pay.hotmart.com/P100606243B?checkoutMode=10&bid=1752190031688"
   }
 };
 

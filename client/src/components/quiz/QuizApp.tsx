@@ -13,6 +13,7 @@ export default function QuizApp() {
     currentStep, 
     totalSteps, 
     answers, 
+    answeredSteps,
     handleOptionSelect, 
     handleNextStep, 
     showResult, 
@@ -60,6 +61,7 @@ export default function QuizApp() {
         <ProgressDots 
           currentStep={currentStep} 
           totalSteps={6} 
+          answeredSteps={answeredSteps}
         />
       )}
 

@@ -18,6 +18,7 @@ export type Answer = {
 export function useQuiz(totalSteps: number) {
   const [currentStep, setCurrentStep] = useState(0); // Começa em 0 para a página inicial
   const [answers, setAnswers] = useState<Answer>({});
+  const [answeredSteps, setAnsweredSteps] = useState<Set<number>>(new Set());
   const [showResult, setShowResult] = useState(false);
   const [showPostProfile, setShowPostProfile] = useState(false);
   const [showSalesPage, setShowSalesPage] = useState(false);
@@ -30,6 +31,13 @@ export function useQuiz(totalSteps: number) {
    */
   const handleOptionSelect = (name: string, value: string) => {
     setAnswers(prev => ({ ...prev, [name]: value }));
+    
+    // Marcar o step atual como respondido
+    setAnsweredSteps(prev => {
+      const newSet = new Set(prev);
+      newSet.add(currentStep);
+      return newSet;
+    });
     
     // Avança automaticamente para a próxima etapa após a seleção
     setTimeout(() => {
@@ -73,6 +81,7 @@ export function useQuiz(totalSteps: number) {
     currentStep,
     totalSteps,
     answers,
+    answeredSteps,
     handleOptionSelect,
     handleNextStep,
     showResult,
