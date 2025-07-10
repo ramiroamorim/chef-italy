@@ -82,7 +82,7 @@ export default function SalesPage() {
   
   return (
     <div className="bg-white min-h-screen">
-      <div className="max-w-[500px] mx-auto px-3 sm:px-4 py-6 sm:py-8 text-[#333]">
+      <div className="max-w-[500px] mx-auto px-3 sm:px-4 py-6 sm:py-8 text-[#333] overflow-x-hidden">
         {/* Cabeçalho da página */}
         <div className="bg-[#FFF8F5] p-4 sm:p-6 rounded-md mb-6 sm:mb-8">
           <h1 style={{ 
@@ -218,6 +218,8 @@ export default function SalesPage() {
             style={{ 
               border: "1px solid #f0f0f0",
               maxWidth: "100%",
+              width: "100%",
+              height: "auto",
               display: "block",
               margin: "0 auto"
             }}
@@ -350,7 +352,9 @@ export default function SalesPage() {
             className="w-full h-auto rounded-xl shadow-lg"
             style={{ 
               border: "1px solid #f0f0f0",
-              maxWidth: "110%",
+              maxWidth: "100%",
+              width: "100%",
+              height: "auto",
               display: "block",
               margin: "0 auto"
             }}
