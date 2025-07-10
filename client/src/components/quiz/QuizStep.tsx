@@ -183,35 +183,64 @@ if (step.isTestimonialStep) {
       <div className="content-main flex-1 flex flex-col justify-center space-y-4">
       {/* Layout otimizado para Chef Profile */}
       {step.name === 'chef_profile' && (
-        <div className="w-full">
+        <div className="w-full flex flex-col items-center justify-center min-h-screen text-center">
           {/* Title aumentado para chef profile */}
           {step.title && (
-            <div className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-center">
+            <div className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-center w-full">
               <span dangerouslySetInnerHTML={{ __html: step.title }} />
             </div>
           )}
-          
           {/* Description com tamanho aumentado */}
           {step.description && (
             <p 
-              className="text-sm sm:text-base text-center mb-1 sm:mb-2" 
+              className="text-sm sm:text-base text-center mb-1 sm:mb-2 w-full" 
               dangerouslySetInnerHTML={{ __html: step.description }}
             />
           )}
-          
-          {/* Image reduzida para mobile para economizar espaço */}
+          {/* Image centralizada */}
           {step.image && (
-            <img 
-              src={step.image} 
-              alt={step.imageAlt || ""} 
-              className="w-full max-w-md h-auto rounded-lg mb-1 sm:mb-2 mx-auto"
-              loading="eager"
-              decoding="async"
-              style={{ 
-                maxHeight: "200px",
-                objectFit: "contain"
-              }}
-            />
+            <div className="flex justify-center w-full">
+              <img 
+                src={step.image} 
+                alt={step.imageAlt || ""} 
+                className="w-full max-w-md h-auto rounded-lg mb-1 sm:mb-2 mx-auto"
+                loading="eager"
+                decoding="async"
+                style={{ 
+                  maxHeight: "200px",
+                  objectFit: "contain"
+                }}
+              />
+            </div>
+          )}
+          {/* Text Blocks com tamanho otimizado para Chef Profile */}
+          {step.textBlocks && (
+            <div className="space-y-1 sm:space-y-2 text-[#555555] text-center px-2 w-full">
+              {step.textBlocks.map((text, i) => (
+                <p 
+                  key={i} 
+                  className={text.highlight ? "text-primary font-medium text-sm sm:text-base text-center" : "text-sm sm:text-base text-center"}
+                  dangerouslySetInnerHTML={{ __html: text.content }}
+                />
+              ))}
+            </div>
+          )}
+          {/* Button do Chef Profile diretamente após o texto */}
+          {step.buttonText && !step.options && (
+            <div className="relative w-full mt-3 sm:mt-4 flex justify-center">
+              <div className="absolute inset-0 rounded-full opacity-30" 
+                style={{
+                  background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
+                  animation: "ping 3s cubic-bezier(0.66, 0, 0, 1) infinite"
+                }}
+              ></div>
+              <button 
+                className="btn-primary relative w-full max-w-xs py-4 sm:py-5 px-8 sm:px-12 flex items-center justify-center z-10 text-xs sm:text-sm font-medium whitespace-nowrap" 
+                onClick={onNextStep}
+              >
+                <span className="text-center leading-tight px-3">{step.buttonText}</span>
+              </button>
+            </div>
           )}
         </div>
       )}
