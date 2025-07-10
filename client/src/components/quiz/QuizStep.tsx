@@ -332,11 +332,11 @@ if (step.isTestimonialStep) {
       )}
       {/* Text Blocks com tamanho otimizado para Chef Profile */}
       {step.textBlocks && step.name === 'chef_profile' && (
-        <div className="space-y-1 sm:space-y-2 text-[#555555]">
+        <div className="space-y-1 sm:space-y-2 text-[#555555] text-center px-2">
           {step.textBlocks.map((text, i) => (
             <p 
               key={i} 
-              className={text.highlight ? "text-primary font-medium text-sm sm:text-base" : "text-sm sm:text-base"}
+              className={text.highlight ? "text-primary font-medium text-sm sm:text-base text-center" : "text-sm sm:text-base text-center"}
               dangerouslySetInnerHTML={{ __html: text.content }}
             />
           ))}
