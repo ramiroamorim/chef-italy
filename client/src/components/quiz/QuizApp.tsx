@@ -65,17 +65,16 @@ export default function QuizApp() {
 
       {/* Quiz Container */}
       <div className="quiz-container slide-transition flex-1 flex flex-col justify-center">
-        {/* Quiz Steps */}
-        {quizSteps.map((step, index) => (
+        {/* Quiz Step atual */}
+        {!showResult && !showPostProfile && !showSalesPage && (
           <QuizStep
-            key={index}
-            step={step}
-            stepNumber={index}
-            isVisible={currentStep === index && !showResult && !showPostProfile && !showSalesPage}
+            step={quizSteps[currentStep]}
+            stepNumber={currentStep}
+            isVisible={true}
             onOptionSelect={handleOptionSelect}
             onNextStep={handleNextStep}
           />
-        ))}
+        )}
 
         {/* Profile Result */}
         {showResult && !showPostProfile && !showSalesPage && (
