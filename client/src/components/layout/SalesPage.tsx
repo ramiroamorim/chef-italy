@@ -5,13 +5,13 @@ import { ChefImages, TestimonialImages } from '@/assets/imageExports';
 import recipeBookImage from '@/assets/images/recipes/recipe-book.png';
 import recipeBookNewImage from '@/assets/images/recipes/recipe-book-new.png'; // Imagem nova para a segunda ocorrência
 import recipesMainImage from '@/assets/images/recipes/recipes-main.png';
-import recipesGridCollageImage from '@/assets/images/recipes/recipes-grid-collage.png';
+import etapa07Image from '@/assets/images/quiz/etapa-07.png';
 
 // Objeto modificado com referências diretas
 const RecipeImages = {
   book: recipeBookImage,
   main: recipesMainImage,
-  gridCollage: recipesGridCollageImage
+  gridCollage: etapa07Image
 };
 
 // Componente de botão pulsante verde - versão simplificada e funcional
@@ -64,12 +64,12 @@ const PriceSection = ({ buyUrl }: { buyUrl: string }) => (
       backgroundColor: "#FFF5F5", 
       borderColor: "#FFE5E5" 
     }}>
-    <p style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>Valore reale del pack: <span className="line-through">34€</span></p>
-    <p style={{ fontSize: "1.35rem", fontWeight: "bold", color: COLORS.PRIMARY, marginBottom: "1rem" }}>Oggi: solo 9€</p>
-    <p style={{ fontSize: "1.05rem", fontWeight: "bold", color: COLORS.ERROR, marginBottom: "1.5rem" }}>⚠️ Ultimi 20 accessi disponibili a 9€ soltanto!</p>
+    <p style={{ fontSize: "1.05rem", marginBottom: "0.5rem" }}>Valore reale del pacchetto: <span className="line-through">34€</span></p>
+    <p style={{ fontSize: "1.35rem", fontWeight: "bold", color: COLORS.PRIMARY, marginBottom: "1rem" }}>Oggi: solo 17€</p>
+    <p style={{ fontSize: "1.05rem", fontWeight: "bold", color: COLORS.ERROR, marginBottom: "1.5rem" }}>⚠️ Ultimi 20 accessi disponibili a 17€ soltanto!</p>
     
     <GreenPulseButton href={buyUrl}>
-      👉🏻 VOGLIO IL PACCHETTO A 9€
+      👉🏻 VOGLIO IL PACCHETTO A 17€
     </GreenPulseButton>
     
     <p style={{ fontSize: "1.05rem" }}>📩 Consegna immediata via e-mail.<br />Nessun abbonamento. Nessun vincolo.</p>
@@ -103,7 +103,7 @@ export default function SalesPage() {
             <p className="mb-2 text-xs sm:text-sm">📛 Nessuna dieta alla moda.</p>
             <p className="mb-2 text-xs sm:text-sm">🛒 Nessun ingrediente impossibile da trovare.</p>
             <p className="mb-2 text-xs sm:text-sm">🥀 Nessun piatto triste o insapore.</p>
-            <p className="mb-2 text-xs sm:text-sm">Solo cucina vera, piena di gusto e libertà —<br />per le donne con intolleranze che <strong>non vogliono rinunciare a mangiare bene</strong>.<br /><strong>Mai più.</strong></p>
+            <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina autentica, gustosa e liberatoria — per le donne con intolleranze che vogliono ancora godersi il cibo, senza paura.</p>
           </div>
         </div>
 
@@ -192,7 +192,7 @@ export default function SalesPage() {
             textAlign: "center",
             fontWeight: "bold"
           }}>
-            ⚠️ Queste ricette NON sono su Google.
+            Queste ricette non le troverai su Google.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -202,7 +202,7 @@ export default function SalesPage() {
             color: "#333333",
             margin: "0"
           }}>
-            Non vengono da Pinterest, né da un blog copiato.<br />Sono nate nella cucina vera di Sofia Moretti —<br />testate, aggiustate, perfezionate per portare sollievo, nutrimento e piacere autentico a chi aveva rinunciato a mangiare con gioia.
+            Sono nate nella vera cucina di Sofia — non su Pinterest, né su un blog copiato e incollato.<br />Ogni piatto è stato pensato per calmare, nutrire… e restituire il piacere a chi aveva ormai rinunciato
           </p>
         </div>
         
@@ -321,7 +321,7 @@ export default function SalesPage() {
             marginBottom: "12px",
             fontWeight: "normal"
           }}>
-            ❌ Non è una dieta.<br />Non è una promessa vuota.
+            Non è una dieta. Non è una promessa vuota.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -331,7 +331,7 @@ export default function SalesPage() {
             marginBottom: "12px",
             fontWeight: "normal"
           }}>
-            💡 È un ritorno alla tavola con leggerezza.<br />Un modo per ricominciare a mangiare con piacere — <span style={{ color: "#B34431", fontWeight: "600" }}>senza dolore</span>.
+            È una scorciatoia verso ciò che desideri da anni:<br />mangiare con piacere, <span style={{ color: "#B34431", fontWeight: "600" }}>senza dolore</span>.
           </p>
           <p style={{ 
             fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -341,7 +341,7 @@ export default function SalesPage() {
             marginBottom: "0",
             fontWeight: "normal"
           }}>
-            💰 E oggi, ti costa meno di un piatto triste al ristorante.
+            E oggi… ti costa meno di un piatto insipido al ristorante.
           </p>
         </div>
         
