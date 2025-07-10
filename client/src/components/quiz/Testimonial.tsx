@@ -7,10 +7,12 @@ import { TestimonialImages, RecipeImages } from "@/assets/imageExports";
 
 // Array com as imagens importadas
 const testimonialImages = [
-  TestimonialImages.testimonial4, // Mudou de 1 para 4
-  TestimonialImages.testimonial2,
-  TestimonialImages.testimonial1, // Mudou de 3 para 1
-  TestimonialImages.testimonial3  // Mudou de 4 para 3
+  TestimonialImages.testimonial6, // Primeira: d233cffd-a5c4-45b1-b3a0-24f08356bf37.JPG
+  TestimonialImages.pageOffer,    // Segunda: image-02-page-offer.jpg
+  TestimonialImages.testimonial2, // Resto aleatório
+  TestimonialImages.testimonial1,
+  TestimonialImages.testimonial3,
+  TestimonialImages.testimonial4
 ];
 
 // Usamos o tipo importado da pasta centralizada

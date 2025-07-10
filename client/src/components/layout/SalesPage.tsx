@@ -100,7 +100,7 @@ export default function SalesPage() {
           </h1>
 
           <div className="mt-3 sm:mt-4">
-            <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina <strong>autentica, gustosa e liberatoria</strong> — per le donne con intolleranze che vogliono ancora godersi il cibo, senza paura.</p>
+            <p className="mb-2 text-xs sm:text-sm">Niente diete alla moda. Niente ingredienti impossibili da trovare. Niente piatti tristi.<br />Solo una cucina <strong>autentica, gustosa e liberatoria</strong> — per le donne con intolleranze che vogliono <strong>ancora godersi il cibo, senza paura</strong>.</p>
           </div>
         </div>
 
@@ -381,7 +381,7 @@ export default function SalesPage() {
           
           <div className="border border-gray-200 rounded-md overflow-hidden">
             <img 
-              src={TestimonialImages.brownie} 
+              src={TestimonialImages.testimonial6} 
               alt="Témoignage client - brownie sans sucre"
               className="w-full h-auto"
             />
