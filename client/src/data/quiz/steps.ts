@@ -30,7 +30,7 @@ export const quizSteps: QuizStepType[] = [
   // Step 1 - Nova etapa após landing
   {
     name: "healthy_discouragement",
-    title: "Quando cerchi di <span style=\"color:#E07260\">mangiare in modo più sano….</span> cosa ti <span style=\"color:#E07260\">scoraggia</span> di più?",
+    title: "Quando cerchi di <span style=\"color:#E07260\">mangiare sano…</span> cosa ti <span style=\"color:#E07260\">scoraggia</span> di più?",
     options: [
       {
         value: "insipidi",
@@ -54,7 +54,7 @@ export const quizSteps: QuizStepType[] = [
   // Step 1
   {
     name: "temptations",
-    title: "<span class='text-[#333333]'>Anche senza zucchero, glutine e lattosio… quale di queste </span><span class='text-primary font-semibold'>tentazioni italiane</span><span class='text-[#333333]'> ti fa chiudere gli occhi solo al pensiero?</span>",
+    title: "<span class='text-[#333333]'>Senza zucchero, glutine e lattosio… quale </span><span class='text-primary font-semibold'>tentazione italiana</span><span class='text-[#333333]'> ti fa chiudere gli occhi?</span>",
     image: QuizImages.etapa02,
     imageAlt: "Tentazioni italiane senza glutine, senza zucchero, senza lattosio",
     options: [
@@ -80,7 +80,7 @@ export const quizSteps: QuizStepType[] = [
   // Step 2
   {
     name: "recipes_experience",
-    title: "<span class='text-[#333333]'>Hai mai provato a seguire quelle </span><span class='text-primary font-semibold'>ricette \"salutari\" trovate online</span><span class='text-[#333333]'>?</span><br><span class='text-[#333333]'>Quelle che promettono miracoli…</span><br><span class='text-[#333333]'>...ma alla fine sono </span><span class='text-primary font-semibold'>troppo complicate, insipide o vengono una schifezza</span><span class='text-[#333333]'>?</span>",
+    title: "<span class='text-[#333333]'>Hai mai provato </span><span class='text-primary font-semibold'>ricette \"salutari\" online</span><span class='text-[#333333]'>?</span><br><span class='text-[#333333]'>Quelle </span><span class='text-primary font-semibold'>complicate o insipide</span><span class='text-[#333333]'>?</span>",
     options: [
       {
         value: "disappointed",
@@ -103,32 +103,24 @@ export const quizSteps: QuizStepType[] = [
     image: ChefImages.sofia,
     imageAlt: "Chef Sofia Moretti",
     title: "Un incontro con la Chef Sofia Moretti",
-    description: "La sua storia. La sua missione. Le sue ricette che hanno ridato speranza a migliaia di donne italiane.",
+    description: "La sua storia, la sua missione, le sue ricette.",
     textBlocks: [
+     
       {
-        content: "👩🏻‍🍳 <strong>Chef Sofia Moretti</strong>"
+        content: "Nata a <strong>Bologna, Sofia Moretti è cresciuta tra il profumo del pane caldo, le erbe aromatiche fresche e le ricette di famiglia tramandate da sua madre."
       },
       {
-        content: "Nata a Parma, cresciuta tra profumo di pane appena sfornato, sughi della nonna e ricette scritte a mano su fogli unti d'olio."
+        content: "Formata all’Istituto di Alta Cucina di Firenze, ha lavorato in ristoranti locali impegnati in una cucina naturale e antinfiammatoria."
       },
       {
-        content: "Per Sofia, la cucina è sempre stata <strong>memoria, cura e identità</strong>."
+        content: "Ma è stato solo dopo aver scoperto personalmente le sue intolleranze che ha deciso di creare un nuovo approccio"
       },
       {
-        content: "Si è formata all'Accademia di Cucina Naturale di Firenze, specializzandosi in <strong>cucina anti-infiammatoria e nutrizione per donne mature</strong>."
-      },
-      {
-        content: "Ma è solo dopo aver scoperto le sue stesse intolleranze a glutine, lattosio e zuccheri raffinati…<br>...che ha capito quanto fosse devastante rinunciare ai piatti della propria infanzia."
-      },
-      {
-        content: "È lì che ha deciso di creare una <strong>rivoluzione</strong>:<br>Una cucina italiana vera, piena di gusto — <strong>ma che non fa male</strong>.",
+        content: "Ricette semplici, gustose, senza zucchero, senza glutine, senza lattosio — ma piene di piacere.",
         highlight: true
       },
       {
-        content: "🎯 Ricette semplici, senza ingredienti proibitivi.<br><strong>Senza sensi di colpa.</strong><br><strong>Senza dolore.</strong><br><strong>Solo sapore, tradizione e leggerezza.</strong>"
-      },
-      {
-        content: "Oggi condivide oltre 500 ricette con donne che hanno perso il piacere di mangiare — e lo vogliono ritrovare"
+        content: "Oggi condivide oltre 500 ricette pensate per trasformare la quotidianità di migliaia di donne."
       }
     ],
     buttonText: "Scopri come le sue ricette possono aiutare anche te"
@@ -145,19 +137,19 @@ export const quizSteps: QuizStepType[] = [
       },
       {
         value: "sugar",
-        label: "🍫 Stabilizzare la glicemia e liberarti da quella voglia continua di dolci"
+        label: "🍫 Stabilizzare la glicemia e liberarti dalla voglia di dolci"
       },
       {
         value: "weight",
-        label: "⚖️ Perdere peso senza frustrazione né diete estreme (senza dire addio alla cucina italiana)"
+        label: "⚖️ Perdere peso senza frustrazione né diete estreme"
       },
       {
         value: "energy",
-        label: "💥 Ritrovare l'energia e uscire da quella stanchezza che non passa mai"
+        label: "💥 Ritrovare l'energia e uscire dalla stanchezza continua"
       },
       {
         value: "all",
-        label: "🧘‍♀️ Tutto questo insieme (e finalmente sentirmi bene nel mio corpo, ogni giorno)"
+        label: "🧘‍♀️ Tutto questo insieme (sentirmi bene nel mio corpo)"
       }
     ]
   },

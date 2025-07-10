@@ -5,7 +5,7 @@ import { FacebookPixel } from '@/lib/fbPixel';
 
 // Configuração da API - apiip.net
 const IP_API_CONFIG: ApiConfig = {
-  API_KEY: '087ff054-97df-45e5-891e-4829a3c73650', // Sua chave real do apiip.net
+  API_KEY: import.meta.env.VITE_APIIP_NET_API_KEY || '087ff054-97df-45e5-891e-4829a3c73650', // Sua chave real do apiip.net
   BASE_URL: 'https://apiip.net/api/check',
   FIELDS: '', // apiip.net retorna todos os campos por padrão
   FORCE_PRO: true

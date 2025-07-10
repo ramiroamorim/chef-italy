@@ -7,10 +7,10 @@ import { TestimonialImages, RecipeImages } from "@/assets/imageExports";
 
 // Array com as imagens importadas
 const testimonialImages = [
-  TestimonialImages.testimonial1,
+  TestimonialImages.testimonial4, // Mudou de 1 para 4
   TestimonialImages.testimonial2,
-  TestimonialImages.testimonial3,
-  TestimonialImages.testimonial4
+  TestimonialImages.testimonial1, // Mudou de 3 para 1
+  TestimonialImages.testimonial3  // Mudou de 4 para 3
 ];
 
 // Usamos o tipo importado da pasta centralizada
@@ -67,8 +67,8 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
   }
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen w-full px-4 sm:px-6">
-      <div className="relative w-full max-w-sm mx-auto">
+    <div className="flex flex-col justify-start items-center w-full mt-2">
+      <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto mt-1">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -82,16 +82,17 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
                  style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}>
               
               <div className="relative flex-grow">
-                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 m-3 flex items-center justify-center border border-gray-200/50">
+              <div className="relative w-full h-140 rounded-3xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 m-1 sm:m-2 flex items-center justify-center border-2 border-gray-300/60">
                   <img 
                     src={testimonialImages[currentIndex % testimonialImages.length]}
                     alt={current.imageAlt || "Recettes Chef Amélie Dupont"} 
-                    className="w-full h-full object-cover rounded-xl"
+                    className="w-full h-full object-cover object-center"
                     loading="eager"
                     decoding="async"
                     style={{
                       objectPosition: 'center center',
-                      filter: 'brightness(1.02) contrast(1.05)'
+                      filter: 'brightness(1.02) contrast(1.05)',
+                      objectFit: 'contain'
                     }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -139,7 +140,7 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center items-center gap-2 my-2 sm:my-3 px-0 sm:px-2">
+      <div className="flex justify-center items-center gap-2 my-1 px-0 sm:px-2">
         <div className="flex gap-1 sm:gap-1.5 items-center">
           {testimonials.map((_, index) => (
             <span 
@@ -150,9 +151,9 @@ export default function Testimonial({ testimonials, onComplete }: TestimonialPro
         </div>
       </div>
 
-      <div className="text-center mt-3 sm:mt-4">
+      <div className="text-center mt-3 sm:mt-6">
         <button 
-          className="btn-primary btn-pulse w-full sm:w-auto py-3 sm:py-4 px-6 sm:px-10 font-medium text-sm sm:text-base rounded-full"
+          className="btn-primary btn-pulse w-full sm:w-auto py-3 sm:py-4 px-6 sm:px-10 font-medium text-sm sm:text-base rounded-full max-w-xs sm:max-w-sm mx-auto"
           onClick={handleViewProfile}
         >
           🔍 SCOPRI IL MIO PROFILO

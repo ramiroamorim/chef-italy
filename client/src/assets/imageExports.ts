@@ -31,6 +31,9 @@ import testimonial3 from './images/testimonials/3abb9dd0-e903-498e-913d-f645ae8b
 import testimonial4 from './images/testimonials/5ed6dd62-8472-4170-8264-fac63010f762.JPG';
 import testimonialBread from './images/testimonials/6975f17a-7bbb-4e4e-acce-d969cd21f7f5.JPG';
 import testimonialBrownie from './images/testimonials/b0c8599b-036e-4648-9387-b81e1545dd9a.JPG';
+import testimonial5 from './images/testimonials/b4570fb2-95e0-4474-bc46-2076f0827c19.JPG';
+import testimonial6 from './images/testimonials/d233cffd-a5c4-45b1-b3a0-24f08356bf37.JPG';
+import testimonial7 from './images/testimonials/dccaaad7-af99-4612-9ff4-f5cd49a8bc5b.JPG';+6
 
 // Thank You Page Images
 import thankYouPage from './images/thank-you/thank-you-page.png';
@@ -64,6 +67,9 @@ export const TestimonialImages = {
   testimonial2,
   testimonial3,
   testimonial4,
+  testimonial5,
+  testimonial6,
+  testimonial7,
   bread: testimonialBread,
   brownie: testimonialBrownie
 };
@@ -98,6 +104,9 @@ export {
   testimonial2,
   testimonial3,
   testimonial4,
+  testimonial5,
+  testimonial6,
+  testimonial7,
   testimonialBread,
   testimonialBrownie,
   

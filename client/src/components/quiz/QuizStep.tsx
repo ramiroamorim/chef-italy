@@ -57,14 +57,14 @@ export default function QuizStep({
 
         {/* Imagem principal centralizada */}
         {step.image && (
-          <div className="my-3 sm:my-4 md:my-5 max-w-md mx-auto">
+          <div className="my-3 sm:my-4 md:my-5 max-w-lg sm:max-w-2xl md:max-w-3xl mx-auto">
             <img
               src={step.image}
               alt={step.imageAlt || ""}
               className="w-full h-auto"
               loading="eager"
               decoding="async"
-              style={{ maxHeight: '300px', objectFit: 'contain' }}
+              style={{ maxHeight: '600px', objectFit: 'contain' }}
             />
           </div>
         )}
@@ -144,30 +144,32 @@ export default function QuizStep({
   }
 
   // Special layout for testimonial step
-  if (step.isTestimonialStep) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="quiz-step"
-      >
-        {/* Title with highlighted text like French example */}
-        {step.title && (
-          <h2 className="text-xl md:text-2xl font-medium mb-2 text-center">
-            <span className="text-primary font-semibold">Centinaia di donne </span>
-            <span className="text-[#333333]">hanno già provato queste ricette e hanno visto il loro corpo trasformarsi.</span>
-          </h2>
-        )}
+if (step.isTestimonialStep) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="quiz-step px-2 flex flex-col min-h-screen pt-4"
+    >
+      {/* Title with highlighted text */}
+      {step.title && (
+        <h2 className="text-base sm:text-lg font-medium mb-3 text-center">
+          <span className="text-primary font-semibold">Centinaia di donne </span>
+          <span className="text-[#333333]">hanno già provato queste ricette e hanno visto il loro corpo trasformarsi.</span>
+        </h2>
+      )}
 
-        {/* Testimonial Component */}
+      {/* Testimonial Component - sem espaços extras */}
+      <div className="flex-1 flex items-start justify-center">
         <Testimonial 
           testimonials={testimonials}
           onComplete={onNextStep}
         />
-      </motion.div>
-    );
-  }
+      </div>
+    </motion.div>
+  );
+}
 
   // Standard layout for quiz steps
   return (
@@ -341,9 +343,9 @@ export default function QuizStep({
         </div>
       )}
       
-      {/* Button do Chef Profile diretamente após o texto */}
+            {/* Button do Chef Profile diretamente após o texto */}
       {step.buttonText && !step.options && step.name === 'chef_profile' && (
-        <div className="relative w-full mt-2 sm:mt-3">
+        <div className="relative w-full mt-3 sm:mt-4">
           <div className="absolute inset-0 rounded-full opacity-30" 
             style={{
               background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
@@ -351,10 +353,10 @@ export default function QuizStep({
             }}
           ></div>
           <button 
-            className="btn-primary relative w-full py-3 sm:py-4 px-6 sm:px-8 flex items-center justify-center z-10 text-sm sm:text-base font-medium" 
+            className="btn-primary relative w-full py-4 sm:py-5 px-8 sm:px-12 flex items-center justify-center z-10 text-xs sm:text-sm font-medium whitespace-nowrap" 
             onClick={onNextStep}
           >
-            <span>{step.buttonText}</span>
+            <span className="text-center leading-tight px-3">{step.buttonText}</span>
           </button>
         </div>
       )}
