@@ -14,11 +14,11 @@ const RecipeImages = {
   gridCollage: etapa07Image
 };
 
-// Componente de botão pulsante verde - versão simplificada e funcional
+// Componente de botão pulsante verde - versão simplificada e funcional 
 const GreenPulseButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Logs para debug
-    console.log('🛒 CLICK DETECTADO - Botão da Hotmart');
+    console.log('🛒 CLICK DETECTADO - Botão da Hotmart'); // botao ok  
     console.log('🔗 URL:', href);
     
     // Permitir comportamento padrão do link - não prevenir
