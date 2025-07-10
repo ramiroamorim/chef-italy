@@ -359,36 +359,6 @@ if (step.isTestimonialStep) {
           ))}
         </div>
       )}
-      {/* Text Blocks com tamanho otimizado para Chef Profile */}
-      {step.textBlocks && step.name === 'chef_profile' && (
-        <div className="space-y-1 sm:space-y-2 text-[#555555] text-center px-2">
-          {step.textBlocks.map((text, i) => (
-            <p 
-              key={i} 
-              className={text.highlight ? "text-primary font-medium text-sm sm:text-base text-center" : "text-sm sm:text-base text-center"}
-              dangerouslySetInnerHTML={{ __html: text.content }}
-            />
-          ))}
-        </div>
-      )}
-      
-            {/* Button do Chef Profile diretamente após o texto */}
-      {step.buttonText && !step.options && step.name === 'chef_profile' && (
-        <div className="relative w-full mt-3 sm:mt-4">
-          <div className="absolute inset-0 rounded-full opacity-30" 
-            style={{
-              background: "linear-gradient(90deg, #E78D7B 0%, #E07260 100%)",
-              animation: "ping 3s cubic-bezier(0.66, 0, 0, 1) infinite"
-            }}
-          ></div>
-          <button 
-            className="btn-primary relative w-full py-4 sm:py-5 px-8 sm:px-12 flex items-center justify-center z-10 text-xs sm:text-sm font-medium whitespace-nowrap" 
-            onClick={onNextStep}
-          >
-            <span className="text-center leading-tight px-3">{step.buttonText}</span>
-          </button>
-        </div>
-      )}
       {/* Text Blocks padrão para outros steps */}
       {step.textBlocks && step.name !== 'chef_profile' && step.name !== 'result' && (
         <div className="space-y-2 sm:space-y-3 text-[#555555]">
