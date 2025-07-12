@@ -8,7 +8,7 @@ import * as crypto from 'crypto';
 // Configuração dinâmica do Facebook CAPI (avaliada em tempo real)
 function getFacebookCAPIConfig() {
   return {
-    PIXEL_ID: process.env.FACEBOOK_PIXEL_ID || '644431871463181', // Configurar no .env
+    PIXEL_ID: process.env.FACEBOOK_PIXEL_ID || '1053618620169381', // Configurar no .env
     ACCESS_TOKEN: process.env.FACEBOOK_ACCESS_TOKEN || 'YOUR_ACCESS_TOKEN_HERE', // Configurar no .env
     API_VERSION: 'v21.0',
     BASE_URL: 'https://graph.facebook.com'

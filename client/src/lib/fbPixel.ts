@@ -559,7 +559,7 @@ export const FacebookPixel = {
 
       
       // 🎯 ENVIAR PAGEVIEW COM ADVANCED MATCHING E EVENT ID (SINTAXE OFICIAL)
-      window.fbq('trackSingle', '644431871463181', 'PageView', pageViewCustomParams, {
+      window.fbq('trackSingle', '1053618620169381', 'PageView', pageViewCustomParams, {
         eventID: pageViewEventId,
         ...advancedData
       });
@@ -689,7 +689,7 @@ export const FacebookPixel = {
     }
     
     // 🎯 ENVIAR INITIATECHECKOUT COM VALORES IDÊNTICOS
-    window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', customParams, {
+    window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', customParams, {
       eventID: checkoutEventId,
       ...advancedData
     });
@@ -767,7 +767,7 @@ export const FacebookPixel = {
     }
     
     // 🎯 ENVIAR INITIATECHECKOUT FORÇADO
-    window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', customParams, {
+    window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', customParams, {
       eventID: checkoutEventId,
       ...advancedData
     });
@@ -888,7 +888,7 @@ export const FacebookPixel = {
     }
     
     // 🎯 ENVIAR INITIATECHECKOUT COM ADVANCED MATCHING E EVENT ID (SINTAXE OFICIAL)
-    window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', customParams, {
+    window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', customParams, {
       eventID: checkoutEventId,
       ...advancedData
     });
@@ -1061,7 +1061,7 @@ export const FacebookPixel = {
     };
     
     console.log('📤 Enviando teste simples:', testParams);
-    window.fbq('trackSingle', '644431871463181', 'PageView', testParams);
+    window.fbq('trackSingle', '1053618620169381', 'PageView', testParams);
     console.log('✅ Teste simples enviado!');
     
     return testParams;
@@ -1129,7 +1129,7 @@ export const FacebookPixel = {
     strategies.forEach((strategy, index) => {
       setTimeout(() => {
         const eventId = generateEventId(`test-invisible-${index + 1}`);
-        window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', strategy, {
+        window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', strategy, {
           eventID: eventId
         });
         console.log(`✅ Estratégia ${index + 1} enviada (caractere invisível)`);
@@ -1203,7 +1203,7 @@ export const FacebookPixel = {
     
     // Testar Estratégia 1
     const eventId1 = generateEventId('test-show-1');
-    window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', strategy1, {
+    window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', strategy1, {
       eventID: eventId1
     });
     console.log('✅ Estratégia 1 enviada (strings longas)');
@@ -1211,7 +1211,7 @@ export const FacebookPixel = {
     // Testar Estratégia 2 (após 2 segundos)
     setTimeout(() => {
       const eventId2 = generateEventId('test-show-2');
-      window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', strategy2, {
+      window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', strategy2, {
         eventID: eventId2
       });
       console.log('✅ Estratégia 2 enviada (objetos JSON)');
@@ -1220,7 +1220,7 @@ export const FacebookPixel = {
     // Testar Estratégia 3 (após 4 segundos)
     setTimeout(() => {
       const eventId3 = generateEventId('test-show-3');
-      window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', strategy3, {
+      window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', strategy3, {
         eventID: eventId3
       });
       console.log('✅ Estratégia 3 enviada (prefixos customizados)');
@@ -1270,7 +1270,7 @@ export const FacebookPixel = {
     
     // Enviar PageView com parâmetros idênticos
     const pageViewEventId = generateEventId('test-pageview');
-    window.fbq('trackSingle', '644431871463181', 'PageView', identicalParams, {
+    window.fbq('trackSingle', '1053618620169381', 'PageView', identicalParams, {
       eventID: pageViewEventId
     });
     console.log('✅ PageView enviado com parâmetros idênticos');
@@ -1278,7 +1278,7 @@ export const FacebookPixel = {
     // Aguardar 1 segundo e enviar InitiateCheckout com parâmetros idênticos
     setTimeout(() => {
       const checkoutEventId = generateEventId('test-checkout');
-      window.fbq('trackSingle', '644431871463181', 'InitiateCheckout', identicalParams, {
+      window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', identicalParams, {
         eventID: checkoutEventId
       });
       console.log('✅ InitiateCheckout enviado com parâmetros idênticos');
@@ -1317,7 +1317,7 @@ export const FacebookPixel = {
     console.log('  Parâmetros FORÇADOS:', testParams);
     
     // Enviar com trackSingle
-    window.fbq('trackSingle', '644431871463181', 'PageView', testParams);
+    window.fbq('trackSingle', '1053618620169381', 'PageView', testParams);
     console.log('✅ PageView FORÇADO enviado!');
     
     // Enviar com trackCustom também
@@ -1440,7 +1440,7 @@ export const FacebookPixel = {
       console.log('  Parâmetros de teste:', testParams);
       
       // Testar com trackSingle (mesma sintaxe do PageView)
-      window.fbq('trackSingle', '644431871463181', 'PageView', testParams);
+      window.fbq('trackSingle', '1053618620169381', 'PageView', testParams);
       console.log('✅ Teste enviado com trackSingle!');
       
       // Testar com trackCustom também

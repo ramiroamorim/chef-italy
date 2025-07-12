@@ -14,6 +14,7 @@ export default function QuizApp() {
     totalSteps, 
     answers, 
     answeredSteps,
+    currentStepAnswer,
     handleOptionSelect, 
     handleNextStep, 
     showResult, 
@@ -73,6 +74,8 @@ export default function QuizApp() {
             step={quizSteps[currentStep]}
             stepNumber={currentStep}
             isVisible={true}
+            answers={answers}
+            currentStepAnswer={currentStepAnswer}
             onOptionSelect={handleOptionSelect}
             onNextStep={handleNextStep}
           />
@@ -89,6 +92,8 @@ export default function QuizApp() {
             step={quizSteps.find(step => step.name === 'post_profile_engagement') || quizSteps[0]}
             stepNumber={-1}
             isVisible={true}
+            answers={answers}
+            currentStepAnswer={currentStepAnswer}
             onOptionSelect={handleOptionSelect}
             onNextStep={handleNextStep}
           />

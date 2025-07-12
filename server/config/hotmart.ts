@@ -5,9 +5,9 @@
 
 // Credenciais da Hotmart
 export const HOTMART_CONFIG = {
-  CLIENT_ID: '4ac7c9c9-ce89-4b24-b4f3-baa4ca406c08',
-  CLIENT_SECRET: '5fefa952-71b8-4695-9705-ce711ca6fb28',
-  BASIC_TOKEN: 'Basic NGFjN2M5YzktY2U4OS00YjI0LWI0ZjMtYmFhNGNhNDA2YzA4OjVmZWZhOTUyLTcxYjgtNDY5NS05NzA1LWNlNzExY2E2ZmIyOA==',
+  CLIENT_ID: '6410c2b2-7d06-4a5b-8930-00c99aecdd77',
+  CLIENT_SECRET: '1615bb17-6508-403a-9fec-d7b94736fd20',
+  BASIC_TOKEN: 'Basic NjQxMGMyYjItN2QwNi00YTViLTg5MzAtMDBjOTlhZWNkZDc3OjE2MTViYjE3LTY1MDgtNDAzYS05ZmVjLWQ3Yjk0NzM2ZmQyMA==',
   
   // URLs da API
   AUTH_URL: 'https://api-sec-vlc.hotmart.com/security/oauth/token',

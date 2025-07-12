@@ -1,5 +1,5 @@
 {
-  "name": "chef-amelie-app",
+  "name": "chef-sofia-app",
   "type": "application",
   "framework": "nodejs",
   "buildCommand": "npm run build",

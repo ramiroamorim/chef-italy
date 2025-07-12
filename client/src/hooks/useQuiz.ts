@@ -22,6 +22,7 @@ export function useQuiz(totalSteps: number) {
   const [showResult, setShowResult] = useState(false);
   const [showPostProfile, setShowPostProfile] = useState(false);
   const [showSalesPage, setShowSalesPage] = useState(false);
+  const [currentStepAnswer, setCurrentStepAnswer] = useState<string | null>(null);
 
   /**
    * Manipula a seleção de uma opção em uma etapa do quiz
@@ -30,6 +31,8 @@ export function useQuiz(totalSteps: number) {
    * @param value Valor da resposta selecionada
    */
   const handleOptionSelect = (name: string, value: string) => {
+    // Atualizar apenas a resposta da etapa atual
+    setCurrentStepAnswer(value);
     setAnswers(prev => ({ ...prev, [name]: value }));
     
     // Marcar o step atual como respondido
@@ -48,6 +51,11 @@ export function useQuiz(totalSteps: number) {
         // Se estamos na etapa improve (5), vamos para testimonials (6)
         setCurrentStep(prev => prev + 1);
       }
+      
+      // Limpar a resposta da etapa atual APÓS avançar para garantir que o reset aconteça
+      setTimeout(() => {
+        setCurrentStepAnswer(null);
+      }, 50);
     }, 500);
   };
 
@@ -58,6 +66,8 @@ export function useQuiz(totalSteps: number) {
    * Se já estiver na etapa pós-perfil, vai para a página de vendas
    */
   const handleNextStep = () => {
+    // Limpar a resposta da etapa atual sempre que avançar
+    setCurrentStepAnswer(null);
     
     // Etapas: 0=landing, 1=healthy_discouragement, 2=temptations, 3=recipes_experience, 4=chef_profile, 5=improve, 6=testimonials, 7=result, 8=post_profile_engagement
     if (showResult) {
@@ -82,6 +92,7 @@ export function useQuiz(totalSteps: number) {
     totalSteps,
     answers,
     answeredSteps,
+    currentStepAnswer,
     handleOptionSelect,
     handleNextStep,
     showResult,

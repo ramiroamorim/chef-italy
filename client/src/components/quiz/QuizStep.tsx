@@ -9,6 +9,8 @@ interface QuizStepProps {
   step: QuizStepType;
   stepNumber: number;
   isVisible: boolean;
+  answers?: { [key: string]: string };
+  currentStepAnswer?: string | null;
   onOptionSelect: (name: string, value: string) => void;
   onNextStep: () => void;
 }
@@ -17,6 +19,8 @@ export default function QuizStep({
   step, 
   stepNumber, 
   isVisible, 
+  answers = {},
+  currentStepAnswer = null,
   onOptionSelect, 
   onNextStep 
 }: QuizStepProps) {
@@ -380,6 +384,7 @@ if (step.isTestimonialStep) {
               name={step.name}
               value={option.value}
               label={option.label}
+              isSelected={currentStepAnswer === option.value}
               onSelect={() => onOptionSelect(step.name, option.value)}
             />
           ))}
