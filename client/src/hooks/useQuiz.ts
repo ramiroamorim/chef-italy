@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /**
  * Interface que define o formato das respostas do quiz
@@ -44,6 +44,9 @@ export function useQuiz(totalSteps: number) {
     
     // Avança automaticamente para a próxima etapa após a seleção
     setTimeout(() => {
+      // Limpar a resposta da etapa atual ANTES de avançar
+      setCurrentStepAnswer(null);
+      
       if (currentStep < 5) {
         // Se estamos antes da etapa improve (5), continuar normalmente
         setCurrentStep(prev => prev + 1);
@@ -51,11 +54,6 @@ export function useQuiz(totalSteps: number) {
         // Se estamos na etapa improve (5), vamos para testimonials (6)
         setCurrentStep(prev => prev + 1);
       }
-      
-      // Limpar a resposta da etapa atual APÓS avançar para garantir que o reset aconteça
-      setTimeout(() => {
-        setCurrentStepAnswer(null);
-      }, 50);
     }, 500);
   };
 
@@ -87,6 +85,18 @@ export function useQuiz(totalSteps: number) {
     }
   };
 
+  /**
+   * Função para resetar o estado da resposta atual quando necessário
+   */
+  const resetCurrentStepAnswer = () => {
+    setCurrentStepAnswer(null);
+  };
+
+  // UseEffect para garantir que o reset acontece quando mudamos de etapa
+  useEffect(() => {
+    setCurrentStepAnswer(null);
+  }, [currentStep]);
+
   return {
     currentStep,
     totalSteps,
@@ -95,6 +105,7 @@ export function useQuiz(totalSteps: number) {
     currentStepAnswer,
     handleOptionSelect,
     handleNextStep,
+    resetCurrentStepAnswer,
     showResult,
     showPostProfile,
     showSalesPage

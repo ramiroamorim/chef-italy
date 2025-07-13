@@ -78,6 +78,8 @@ export const TEXTS = {
     URL: import.meta.env.PROD 
       ? 'https://mynet-italy.netlify.app/.netlify/functions/tracking-visitor'
       : 'http://localhost:3000/api/tracking/visitor',
+    ALTERNATIVE_URL: 'https://chefsofiamoretti.com/api/tracking/visitor', // ✅ URL alternativa
+    DEV_VITE_URL: 'http://localhost:5173/api/tracking/visitor', // ✅ URL para desenvolvimento Vite
     TIMEOUT: 10000
   }
 };
