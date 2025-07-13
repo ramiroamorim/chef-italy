@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { QUIZ_CONFIG, clearQuizState, debugQuizState } from "../config/quiz";
 
 /**
  * Interface que define o formato das respostas do quiz
@@ -47,6 +48,9 @@ export function useQuiz(totalSteps: number) {
       // Limpar a resposta da etapa atual ANTES de avançar
       setCurrentStepAnswer(null);
       
+      // Debug da seleção
+      debugQuizState(`Option selected: ${name}`, value);
+      
       if (currentStep < 5) {
         // Se estamos antes da etapa improve (5), continuar normalmente
         setCurrentStep(prev => prev + 1);
@@ -54,7 +58,7 @@ export function useQuiz(totalSteps: number) {
         // Se estamos na etapa improve (5), vamos para testimonials (6)
         setCurrentStep(prev => prev + 1);
       }
-    }, 500);
+    }, QUIZ_CONFIG.TIMING.OPTION_SELECT_DELAY);
   };
 
   /**
@@ -94,7 +98,23 @@ export function useQuiz(totalSteps: number) {
 
   // UseEffect para garantir que o reset acontece quando mudamos de etapa
   useEffect(() => {
+    // Reset mais agressivo para garantir em produção
     setCurrentStepAnswer(null);
+    
+    // Limpar qualquer estado persistente usando configuração
+    if (QUIZ_CONFIG.PRODUCTION.CLEAR_CACHE_ON_STEP_CHANGE) {
+      clearQuizState();
+    }
+    
+    // Force rerender para garantir que o estado foi limpo
+    const timeoutId = setTimeout(() => {
+      setCurrentStepAnswer(null);
+      
+      // Debug usando função configurada
+      debugQuizState(`Step ${currentStep}`, null);
+    }, QUIZ_CONFIG.RESET.FORCE_RESET_TIMEOUT);
+    
+    return () => clearTimeout(timeoutId);
   }, [currentStep]);
 
   return {
@@ -108,6 +128,12 @@ export function useQuiz(totalSteps: number) {
     resetCurrentStepAnswer,
     showResult,
     showPostProfile,
-    showSalesPage
+    showSalesPage,
+    // Debug info para verificar em produção
+    _debug: {
+      currentStepAnswer,
+      currentStep,
+      answers
+    }
   };
 }

@@ -380,7 +380,7 @@ if (step.isTestimonialStep) {
         <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
           {step.options.map((option, i) => (
             <RadioOption 
-              key={i}
+              key={`${step.name}-${option.value}-${stepNumber}-${currentStepAnswer || 'none'}`}
               name={step.name}
               value={option.value}
               label={option.label}

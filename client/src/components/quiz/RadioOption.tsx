@@ -7,6 +7,8 @@ interface RadioOptionProps {
 }
 
 export default function RadioOption({ name, value, label, isSelected = false, onSelect }: RadioOptionProps) {
+  // Force key baseada no step para garantir reset completo
+  const forceKey = `${name}-${value}-${isSelected ? 'selected' : 'unselected'}`;
   // Extrai emoji do início da label usando uma busca mais robusta
   const trimmedLabel = label.trim();
   
@@ -29,6 +31,7 @@ export default function RadioOption({ name, value, label, isSelected = false, on
     <label className="radio-option block mb-2 cursor-pointer select-none">
       <span className="flex items-center gap-3">
         <input
+          key={forceKey}
           type="radio"
           name={name}
           value={value}
