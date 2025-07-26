@@ -1,0 +1,26 @@
+{
+  "name": "rest-express",
+  "description": "A Node.js Express app with React frontend",
+  "keywords": ["node", "express", "react"],
+  "stack": "heroku-24",
+  "env": {
+    "NODE_ENV": {
+      "description": "Production environment",
+      "value": "production"
+    },
+    "PORT": {
+      "description": "Port number for the server",
+      "value": "3000"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
