@@ -1,47 +1,84 @@
-import express from "express";
-import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
+import express, { type Request, Response, NextFunction } from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Configurar CORS
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://chef-italy-miro.vercel.app', 'https://your-domain.com', 'https://mynet-italy.netlify.app']
-    : ['http://localhost:5173', 'http://localhost:3000', "https://chefsofiamoretti.com" ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Rota de teste simples
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'Servidor funcionando!' });
-});
+// Configurar servir arquivos de mídia com tipos MIME corretos
+app.use('/audio', express.static('public/audio', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.mp4')) {
+      res.set('Content-Type', 'video/mp4');
+    } else if (path.endsWith('.mp3')) {
+      res.set('Content-Type', 'audio/mpeg');
+    } else if (path.endsWith('.wav')) {
+      res.set('Content-Type', 'audio/wav');
+    }
+    res.set('Accept-Ranges', 'bytes');
+  }
+}));
 
-// Servir arquivos estáticos em produção
-if (process.env.NODE_ENV === "production") {
-  const distPath = path.resolve(__dirname, "..", "dist", "public");
-  app.use(express.static(distPath));
-  
-  app.get("*", (req, res) => {
-    if (!req.path.startsWith("/api/")) {
-      res.sendFile(path.resolve(distPath, "index.html"));
+app.use((req, res, next) => {
+  const start = Date.now();
+  const path = req.path;
+  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+
+  const originalResJson = res.json;
+  res.json = function (bodyJson, ...args) {
+    capturedJsonResponse = bodyJson;
+    return originalResJson.apply(res, [bodyJson, ...args]);
+  };
+
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    if (path.startsWith("/api")) {
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) {
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
+
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "…";
+      }
+
+      log(logLine);
     }
   });
-}
 
-// Use a porta do ambiente ou 3000 como fallback
-const port = Number(process.env.PORT) || 3000;
-
-app.listen(port, "0.0.0.0", () => {
-  console.log(`✅ Servidor rodando na porta ${port}`);
-  console.log(`🌐 Acesse: http://localhost:${port}`);
+  next();
 });
 
-export default app;
+(async () => {
+  const server = await registerRoutes(app);
+
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    res.status(status).json({ message });
+    throw err;
+  });
+
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
+  } else {
+    serveStatic(app);
+  }
+
+  // Use port 3001 to avoid conflicts with macOS Control Center on port 5000
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+  const port = 3001;
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true,
+  }, () => {
+    log(`serving on port ${port}`);
+  });
+})();

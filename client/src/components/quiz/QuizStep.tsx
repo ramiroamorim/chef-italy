@@ -187,7 +187,7 @@ if (step.isTestimonialStep) {
       <div className="content-main flex-1 flex flex-col justify-center space-y-4">
       {/* Layout otimizado para Chef Profile */}
       {step.name === 'chef_profile' && (
-        <div className="w-full flex flex-col items-center justify-center min-h-screen text-center">
+        <div className="w-full flex flex-col items-center justify-center text-center">
           {/* Title aumentado para chef profile */}
           {step.title && (
             <div className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-center w-full">
@@ -219,11 +219,14 @@ if (step.isTestimonialStep) {
           )}
           {/* Text Blocks com tamanho otimizado para Chef Profile */}
           {step.textBlocks && (
-            <div className="space-y-1 sm:space-y-2 text-[#555555] text-center px-2 w-full">
+            <div className="space-y-1 sm:space-y-2 text-[#555555] px-2 w-full">
               {step.textBlocks.map((text, i) => (
-                <p 
+                <motion.p 
                   key={i} 
-                  className={text.highlight ? "text-primary font-medium text-sm sm:text-base text-center" : "text-sm sm:text-base text-center"}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: i * 0.2 }}
+                  className={text.highlight ? "text-primary font-medium text-sm sm:text-base text-left sm:text-center" : "text-sm sm:text-base text-left sm:text-center"}
                   dangerouslySetInnerHTML={{ __html: text.content }}
                 />
               ))}

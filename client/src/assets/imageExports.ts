@@ -34,7 +34,7 @@ import testimonialBrownie from './images/testimonials/b0c8599b-036e-4648-9387-b8
 import testimonial5 from './images/testimonials/b4570fb2-95e0-4474-bc46-2076f0827c19.JPG';
 import testimonial6 from './images/testimonials/d233cffd-a5c4-45b1-b3a0-24f08356bf37.JPG';
 import testimonial7 from './images/testimonials/dccaaad7-af99-4612-9ff4-f5cd49a8bc5b.JPG';
-import imagePageOffer from './images/testimonials/image-02-page-offer.jpg';+6
+import imagePageOffer from './images/testimonials/image-02-page-offer.jpg';
 
 // Thank You Page Images
 import thankYouPage from './images/thank-you/thank-you-page.png';

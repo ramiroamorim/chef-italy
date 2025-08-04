@@ -171,7 +171,8 @@ export async function sendEventToCAPI(eventData: Partial<CAPIEventData>): Promis
     // Payload para Facebook
     const payload = {
       data: [capiEvent],
-      test_event_code: process.env.NODE_ENV === 'development' ? 'TEST12345' : undefined
+      test_event_code: process.env.NODE_ENV === 'development' ? 
+        (process.env.FACEBOOK_TEST_EVENT_CODE || 'TEST12345') : undefined
     };
     
     console.log('📱 CAPI: Enviando evento para Facebook:', {

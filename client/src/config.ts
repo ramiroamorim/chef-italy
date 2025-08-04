@@ -76,9 +76,9 @@ export const TEXTS = {
   WEBHOOK: {
     ENABLED: true, // ✅ Ativado para enviar ao nosso servidor
     URL: import.meta.env.PROD 
-      ? 'https://mynet-italy.netlify.app/.netlify/functions/tracking-visitor'
+      ? 'https://chefsofiamoretti.com/api/tracking/visitor'
       : 'http://localhost:3000/api/tracking/visitor',
-    ALTERNATIVE_URL: 'https://chefsofiamoretti.com/api/tracking/visitor', // ✅ URL alternativa
+    ALTERNATIVE_URL: 'http://localhost:3001/api/tracking/visitor', // ✅ URL alternativa local
     DEV_VITE_URL: 'http://localhost:5173/api/tracking/visitor', // ✅ URL para desenvolvimento Vite
     TIMEOUT: 10000
   }
