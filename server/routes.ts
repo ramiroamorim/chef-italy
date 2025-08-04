@@ -9,7 +9,6 @@ import {
   prepareCAPIData,
   HotmartUtils 
 } from './config/hotmart';
-import { VisitorDatabase, FacebookEventDatabase, DatabaseUtils } from './database-supabase';
 import { sendEventToCAPI, testCAPIConnection, getCAPILogs, getCAPIStats, forwardFrontendEventToCAPI } from './facebook-capi';
 
 // Armazenar visitantes temporariamente (em produção usar banco de dados)
@@ -122,8 +121,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         timestamp: visitorData.timestamp || new Date().toISOString()
       };
       
-      // Salvar no banco de dados permanente
-      await VisitorDatabase.save(dbVisitorData);
       
       // Manter também no storage temporário para compatibilidade
       visitorsStorage.push({
@@ -311,19 +308,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // 🗄️ BANCO DE DADOS: Estatísticas do banco
-  app.get('/api/database/stats', async (req, res) => {
-    try {
-      const stats = await DatabaseUtils.getFullReport();
-      res.json({
-        success: true,
-        ...stats
-      });
-    } catch (error) {
-      console.error('❌ Erro ao obter estatísticas:', error);
-      res.status(500).json({ success: false, error: 'Erro interno' });
-    }
-  });
 
   // 🗄️ BANCO DE DADOS: Receber evento do Facebook
   app.post('/api/database/facebook-event', async (req, res) => {
@@ -336,8 +320,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         hasHashedParams: Boolean(eventData.customParameters?.zp)
       });
       
-      // Salvar no banco de dados
-      await FacebookEventDatabase.save(eventData);
       
       // 📱 ENVIAR PARA FACEBOOK CAPI
       try {
@@ -367,44 +349,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // 🗄️ BANCO DE DADOS: Buscar visitante por ID
-  app.get('/api/database/visitor/:sessionId', async (req, res) => {
-    try {
-      const { sessionId } = req.params;
-      const result = await DatabaseUtils.getVisitorWithEvents(sessionId);
-      
-      if (!result.visitor) {
-        return res.status(404).json({ 
-          success: false, 
-          error: 'Visitante não encontrado' 
-        });
-      }
-      
-      res.json({
-        success: true,
-        ...result
-      });
-      
-    } catch (error) {
-      console.error('❌ Erro ao buscar visitante:', error);
-      res.status(500).json({ success: false, error: 'Erro interno' });
-    }
-  });
 
-  // 🗄️ BANCO DE DADOS: Exportar todos os dados
-  app.get('/api/database/export', async (req, res) => {
-    try {
-      const exportData = await DatabaseUtils.exportAllData();
-      
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Content-Disposition', 'attachment; filename="chef-amelie-data-export.json"');
-      res.json(exportData);
-      
-    } catch (error) {
-      console.error('❌ Erro ao exportar dados:', error);
-      res.status(500).json({ success: false, error: 'Erro interno' });
-    }
-  });
 
   // 📱 FACEBOOK CAPI: Estatísticas e monitoramento
   app.get('/api/capi/stats', (req, res) => {
