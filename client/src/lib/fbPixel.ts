@@ -106,46 +106,6 @@ const generateUUID = (): string => {
   });
 };
 
-/**
- * Preparar dados de Advanced Matching
- */
-const prepareAdvancedMatching = (visitorData: VisitorData) => {
-  const advancedData: any = {
-    external_id: CookieUtils.getExternalId(),
-    fbp: CookieUtils.getFbp()
-  };
-
-  const fbc = CookieUtils.getFbc();
-  if (fbc) {
-    advancedData.fbc = fbc;
-  }
-
-  if (visitorData.ip) {
-    advancedData.client_ip_address = visitorData.ip;
-  }
-
-  if (visitorData.userAgent) {
-    advancedData.client_user_agent = visitorData.userAgent;
-  }
-
-  if (visitorData.countryCode) {
-    advancedData.country = visitorData.countryCode.toLowerCase();
-  }
-
-  if (visitorData.regionName) {
-    advancedData.st = visitorData.regionName;
-  }
-
-  if (visitorData.city) {
-    advancedData.ct = visitorData.city;
-  }
-
-  if (visitorData.zip) {
-    advancedData.zp = visitorData.zip;
-  }
-
-  return advancedData;
-};
 
 /**
  * Aguardar Facebook Pixel carregar
@@ -176,7 +136,7 @@ const waitForPixel = (maxWait = 5000): Promise<boolean> => {
 };
 
 /**
- * Enviar evento para o servidor (CAPI)
+ * Enviar evento para o servidor (CAPI) - versão simplificada
  */
 const sendToServer = async (eventType: string, eventId: string, customParams: any, visitorData: VisitorData) => {
   try {
@@ -185,12 +145,6 @@ const sendToServer = async (eventType: string, eventId: string, customParams: an
       eventId,
       sessionId: CookieUtils.getExternalId(),
       customParameters: customParams,
-      originalData: {
-        zip: visitorData.zip,
-        city: visitorData.city,
-        state: visitorData.regionName,
-        country: visitorData.countryCode
-      },
       timestamp: new Date().toISOString()
     };
     
@@ -210,10 +164,11 @@ export const FacebookPixel = {
   CookieUtils,
 
   /**
-   * Inicializar com PageView
+   * Inicializar pixel (sem enviar PageView adicional)
    */
   init: async (visitorData: VisitorData) => {
     if ((window as any).chefAmeliePixelInitialized) {
+      console.log('🎯 Pixel já inicializado');
       return true;
     }
 
@@ -221,122 +176,40 @@ export const FacebookPixel = {
     
     const pixelReady = await waitForPixel();
     if (!pixelReady) {
-      console.error('❌ Facebook Pixel não carregou');
+      console.error('❌ Facebook Pixel não carregou no tempo esperado');
       return false;
     }
 
-    const advancedData = prepareAdvancedMatching(visitorData);
-    const eventId = generateUUID();
-    
-    const customParams: any = {
-      content_name: 'Chef Amelie Quiz Landing',
-      content_category: 'Quiz',
-      content_ids: ['chef-amelie-landing'],
-      value: 17,
-      currency: 'EUR',
-      content_type: 'website',
-      external_id: advancedData.external_id,
-      fbp: advancedData.fbp
-    };
-
-    if (advancedData.fbc) {
-      customParams.fbc = advancedData.fbc;
+    try {
+      // Salvar dados do visitante para uso posterior
+      (window as any).chefAmelieVisitorData = visitorData;
+      (window as any).chefAmeliePixelInitialized = true;
+      
+      console.log('✅ Pixel inicializado (PageView já enviado pelo HTML)');
+      return true;
+      
+    } catch (error) {
+      console.error('❌ Erro ao inicializar pixel:', error);
+      return false;
     }
-
-    if (visitorData.userAgent) {
-      customParams.client_user_agent = visitorData.userAgent;
-    }
-
-    if (visitorData.ip) {
-      customParams.client_ip_address = visitorData.ip;
-    }
-
-    // Enviar PageView
-    window.fbq('trackSingle', '1053618620169381', 'PageView', customParams, {
-      eventID: eventId,
-      ...advancedData
-    });
-    
-    console.log('✅ PageView enviado:', eventId);
-    
-    // Salvar no servidor
-    await sendToServer('PageView', eventId, customParams, visitorData);
-    
-    // Salvar dados globalmente
-    (window as any).chefAmelieAdvancedMatching = advancedData;
-    (window as any).chefAmeliePixelInitialized = true;
-    
-    return true;
   },
 
   /**
-   * Enviar InitiateCheckout
+   * InitiateCheckout (não usado mais - enviado pelo HTML)
    */
   trackInitiateCheckout: async (visitorData?: VisitorData) => {
-    if (typeof window === 'undefined' || !window.fbq) {
-      console.warn('🔸 Facebook Pixel não carregado');
-      return;
-    }
-
-    if ((window as any).chefAmelieCheckoutSent) {
-      console.log('🔄 InitiateCheckout já enviado');
-      return;
-    }
-
-    const advancedData = (window as any).chefAmelieAdvancedMatching || {};
-    const eventId = generateUUID();
-    
-    const customParams: any = {
-      content_name: 'Chef Amelie Quiz Landing',
-      content_category: 'Quiz',
-      content_ids: ['chef-amelie-landing'],
-      value: 17,
-      currency: 'EUR',
-      content_type: 'website',
-      external_id: CookieUtils.getExternalId(),
-      fbp: CookieUtils.getFbp()
-    };
-
-    const fbc = CookieUtils.getFbc();
-    if (fbc) {
-      customParams.fbc = fbc;
-    }
-
-    if (visitorData?.userAgent) {
-      customParams.client_user_agent = visitorData.userAgent;
-    }
-
-    if (visitorData?.ip || advancedData?.client_ip_address) {
-      customParams.client_ip_address = visitorData?.ip || advancedData.client_ip_address;
-    }
-
-    // Enviar InitiateCheckout
-    window.fbq('trackSingle', '1053618620169381', 'InitiateCheckout', customParams, {
-      eventID: eventId,
-      ...advancedData
-    });
-    
-    console.log('✅ InitiateCheckout enviado:', eventId);
-    
-    // Salvar no servidor
-    if (visitorData) {
-      await sendToServer('InitiateCheckout', eventId, customParams, visitorData);
-    }
-    
-    (window as any).chefAmelieCheckoutSent = true;
+    console.log('🎯 InitiateCheckout já foi enviado pelo HTML no carregamento da página');
+    return;
   },
 
   /**
-   * Obter status
+   * Obter status simples
    */
   getStatus: () => {
     return {
       pixelLoaded: typeof window !== 'undefined' && !!window.fbq,
       initialized: !!(window as any).chefAmeliePixelInitialized,
-      checkoutSent: !!(window as any).chefAmelieCheckoutSent,
-      externalId: CookieUtils.getExternalId(),
-      fbp: CookieUtils.getFbp(),
-      fbc: CookieUtils.getFbc()
+      checkoutSent: !!(window as any).chefAmelieCheckoutSent
     };
   },
 
@@ -347,5 +220,7 @@ export const FacebookPixel = {
     (window as any).chefAmeliePixelInitialized = false;
     (window as any).chefAmelieCheckoutSent = false;
     console.log('🔄 Flags resetados');
-  }
+  },
+
+
 };

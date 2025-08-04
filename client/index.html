@@ -26,16 +26,35 @@
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
         if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
         n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;t.onerror=function(){console.warn('Facebook Pixel failed to load');};
+        t.src=v;t.onerror=function(){console.error('❌ Facebook Pixel script failed to load');};
         s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window, document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
         
+        // Inicializar pixel básico primeiro
         fbq('init', '1053618620169381');
-        console.log('🎯 Facebook Pixel inicializado - aguardando React...');
+        
+        // Verificar se pixel carregou
+        console.log('🎯 Facebook Pixel inicializado. Status:', {
+          fbqExists: typeof fbq !== 'undefined',
+          pixelId: '1053618620169381',
+          timestamp: new Date().toISOString()
+        });
+        
+        // Enviar PageView e InitiateCheckout imediatamente
+        fbq('track', 'PageView');
+        fbq('track', 'InitiateCheckout', {
+          content_name: 'Chef Sofia Quiz Landing',
+          content_category: 'Quiz',
+          content_ids: ['chef-sofia-quiz'],
+          value: 17,
+          currency: 'EUR'
+        });
+        
+        console.log('📊 PageView e InitiateCheckout enviados');
         
       } catch(e) {
-        console.warn('Facebook Pixel initialization failed:', e);
+        console.error('❌ Facebook Pixel initialization failed:', e);
       }
     </script>
     <!-- End Facebook Pixel Code -->

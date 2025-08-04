@@ -22,6 +22,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ status: "ok" });
   });
 
+  // Testar token do Facebook
+  app.get('/api/facebook/test-token', async (req, res) => {
+    try {
+      const token = process.env.FACEBOOK_ACCESS_TOKEN;
+      const pixelId = process.env.FACEBOOK_PIXEL_ID || '1053618620169381';
+      
+      if (!token || token === 'YOUR_ACCESS_TOKEN_HERE') {
+        return res.json({
+          success: false,
+          error: 'Token do Facebook não configurado',
+          configured: false
+        });
+      }
+
+      // Testar token fazendo uma requisição simples para a API do Facebook
+      const testUrl = `https://graph.facebook.com/v21.0/${pixelId}?access_token=${token}`;
+      
+      console.log('🧪 Testando token do Facebook...');
+      
+      const response = await fetch(testUrl);
+      const data = await response.json();
+      
+      if (response.ok) {
+        res.json({
+          success: true,
+          message: 'Token válido!',
+          pixelId,
+          tokenLength: token.length,
+          tokenStart: token.substring(0, 15) + '...',
+          pixelData: data
+        });
+      } else {
+        res.json({
+          success: false,
+          error: 'Token inválido ou expirado',
+          details: data,
+          pixelId,
+          tokenLength: token.length
+        });
+      }
+      
+    } catch (error) {
+      console.error('❌ Erro ao testar token:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno ao testar token',
+        details: error instanceof Error ? error.message : 'Erro desconhecido'
+      });
+    }
+  });
+
   // 🎯 Receber dados de tracking de visitantes
   app.post('/api/tracking/visitor', async (req, res) => {
     try {
